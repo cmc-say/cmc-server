@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-    @GetMapping("/index.html")
+    @GetMapping("/index.html") // 상태코드 수정
     public String main1() throws Exception{
         return "main1";
     }

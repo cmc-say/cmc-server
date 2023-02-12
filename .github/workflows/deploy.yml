@@ -49,10 +49,10 @@ jobs:
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20
         with:
-          aws_access_key: $
-          aws_secret_key: $
-          application_name: dev-real-test
-          environment_name: Devrealtest-env
-          version_label: github-action-$
+          aws_access_key: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws_secret_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          application_name: cmc-say-server-java11
+          environment_name: Cmcsayserverjava11-env
+          version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip

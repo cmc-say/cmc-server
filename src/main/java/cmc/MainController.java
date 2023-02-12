@@ -12,7 +12,7 @@ public class MainController {
         return "main1";
     }
 
-    @GetMapping("/hi2")
+    @GetMapping("/")
     public String main2() throws Exception{
         return "main2";
     }

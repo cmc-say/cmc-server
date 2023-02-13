@@ -1,1 +1,1 @@
-# cmc-server
+# base url 13.125.70.192:8080

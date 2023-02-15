@@ -23,7 +23,7 @@ jobs:
         shell: bash
 
       - name: Setup MySQL
-      - uses: getong/mariadb-action@v1.1
+        uses: getong/mariadb-action@v1.1
         with:
           character set server: 'utf8'
           mysql database: 'cmc_database'

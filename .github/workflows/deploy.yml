@@ -28,7 +28,7 @@ jobs:
           character set server: 'utf8'
           mysql database: 'cmc_database'
           mysql user: 'root'
-          mysql password: ${{ secrets.MYSQL_PASSWORD }}
+          mysql password: ${{ secrets.MARIADB_PASSWORD }}
 
       - name: Build with Gradle
         run: ./gradlew clean build

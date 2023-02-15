@@ -18,6 +18,17 @@ jobs:
         with:
           java-version: 11
 
+      - name: Set MariaDb
+        uses: getong/mariadb-action@v1.1
+        with:
+          host port: 3307
+          container port: 3307
+          character set server: 'utf8'
+          mariadb version: '10.6.10'
+          mysql database: 'cmc_database'
+          mysql user: 'root'
+          mysql password: ${{ secrets.MARIADB_PASSWORD }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash

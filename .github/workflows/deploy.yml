@@ -22,16 +22,8 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: Setup MySQL
-        uses: getong/mariadb-action@v1.1
-        with:
-          character set server: 'utf8'
-          mysql database: 'cmc_database'
-          mysql user: 'root'
-          mysql password: ${{ secrets.MARIADB_PASSWORD }}
-
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build -i
         shell: bash
 
       - name: Get current time

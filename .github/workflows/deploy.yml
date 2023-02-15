@@ -3,7 +3,7 @@ name: dev-spring-springboot
 on:
   push:
     branches:
-      - Feat/#10
+      - master
   workflow_dispatch:
 
 jobs:

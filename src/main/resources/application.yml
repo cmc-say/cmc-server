@@ -1,0 +1,69 @@
+# default
+spring:
+  profiles:
+    active: dev # default
+    group:
+      dev:  # local, common profile
+        - common
+        - dev
+      prod:   # prod, common profile
+        - common
+        - prod
+      test:   # test, common profile
+        - common
+        - test
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: common
+
+server:
+  port: 8080
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/cmc_database
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${REMOTE_DB_URL}
+    username: ${REMOTE_DB_USERNAME}
+    password: ${REMOTE_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/cmc_database
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create

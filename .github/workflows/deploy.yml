@@ -24,7 +24,7 @@ jobs:
           host port: 3307
           container port: 3307
           character set server: 'utf8'
-          mariadb version: '10.4.10'
+          mariadb version: '10.6.10'
           mysql database: 'cmc_database'
           mysql user: 'root'
           mysql password: ${{ secrets.MARIADB_PASSWORD }}
@@ -34,7 +34,7 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
-        run: ./gradlew clean build -i
+        run: ./gradlew clean build
         shell: bash
 
       - name: Get current time

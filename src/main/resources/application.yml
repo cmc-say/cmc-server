@@ -19,6 +19,8 @@ spring:
   config:
     activate:
       on-profile: common
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB106Dialect
 
 server:
   port: 8080
@@ -37,7 +39,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-    database-platform: org.hibernate.dialect.MariaDB103Dialect
 
 ---
 

@@ -22,10 +22,6 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
-        shell: bash
-
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
@@ -33,6 +29,10 @@ jobs:
           mysql database: 'cmc_database'
           mysql user: 'root'
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+        shell: bash
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2

@@ -26,6 +26,14 @@ jobs:
         run: ./gradlew clean build
         shell: bash
 
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
+        with:
+          character set server: 'utf8'
+          mysql database: 'cmc_database'
+          mysql user: 'root'
+          mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
       - name: Get current time
         uses: 1466587594/get-current-time@v2
         id: current-time

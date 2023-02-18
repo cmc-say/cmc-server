@@ -39,6 +39,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    show-sql: true
 
 ---
 
@@ -69,3 +70,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    show-sql: true

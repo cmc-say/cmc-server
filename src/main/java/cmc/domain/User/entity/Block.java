@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "Block", indexes = {
         @Index(columnList = "blockedUserId"),
 })
-@EqualsAndHashCode(of = {"blockId"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Block extends BaseEntity {

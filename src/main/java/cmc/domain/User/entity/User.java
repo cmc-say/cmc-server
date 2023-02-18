@@ -11,7 +11,6 @@ import javax.persistence.*;
         @Index(columnList = "refreshToken"),
         @Index(columnList = "deviceToken")
 })
-@EqualsAndHashCode(of = {"userId"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User extends BaseEntity

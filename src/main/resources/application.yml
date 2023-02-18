@@ -20,10 +20,14 @@ spring:
     activate:
       on-profile: common
   jpa:
-    database-platform: org.hibernate.dialect.MariaDB106Dialect
-
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
 server:
   port: 8080
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-validity: 86400  # 60*60*24 : 1day
+  refresh-token-validity: 7776000 # 60*60*24*90 : 3month
 
 ---
 
@@ -37,8 +41,10 @@ spring:
     username: ${LOCAL_DB_USERNAME}
     password: ${LOCAL_DB_PASSWORD}
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: create
+    show-sql: true
 
 ---
 
@@ -52,6 +58,7 @@ spring:
     username: ${REMOTE_DB_USERNAME}
     password: ${REMOTE_DB_PASSWORD}
   jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:
       ddl-auto: update
 
@@ -69,3 +76,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    show-sql: true

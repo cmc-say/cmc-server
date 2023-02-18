@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.8'
+	id 'org.springframework.boot' version '2.5.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -29,8 +29,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// db
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
+//	runtimeOnly ''
 
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
@@ -39,6 +39,7 @@ dependencies {
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {

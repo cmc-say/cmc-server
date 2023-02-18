@@ -13,26 +13,26 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
-    private UserBlockRepository userBlockRepository;
-    private UserReportRepository userReportRepository;
+    private final UserRepository userRepository;
+    private final UserBlockRepository userBlockRepository;
+    private final UserReportRepository userReportRepository;
 
     @Transactional
-    public void blockUser(Long userId) {
+    public void blockUser(Long blockingUserId, Long blockedUserId) {
 
         Block block = Block.builder()
-                .blockedUserId(userId)
-                .blockingUserId(1L)
+                .blockedUserId(blockedUserId)
+                .blockingUserId(blockingUserId)
                 .build();
 
         userBlockRepository.save(block);
     }
 
     @Transactional
-    public void reportUser(Long userId) {
+    public void reportUser(Long reportingUserId, Long reportedUserId) {
         Report report = Report.builder()
-                .reportedUserId(userId)
-                .reportingUserId(1L)
+                .reportedUserId(reportedUserId)
+                .reportingUserId(reportingUserId)
                 .build();
 
         userReportRepository.save(report);

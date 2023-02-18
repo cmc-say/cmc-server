@@ -18,7 +18,11 @@ public enum ErrorCode {
     LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid"),
 
     // User
-    USER_NOT_FOUND(404, "U001", "User not found");
+    USER_NOT_FOUND(404, "U001", "User not found"),
+
+    // Jwt
+    TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다.")
+    ;
 
     private final String code;
     private final String message;

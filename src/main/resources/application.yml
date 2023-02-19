@@ -43,9 +43,15 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
-
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+  sql:
+    init:
+      mode: always
 ---
 
 spring:
@@ -57,6 +63,7 @@ spring:
     url: ${REMOTE_DB_URL}
     username: ${REMOTE_DB_USERNAME}
     password: ${REMOTE_DB_PASSWORD}
+
   jpa:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:

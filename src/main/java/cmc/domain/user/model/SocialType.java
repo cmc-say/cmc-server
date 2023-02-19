@@ -1,4 +1,4 @@
-package cmc.domain.User.model;
+package cmc.domain.user.model;
 
 public enum SocialType {
     KAKAO, APPLE

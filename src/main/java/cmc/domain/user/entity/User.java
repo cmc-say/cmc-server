@@ -1,6 +1,6 @@
-package cmc.domain.User.entity;
+package cmc.domain.user.entity;
 
-import cmc.domain.User.model.SocialType;
+import cmc.domain.user.model.SocialType;
 import cmc.global.common.BaseEntity;
 import lombok.*;
 
@@ -10,7 +10,10 @@ import javax.persistence.*;
 @Table(name = "User", indexes = {
         @Index(columnList = "refreshToken"),
         @Index(columnList = "deviceToken")
-})
+},
+uniqueConstraints =
+        {@UniqueConstraint(columnNames = "userId")}
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User extends BaseEntity
@@ -20,7 +23,7 @@ public class User extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @Setter @Column(nullable = false, length = 50) private Long socialId;
-    @Setter @Column(nullable = false, length = 10) private SocialType socialType;
+    @Enumerated(EnumType.STRING) @Setter @Column(nullable = false, length = 10) private SocialType socialType;
     @Setter @Column(length = 100) private String refreshToken;
     @Setter @Column(length= 100) private String deviceToken;
 

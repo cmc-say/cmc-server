@@ -1,4 +1,4 @@
-package cmc.domain.User.entity;
+package cmc.domain.user.entity;
 
 import cmc.global.common.BaseEntity;
 import lombok.*;

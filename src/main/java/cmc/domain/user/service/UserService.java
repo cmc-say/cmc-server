@@ -1,13 +1,16 @@
-package cmc.domain.User.service;
+package cmc.domain.user.service;
 
-import cmc.domain.User.entity.Block;
-import cmc.domain.User.entity.Report;
-import cmc.domain.User.repository.UserBlockRepository;
-import cmc.domain.User.repository.UserReportRepository;
-import cmc.domain.User.repository.UserRepository;
+
+import cmc.domain.user.entity.Block;
+import cmc.domain.user.entity.Report;
+import cmc.domain.user.repository.UserBlockRepository;
+import cmc.domain.user.repository.UserReportRepository;
+import cmc.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +40,5 @@ public class UserService {
 
         userReportRepository.save(report);
     }
+
 }

@@ -1,6 +1,6 @@
-package cmc.domain.User.repository;
+package cmc.domain.user.repository;
 
-import cmc.domain.User.entity.Block;
+import cmc.domain.user.entity.Block;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserBlockRepository extends JpaRepository<Block, Long> {

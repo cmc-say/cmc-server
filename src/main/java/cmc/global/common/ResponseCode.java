@@ -13,7 +13,10 @@ public enum ResponseCode {
     USER_DELETE_SUCCESS(HttpStatus.OK, "유저 회원 탈퇴에 성공하였습니다."),
     USER_REPORT_SUCCESS(HttpStatus.OK, "유저 신고에 성공하였습니다."),
     USER_BLOCK_SUCCESS(HttpStatus.OK, "유저 차단에 성공하였습니다."),
-    USER_CHARACTERS_FOUND(HttpStatus.OK, "유저의 캐릭터 조회에 성공하였습니다.");
+    USER_CHARACTERS_FOUND(HttpStatus.OK, "유저의 캐릭터 조회에 성공하였습니다."),
+
+    // avatar
+    AVATAR_SAVE_SUCCESS(HttpStatus.OK, "아바타 저장에 성공하였습니다.");
 
     private final HttpStatus status;
     private final String message;

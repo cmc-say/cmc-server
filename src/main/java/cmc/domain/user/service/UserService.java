@@ -3,9 +3,12 @@ package cmc.domain.user.service;
 
 import cmc.domain.user.entity.Block;
 import cmc.domain.user.entity.Report;
+import cmc.domain.user.entity.User;
 import cmc.domain.user.repository.UserBlockRepository;
 import cmc.domain.user.repository.UserReportRepository;
 import cmc.domain.user.repository.UserRepository;
+import cmc.global.error.exception.BusinessException;
+import cmc.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +42,11 @@ public class UserService {
                 .build();
 
         userReportRepository.save(report);
+    }
+
+    public User findUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
 }

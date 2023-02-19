@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class SaveAvatarRequest {
 
-    private String characterName;
-    private String characterMessage;
+    private String avatarName;
+    private String avatarMessage;
 
 }

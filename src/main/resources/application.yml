@@ -21,6 +21,9 @@ spring:
       on-profile: common
   jpa:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
 server:
   port: 8080
 
@@ -62,7 +65,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_batch_fetch_size: 100
   sql:
     init:
       mode: always
@@ -96,5 +98,8 @@ spring:
     password: ${LOCAL_DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
+  sql:
+    init:
+      mode: always

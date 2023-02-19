@@ -23,9 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class AvatarControllerTest extends TestSupport {
-//    @BeforeAll() {
-//        // userId 1에 해당하는 user 디비에 저장 필요
-//    }
 
     @DisplayName("유저가 갖고 있는 캐릭터 조회")
     @Test

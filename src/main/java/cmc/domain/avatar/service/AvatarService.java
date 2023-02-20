@@ -1,11 +1,10 @@
 package cmc.domain.avatar.service;
 
+
 import cmc.domain.avatar.entity.Avatar;
 import cmc.domain.avatar.repository.AvatarRepository;
 import cmc.domain.user.entity.User;
 import cmc.domain.user.service.UserService;
-import cmc.global.error.exception.BusinessException;
-import cmc.global.error.exception.ErrorCode;
 import cmc.global.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

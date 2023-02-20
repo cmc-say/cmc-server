@@ -1,6 +1,7 @@
 package cmc.domain.avatar.controller;
 
 import cmc.domain.avatar.dto.request.SaveAvatarRequest;
+import cmc.domain.avatar.dto.response.SaveAvatarResponse;
 import cmc.domain.avatar.entity.Avatar;
 import cmc.domain.avatar.service.AvatarService;
 import cmc.global.common.ApiResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,10 +27,13 @@ public class AvatarController {
 
     // 유저의 캐릭터들 조회
     @GetMapping("/api/v1/user/avatars")
-    public ResponseEntity<ApiResponse<Avatar>> getAvatars(Principal principal) {
+    public ResponseEntity<ApiResponse<List<SaveAvatarResponse>>> getAvatars(Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         List<Avatar> avatars = avatarService.getCharactersByUserId(tokenUserId);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_CHARACTERS_FOUND, avatars));
+
+        List<SaveAvatarResponse> saveAvatarResponse = avatars.stream().map(SaveAvatarResponse::of).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
     }
 
     // 캐릭터 저장 (사진, 정보)

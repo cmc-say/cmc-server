@@ -1,14 +1,17 @@
 package cmc.domain.avatar.controller;
 
+import cmc.domain.avatar.dto.request.SaveAvatarRequest;
 import cmc.domain.avatar.entity.Avatar;
 import cmc.domain.avatar.service.AvatarService;
 import cmc.global.common.ApiResponse;
 import cmc.global.common.ResponseCode;
+import cmc.global.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,28 +21,32 @@ import java.util.List;
 @Slf4j
 public class AvatarController {
     private final AvatarService avatarService;
+    private final S3Util s3Util;
 
-    // GET
+    // 유저의 캐릭터들 조회
     @GetMapping("/api/v1/user/avatars")
-    public ResponseEntity<ApiResponse<Avatar>> getCharacters(Principal principal) {
+    public ResponseEntity<ApiResponse<Avatar>> getAvatars(Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         List<Avatar> avatars = avatarService.getCharactersByUserId(tokenUserId);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_CHARACTERS_FOUND, avatars));
     }
 
-//    // 캐릭터 추가 (사진, 정보) POST
-//    @PostMapping
-//    public ResponseEntity<ApiResponse> saveCharacter(
-//            @RequestPart(value = "data", required = true) SaveCharacterRequest req,
-//            @RequestPart(value = "file") MultipartFile file,
-//            Principal principal) {
-//
-//    }
+    // 캐릭터 저장 (사진, 정보)
+    @PostMapping("/api/v1/avatar")
+    public ResponseEntity<ApiResponse> saveAvatar(
+            @RequestPart(value = "data", required = true) SaveAvatarRequest req,
+            @RequestPart(value = "file") MultipartFile file,
+            Principal principal) {
+        Long tokenUserId = Long.parseLong(principal.getName());
+        avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), file);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.AVATAR_SAVE_SUCCESS));
+    }
 //
 //    // 캐릭터 수정 (사진) PUT /{characterId}/img
 //    @PutMapping("/{characterId}/img")
-//    public ResponseEntity<ApiResponse> updateCharacterImg() {
-//
+//    public ResponseEntity<ApiResponse> updateCharacterImg(@RequestPart(value = "file") MultipartFile file) {
+//        // delete 원래 파일
+//        // upload 현재 파일
 //    }
 //
 //    // 캐릭터 수정 (정보) PUT /{characterId}/info

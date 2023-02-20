@@ -21,6 +21,9 @@ spring:
       on-profile: common
   jpa:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
 server:
   port: 8080
 
@@ -28,6 +31,20 @@ jwt:
   secret: ${JWT_SECRET}
   access-token-validity: 86400  # 60*60*24 : 1day
   refresh-token-validity: 7776000 # 60*60*24*90 : 3month
+
+# multipart 설정
+spring.servlet.multipart.max-file-size: 5MB
+spring.servlet.multipart.max-request-size: 10MB
+
+# s3 설정
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET_NAME}
+      iamAccessKey: ${IMAGE_IAM_ACCESS_KEY}
+      iamSecretKey: ${IMAGE_IAM_SECRET_KEY}
+    region:
+      static: ap-northeast-2
 
 ---
 
@@ -48,7 +65,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_batch_fetch_size: 100
   sql:
     init:
       mode: always
@@ -82,5 +98,8 @@ spring:
     password: ${LOCAL_DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
+  sql:
+    init:
+      mode: always

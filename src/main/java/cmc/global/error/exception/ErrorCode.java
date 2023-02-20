@@ -21,8 +21,11 @@ public enum ErrorCode {
     USER_NOT_FOUND(404, "U001", "User not found"),
 
     // Jwt
-    TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다.")
-    ;
+    TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다."),
+
+    // s3
+    FILE_SIZE_EXCEED(400, "S001" , "파일이 제한 크기를 초과하였습니다."),
+    FILE_UPLOAD_ERROR(400, "S002", "파일 업로드에 실패하였습니다.");
 
     private final String code;
     private final String message;

@@ -24,7 +24,7 @@ public class Avatar extends BaseEntity {
     private String avatarMessage;
 
     @Setter
-    @Column(length = 200)
+    @Column(length = 300)
     private String avatarImg;
 
     @ManyToOne

@@ -87,9 +87,7 @@ public class S3Util {
 
     private String createFileName(String filename) {
         String FILE_EXTENSION_SEPARATOR = ".";
-        log.info("filename {}", filename);
         int fileExtensionIndex = filename.lastIndexOf(FILE_EXTENSION_SEPARATOR);
-        log.info("fileExtensionIndex {}", fileExtensionIndex);
         String fileExtension = filename.substring(fileExtensionIndex);
         String fileOriginalName = filename.substring(0, fileExtensionIndex);
         String now = String.valueOf(System.currentTimeMillis());

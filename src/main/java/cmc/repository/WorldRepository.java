@@ -13,4 +13,5 @@ public interface WorldRepository extends JpaRepository<World, Long> {
             "FROM World w " +
             "ORDER BY w.createdAt desc ")
     List<World> getWorldsWithOrderRecent();
+
 }

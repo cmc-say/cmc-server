@@ -117,4 +117,8 @@ public class WorldService {
         return worldRepository.findById(worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
     }
+
+    public List<World> searchWorldByKeyword(String keyword) {
+        return worldHashtagRepository.searchWorld(keyword);
+    }
 }

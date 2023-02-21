@@ -121,13 +121,20 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(ResponseCode.WORLD_FOUND_SUCCESS,
                 WorldHashtagsUserCountResponseDto.fromEntity(world)));
     }
-//
-//    // 세계관 검색 결과 조회
-//    @GetMapping("/api/v1/world/search")
-//    public ResponseEntity<ApiResponse<dto>> searchWorld() {
-//
-//    }
-//
+
+    // 세계관 검색 결과 조회
+    @GetMapping("/api/v1/world/search")
+    public ResponseEntity<ApiResponse<List<WorldHashtagsUserCountResponseDto>>> searchWorld(
+            @RequestParam("keyword") String keyword) {
+
+        List<World> worlds= worldService.searchWorldByKeyword(keyword);
+        List<WorldHashtagsUserCountResponseDto> dtoList = worlds.stream()
+                .map(WorldHashtagsUserCountResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(ResponseCode.WORLD_SEARCH_SUCCESS, dtoList));
+    }
+
 //    // 추천 세계관 목록 조회
 //    @GetMapping("/api/v1/world/{worldId}")
 //    public ResponseEntity<ApiResponse<dto>> getRecommendedWorld() {

@@ -3,6 +3,7 @@ package cmc.controller;
 import cmc.dto.response.GetWorldsByAvatarResponse;
 import cmc.dto.request.SaveWorldRequest;
 import cmc.domain.World;
+import cmc.dto.response.IsMemberOfWorldResponse;
 import cmc.service.WorldService;
 import cmc.common.ApiResponse;
 import cmc.common.ResponseCode;
@@ -58,6 +59,20 @@ public class WorldController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_FOUND_SUCCESS, getWorldsByAvatarResponses));
     }
+
+
+    // 세계관에 참여하고 있는 유저인지 조회
+    @GetMapping("/api/v1/user/world/{worldId}/isMember")
+    public ResponseEntity<ApiResponse<IsMemberOfWorldResponse>> isMemberOfWorld(@PathVariable("worldId") Long worldId, Principal principal) {
+
+        Long userId = Long.parseLong(principal.getName());
+
+        boolean isMember = !worldService.isMemberOfWorldByUserId(userId, worldId).isEmpty();
+        IsMemberOfWorldResponse isMemberOfWorldResponse = new IsMemberOfWorldResponse(isMember);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponse));
+    }
+
 //
 //    // 세계관 최신순 조회
 //    @GetMapping("/api/v1/world?order=recent")

@@ -20,7 +20,8 @@ public enum ResponseCode {
 
     // world
     WORLD_SAVE_SUCCESS(HttpStatus.CREATED, "세계관 저장에 성공하였습니다."),
-    WORLD_FOUND_SUCCESS(HttpStatus.OK, "캐릭터가 가지고 있는 세계관 조회에 성공하였습니다.");
+    WORLD_FOUND_SUCCESS(HttpStatus.OK, "캐릭터가 가지고 있는 세계관 조회에 성공하였습니다."),
+    USER_IS_MEMBER_OF_WORLD_FOUND(HttpStatus.OK, "유저 세계관 참여 여부 조회에 성공하였습니다." );
 
     private final HttpStatus status;
     private final String message;

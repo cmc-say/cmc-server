@@ -2,6 +2,8 @@ package cmc.service;
 
 import cmc.domain.User;
 import cmc.domain.model.OrderType;
+import cmc.error.exception.BusinessException;
+import cmc.error.exception.ErrorCode;
 import cmc.repository.WorldAvatarRepository;
 import cmc.domain.Hashtag;
 import cmc.domain.World;
@@ -109,5 +111,10 @@ public class WorldService {
     @Transactional
     public void deleteWorld(Long worldId) {
         worldRepository.deleteById(worldId);
+    }
+
+    public World getWorldByWorldId(Long worldId) {
+        return worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
     }
 }

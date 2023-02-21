@@ -1,8 +1,7 @@
 package cmc.controller;
 
 import cmc.domain.model.ReportType;
-import cmc.domain.model.SocialType;
-import cmc.dto.request.ReportUserRequest;
+import cmc.dto.request.ReportUserRequestDto;
 import cmc.service.UserService;
 import cmc.common.ApiResponse;
 import cmc.common.ResponseCode;
@@ -30,7 +29,7 @@ public class UserController {
 
     // 유저 신고
     @PostMapping("/api/v1/user/{userId}/report")
-    public ResponseEntity<ApiResponse> reportUser(@PathVariable("userId") Long userId, Principal principal, @RequestBody ReportUserRequest req) {
+    public ResponseEntity<ApiResponse> reportUser(@PathVariable("userId") Long userId, Principal principal, @RequestBody ReportUserRequestDto req) {
 
         Long tokenUserId = Long.parseLong(principal.getName());
         ReportType reportType = ReportType.fromString(req.getReportType());

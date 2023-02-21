@@ -1,7 +1,7 @@
 package cmc.controller;
 
-import cmc.dto.request.SaveAvatarRequest;
-import cmc.dto.response.SaveAvatarResponse;
+import cmc.dto.request.SaveAvatarRequestDto;
+import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
 import cmc.service.AvatarService;
 import cmc.common.ApiResponse;
@@ -27,11 +27,11 @@ public class AvatarController {
 
     // 유저의 캐릭터들 조회
     @GetMapping("/api/v1/user/avatars")
-    public ResponseEntity<ApiResponse<List<SaveAvatarResponse>>> getAvatars(Principal principal) {
+    public ResponseEntity<ApiResponse<List<AvatarResponseDto>>> getAvatars(Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         List<Avatar> avatars = avatarService.getCharactersByUserId(tokenUserId);
 
-        List<SaveAvatarResponse> saveAvatarResponse = avatars.stream().map(SaveAvatarResponse::fromEntity).collect(Collectors.toList());
+        List<AvatarResponseDto> saveAvatarResponse = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
     }
@@ -39,7 +39,7 @@ public class AvatarController {
     // 캐릭터 저장 (사진, 정보)
     @PostMapping("/api/v1/avatar")
     public ResponseEntity<ApiResponse> saveAvatar(
-            @RequestPart(value = "data") SaveAvatarRequest req,
+            @RequestPart(value = "data") SaveAvatarRequestDto req,
             @RequestPart(value = "file") MultipartFile file,
             Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());

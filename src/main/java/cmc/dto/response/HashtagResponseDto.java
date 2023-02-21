@@ -2,20 +2,19 @@ package cmc.dto.response;
 
 import cmc.domain.Hashtag;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-public class HashtagResponse {
+public class HashtagResponseDto {
     private Long hashtagId;
     private String hashtagName;
 
-    HashtagResponse(Long hashtagId, String hashtagName) {
+    HashtagResponseDto(Long hashtagId, String hashtagName) {
         this.hashtagId = hashtagId;
         this.hashtagName = hashtagName;
     }
 
-    public static HashtagResponse fromEntity (Hashtag hashtag) {
-         return new HashtagResponse(
+    public static HashtagResponseDto fromEntity (Hashtag hashtag) {
+         return new HashtagResponseDto(
                  hashtag.getHashtagId(),
                  hashtag.getHashtagName());
     }

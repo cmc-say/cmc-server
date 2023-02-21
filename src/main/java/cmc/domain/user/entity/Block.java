@@ -6,8 +6,15 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "Block", indexes = {
-        @Index(columnList = "blockedUserId"),
+@Table(name = "Block",
+        indexes = {
+            @Index(columnList = "blockingUserId"),
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name= "blocking_blocked_constraint",
+                        columnNames={"blockingUserId", "blockedUserId"}
+                )
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

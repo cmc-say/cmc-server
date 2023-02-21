@@ -31,7 +31,7 @@ public class AvatarController {
         Long tokenUserId = Long.parseLong(principal.getName());
         List<Avatar> avatars = avatarService.getCharactersByUserId(tokenUserId);
 
-        List<SaveAvatarResponse> saveAvatarResponse = avatars.stream().map(SaveAvatarResponse::of).collect(Collectors.toList());
+        List<SaveAvatarResponse> saveAvatarResponse = avatars.stream().map(SaveAvatarResponse::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
     }
@@ -39,7 +39,7 @@ public class AvatarController {
     // 캐릭터 저장 (사진, 정보)
     @PostMapping("/api/v1/avatar")
     public ResponseEntity<ApiResponse> saveAvatar(
-            @RequestPart(value = "data", required = true) SaveAvatarRequest req,
+            @RequestPart(value = "data") SaveAvatarRequest req,
             @RequestPart(value = "file") MultipartFile file,
             Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
@@ -72,11 +72,6 @@ public class AvatarController {
 //
 //    }
 //
-//    // 캐릭터가 속해있는 세계관 리스트 조회 GET /{characterId}/worlds
-//    @GetMapping("/{characterId}/worlds")
-//    public ResponseEntity<ApiResponse<dto>> getWorldsWithCharacter() {
-//
-//    }
 //
 //    // 오늘의 한마디 쓰기 POST /{characterId}/wordToday?worldId=
 //    @PostMapping("/{characterId}/wordToday")

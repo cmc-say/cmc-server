@@ -40,6 +40,5 @@ public class AvatarService {
                 .user(user)
                 .build();
         avatarRepository.save(avatar);
-        return;
     }
 }

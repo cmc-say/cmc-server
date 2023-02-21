@@ -6,9 +6,18 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "Report", indexes = {
-        @Index(columnList = "reportedUserId"),
-})
+@Table(
+        name = "Report",
+        indexes = {
+        @Index(columnList = "reportingUserId"),
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "reporting_reported_constraint",
+                        columnNames = {"reportingUserId", "reportedUserId"}
+                )
+        }
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Report extends BaseEntity {

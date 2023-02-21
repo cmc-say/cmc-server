@@ -18,6 +18,7 @@ public enum ErrorCode {
     DUPLICATED_BLOCK(400,"U002" , "중복된 차단입니다."),
     DUPLICATED_REPORT(400, "U003", "중복된 신고입니다."),
     SELF_BLOCK_OR_REPORT(400, "U004", "신고/차단하는 유저와 당하는 유저가 같습니다."),
+    REPORT_TYPE_ERROR(400, "U005", "신고 타입이 잘못되었습니다."),
 
     // Jwt
     TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다."),

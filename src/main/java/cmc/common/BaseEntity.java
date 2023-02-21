@@ -1,6 +1,7 @@
 package cmc.common;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,26 +15,19 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+public class BaseEntity {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
     @Column(updatable = false)
-    protected LocalDateTime createdAt; // 생성일시
-
-    @CreatedBy
-    @Column(updatable = false, length = 100)
-    protected Long createdBy; // 생성자
+    private LocalDateTime createdAt; // 생성일시
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
     @Column
-    protected LocalDateTime modifiedAt; // 수정일시
-
-    @LastModifiedBy
-    @Column(length = 100)
-    protected Long modifiedBy; // 수정자
+    private LocalDateTime modifiedAt; // 수정일시
 
 }

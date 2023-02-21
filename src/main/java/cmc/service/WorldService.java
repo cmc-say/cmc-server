@@ -106,6 +106,7 @@ public class WorldService {
         return worldRepository.findAll();
     }
 
+    @Transactional
     public void deleteWorld(Long worldId) {
         worldRepository.deleteById(worldId);
     }

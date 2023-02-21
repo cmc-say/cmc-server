@@ -92,7 +92,7 @@ public class WorldService {
     }
 
     public List<World> getWorldsByAvatar(Long avatarId) {
-        return worldAvatarRepository.findWorldWithHashtag(avatarId);
+        return worldAvatarRepository.findWorldWithAvatar(avatarId);
     }
 
     public List<User> isMemberOfWorldByUserId(Long userId, Long worldId) {

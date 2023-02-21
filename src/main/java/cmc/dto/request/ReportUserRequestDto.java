@@ -3,6 +3,6 @@ package cmc.dto.request;
 import lombok.Getter;
 
 @Getter
-public class ReportUserRequest {
+public class ReportUserRequestDto {
     private String reportType;
 }

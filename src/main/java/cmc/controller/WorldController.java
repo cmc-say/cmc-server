@@ -112,11 +112,15 @@ public class WorldController {
 //
 //    }
 //
-//    // 세계관 상세 정보 조회
-//    @GetMapping("/api/v1/world/{worldId}")
-//    public ResponseEntity<ApiResponse<dto>> getWorld() {
-//
-//    }
+    // 세계관 상세 정보 조회
+    @GetMapping("/api/v1/world/{worldId}")
+    public ResponseEntity<ApiResponse<WorldHashtagsUserCountResponseDto>> getWorldByWorldId(@PathVariable("worldId") Long worldId) {
+
+        World world = worldService.getWorldByWorldId(worldId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(ResponseCode.WORLD_FOUND_SUCCESS,
+                WorldHashtagsUserCountResponseDto.fromEntity(world)));
+    }
 //
 //    // 세계관 검색 결과 조회
 //    @GetMapping("/api/v1/world/search")

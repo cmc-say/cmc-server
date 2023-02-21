@@ -4,6 +4,7 @@ package cmc.service;
 import cmc.domain.Block;
 import cmc.domain.Report;
 import cmc.domain.User;
+import cmc.domain.model.ReportType;
 import cmc.repository.UserBlockRepository;
 import cmc.repository.UserReportRepository;
 import cmc.repository.UserRepository;
@@ -36,7 +37,7 @@ public class UserService {
     }
 
     @Transactional
-    public void reportUser(Long reportingUserId, Long reportedUserId) {
+    public void reportUser(Long reportingUserId, Long reportedUserId, ReportType reportType) {
 
         checkDuplicatedReport(reportingUserId, reportedUserId);
         checkSelf(reportingUserId, reportedUserId);
@@ -44,6 +45,7 @@ public class UserService {
         Report report = Report.builder()
                 .reportedUserId(reportedUserId)
                 .reportingUserId(reportingUserId)
+                .reportType(reportType)
                 .build();
 
         userReportRepository.save(report);

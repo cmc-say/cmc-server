@@ -73,13 +73,13 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponse));
     }
 
-//
+
 //    // 세계관 최신순 조회
 //    @GetMapping("/api/v1/world?order=recent")
 //    public ResponseEntity<ApiResponse<dto>> getWorldWithOrderRecent() {
 //
 //    }
-//
+
 //    // 세계관 삭제
 //    @DeleteMapping("/api/v1/world/{worldId}")
 //    public ResponseEntity<ApiResponse> deleteWorld() {

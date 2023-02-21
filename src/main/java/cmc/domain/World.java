@@ -48,10 +48,10 @@ public class World extends BaseEntity {
     @Setter
     private Long worldHostUserId;
 
-    @OneToMany(targetEntity = WorldHashtag.class, fetch = FetchType.LAZY, mappedBy = "world")
+    @OneToMany(targetEntity = WorldHashtag.class, fetch = FetchType.LAZY, mappedBy = "world", cascade = CascadeType.ALL)
     private List<WorldHashtag> worldHashtags = new ArrayList<>();
 
-    @OneToMany(targetEntity = WorldAvatar.class, fetch = FetchType.LAZY, mappedBy = "world")
+    @OneToMany(targetEntity = WorldAvatar.class, fetch = FetchType.LAZY, mappedBy = "world", cascade = CascadeType.ALL)
     private List<WorldAvatar> worldAvatars = new ArrayList<>();
 
     @Builder

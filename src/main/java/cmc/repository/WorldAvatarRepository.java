@@ -17,7 +17,7 @@ public interface WorldAvatarRepository extends JpaRepository<WorldAvatar, Long> 
             "JOIN w.worldHashtags wh " +
             "JOIN wh.hashtag " +
             "WHERE wa.avatar.avatarId = :avatarId")
-    List<World> findWorldWithHashtag(@Param("avatarId") Long avatarId);
+    List<World> findWorldWithAvatar(@Param("avatarId") Long avatarId);
 
     @Query(value = "SELECT u FROM WorldAvatar wa " +
             "JOIN wa.avatar a " +

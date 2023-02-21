@@ -14,11 +14,11 @@ INSERT INTO avatar (avatar_id, user_id, avatar_name, avatar_message, avatar_img)
 
 -- world
 INSERT INTO world (world_id, world_name, world_user_limit, world_img, world_start_date, world_end_date, world_notice, world_password, world_host_user_id)
-    VALUES (1, "세계관", 10, "url", "2023-02-21", "2023-03-21", "공지", "123", 1);
+    VALUES (1, "세계관 하나", 10, "url", "2023-02-21", "2023-03-21", "공지", "123", 1);
 INSERT INTO world (world_id, world_name, world_user_limit, world_img, world_start_date, world_end_date, world_notice, world_password, world_host_user_id)
-    VALUES (2, "세계관", 10, "url", "2023-02-21", "2023-03-21", "공지", "123", 1);
+    VALUES (2, "세계관 둘 하나", 10, "url", "2023-02-21", "2023-03-21", "공지", "123", 1);
 INSERT INTO world (world_id, world_name, world_user_limit, world_img, world_start_date, world_end_date, world_notice, world_password, world_host_user_id)
-    VALUES (3, "세계관", 10, "url", "2023-02-21", "2023-03-21", "공지", "123", 2);
+    VALUES (3, "세계관 둘 셋", 10, "url", "2023-02-21", "2023-03-21", "공지", "123", 2);
 -- world_avatar
 INSERT INTO world_avatar (world_avatar_id, avatar_id, world_id) VALUES (1, 1, 1);
 INSERT INTO world_avatar (world_avatar_id, avatar_id, world_id) VALUES (2, 1, 2);

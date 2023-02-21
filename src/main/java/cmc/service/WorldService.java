@@ -92,7 +92,7 @@ public class WorldService {
     }
 
     public List<World> getWorldsByAvatar(Long avatarId) {
-        return worldAvatarRepository.findWorldWithHashtag(avatarId);
+        return worldAvatarRepository.findWorldWithAvatar(avatarId);
     }
 
     public List<User> isMemberOfWorldByUserId(Long userId, Long worldId) {
@@ -116,5 +116,9 @@ public class WorldService {
     public World getWorldByWorldId(Long worldId) {
         return worldRepository.findById(worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+    }
+
+    public List<World> searchWorldByKeyword(String keyword) {
+        return worldHashtagRepository.searchWorld(keyword);
     }
 }

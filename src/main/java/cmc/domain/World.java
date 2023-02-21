@@ -51,6 +51,9 @@ public class World extends BaseEntity {
     @OneToMany(targetEntity = WorldHashtag.class, fetch = FetchType.LAZY, mappedBy = "world")
     private List<WorldHashtag> worldHashtags = new ArrayList<>();
 
+    @OneToMany(targetEntity = WorldAvatar.class, fetch = FetchType.LAZY, mappedBy = "world")
+    private List<WorldAvatar> worldAvatars = new ArrayList<>();
+
     @Builder
     public World(
             Long worldId,

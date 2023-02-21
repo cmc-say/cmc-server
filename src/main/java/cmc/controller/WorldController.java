@@ -1,6 +1,7 @@
 package cmc.controller;
 
-import cmc.dto.response.WorldHashtagsResponseDto;
+import cmc.domain.model.OrderType;
+import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
 import cmc.dto.response.IsMemberOfWorldResponseDto;
@@ -50,14 +51,14 @@ public class WorldController {
 
     // 캐릭터가 속해있는 세계관 리스트 조회
     @GetMapping("/api/v1/world/avatar/{avatarId}")
-    public ResponseEntity<ApiResponse<List<WorldHashtagsResponseDto>>> getWorldsByAvatar(@PathVariable("avatarId") Long avatarId) {
+    public ResponseEntity<ApiResponse<List<WorldHashtagsUserCountResponseDto>>> getWorldsByAvatar(@PathVariable("avatarId") Long avatarId) {
 
         List<World> worldHashtags = worldService.getWorldsByAvatar(avatarId);
-        List<WorldHashtagsResponseDto> worldHashtagsRespons = worldHashtags.stream()
-                .map(WorldHashtagsResponseDto::fromEntity)
+        List<WorldHashtagsUserCountResponseDto> worldHashtagsRespons = worldHashtags.stream()
+                .map(WorldHashtagsUserCountResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_FOUND_SUCCESS, worldHashtagsRespons));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_WITH_CHARACTER_FOUND_SUCCESS, worldHashtagsRespons));
     }
 
 
@@ -74,11 +75,21 @@ public class WorldController {
     }
 
 
-//    // 세계관 최신순 조회
-//    @GetMapping("/api/v1/world?order=recent")
-//    public ResponseEntity<ApiResponse<dto>> getWorldWithOrderRecent() {
-//
-//    }
+    // 세계관 최신순 조회
+    @GetMapping("/api/v1/world")
+    public ResponseEntity<ApiResponse<List<WorldHashtagsUserCountResponseDto>>> getWorldsWithOrder(
+            @RequestParam(value = "order", defaultValue = "id") String order) {
+
+        OrderType orderType = OrderType.fromString(order);
+
+        List<World> worldsWithOrder = worldService.getWorldsWithOrder(orderType);
+
+        List<WorldHashtagsUserCountResponseDto> worldHashtagsUserCountResponseDtoList = worldsWithOrder.stream()
+                .map(WorldHashtagsUserCountResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(ResponseCode.WORLD_FOUND_SUCCESS, worldHashtagsUserCountResponseDtoList));
+    }
 
 //    // 세계관 삭제
 //    @DeleteMapping("/api/v1/world/{worldId}")

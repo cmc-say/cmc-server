@@ -20,6 +20,9 @@ public enum ErrorCode {
     SELF_BLOCK_OR_REPORT(400, "U004", "신고/차단하는 유저와 당하는 유저가 같습니다."),
     REPORT_TYPE_ERROR(400, "U005", "신고 타입이 잘못되었습니다."),
 
+    // world
+    ORDER_TYPE_ERROR(400, "W001" , "정렬 타입이 잘못되었습니다." ),
+
     // Jwt
     TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다."),
 

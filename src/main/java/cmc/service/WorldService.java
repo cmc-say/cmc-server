@@ -1,5 +1,6 @@
 package cmc.service;
 
+import cmc.domain.User;
 import cmc.repository.WorldAvatarRepository;
 import cmc.domain.Hashtag;
 import cmc.domain.World;
@@ -89,5 +90,9 @@ public class WorldService {
 
     public List<World> getWorldsByAvatar(Long avatarId) {
         return worldAvatarRepository.findWorldWithHashtag(avatarId);
+    }
+
+    public List<User> isMemberOfWorldByUserId(Long userId, Long worldId) {
+        return worldAvatarRepository.findWorldByUserId(userId, worldId);
     }
 }

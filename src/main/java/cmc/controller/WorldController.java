@@ -58,6 +58,16 @@ public class WorldController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_FOUND_SUCCESS, getWorldsByAvatarResponses));
     }
+
+
+    // 세계관에 참여하고 있는 유저인지 조회
+    @GetMapping("/api/v1/user/world/{worldId}/isMember")
+    public void isMemberOfWorld(@RequestParam("worldId") Long worldId, Principal principal) {
+        Long userId = Long.parseLong(principal.getName());
+
+        userService.isMemberOfWorld()
+    }
+
 //
 //    // 세계관 최신순 조회
 //    @GetMapping("/api/v1/world?order=recent")

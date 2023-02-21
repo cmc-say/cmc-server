@@ -25,14 +25,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_DELETE_SUCCESS));
     }
 
-    // 세계관에 참여하고 있는 유저인지 조회
-    @GetMapping("/api/v1/user/isMember")
-    public void isMemberOfWorld(@RequestParam("worldId") Long worldId, Principal principal) {
-        Long userId = Long.parseLong(principal.getName());
-
-        userService.isMemberOfWorld()
-    }
-
     // 유저 신고
     @PostMapping("/api/v1/user/{userId}/report")
     public ResponseEntity<ApiResponse> reportUser(@PathVariable("userId") Long userId, Principal principal) {

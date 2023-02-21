@@ -30,4 +30,5 @@ public class Hashtag extends BaseEntity {
         this.hashtagId = hashtagId;
         this.hashtagName = hashtagName;
     }
+
 }

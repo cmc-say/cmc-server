@@ -3,7 +3,7 @@ package cmc.dto.request;
 import lombok.Getter;
 
 @Getter
-public class SaveAvatarRequest {
+public class SaveAvatarRequestDto {
 
     private String avatarName;
     private String avatarMessage;

@@ -11,20 +11,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class GetWorldsByAvatarResponse {
+public class WorldHashtagsResponseDto {
     private Long worldId;
     private String worldName;
     private Integer worldUserLimit;
     private String worldImg;
     private LocalDateTime worldStartDate;
     private LocalDateTime worldEndDate;
-    private List<Hashtag> hashtag;
+    private List<HashtagResponseDto> hashtag;
     private Long worldHostUserId;
     private String worldNotice;
     private String worldPassword;
 
     @Builder
-    public GetWorldsByAvatarResponse(
+    public WorldHashtagsResponseDto(
             Long worldId,
             String worldName,
             Integer worldUserLimit,
@@ -42,14 +42,14 @@ public class GetWorldsByAvatarResponse {
         this.worldImg = worldImg;
         this.worldStartDate = worldStartDate;
         this.worldEndDate = worldEndDate;
-        this.hashtag = hashtag;
+        this.hashtag = hashtag.stream().map(HashtagResponseDto::fromEntity).collect(Collectors.toList());
         this.worldHostUserId = worldHostUserId;
         this.worldNotice = worldNotice;
         this.worldPassword = worldPassword;
     }
 
-    public static GetWorldsByAvatarResponse fromEntity(World world) {
-        return GetWorldsByAvatarResponse.builder()
+    public static WorldHashtagsResponseDto fromEntity(World world) {
+        return WorldHashtagsResponseDto.builder()
                 .worldId(world.getWorldId())
                 .worldName(world.getWorldName())
                 .worldUserLimit(world.getWorldUserLimit())

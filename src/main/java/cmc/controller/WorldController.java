@@ -1,9 +1,9 @@
 package cmc.controller;
 
-import cmc.dto.response.GetWorldsByAvatarResponse;
-import cmc.dto.request.SaveWorldRequest;
+import cmc.dto.response.WorldHashtagsResponseDto;
+import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
-import cmc.dto.response.IsMemberOfWorldResponse;
+import cmc.dto.response.IsMemberOfWorldResponseDto;
 import cmc.service.WorldService;
 import cmc.common.ApiResponse;
 import cmc.common.ResponseCode;
@@ -28,7 +28,7 @@ public class WorldController {
     // 세계관 만들기
     @PostMapping("/api/v1/world")
     public ResponseEntity<ApiResponse> saveWorld(
-            @RequestPart(value = "data") SaveWorldRequest req,
+            @RequestPart(value = "data") SaveWorldRequestDto req,
             @RequestPart(value = "file") MultipartFile file,
             Principal principal
             ) {
@@ -50,27 +50,27 @@ public class WorldController {
 
     // 캐릭터가 속해있는 세계관 리스트 조회
     @GetMapping("/api/v1/world/avatar/{avatarId}")
-    public ResponseEntity<ApiResponse<List<GetWorldsByAvatarResponse>>> getWorldsByAvatar(@PathVariable("avatarId") Long avatarId) {
+    public ResponseEntity<ApiResponse<List<WorldHashtagsResponseDto>>> getWorldsByAvatar(@PathVariable("avatarId") Long avatarId) {
 
         List<World> worldHashtags = worldService.getWorldsByAvatar(avatarId);
-        List<GetWorldsByAvatarResponse> getWorldsByAvatarResponses = worldHashtags.stream()
-                .map(GetWorldsByAvatarResponse::fromEntity)
+        List<WorldHashtagsResponseDto> worldHashtagsRespons = worldHashtags.stream()
+                .map(WorldHashtagsResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_FOUND_SUCCESS, getWorldsByAvatarResponses));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_FOUND_SUCCESS, worldHashtagsRespons));
     }
 
 
     // 세계관에 참여하고 있는 유저인지 조회
     @GetMapping("/api/v1/user/world/{worldId}/isMember")
-    public ResponseEntity<ApiResponse<IsMemberOfWorldResponse>> isMemberOfWorld(@PathVariable("worldId") Long worldId, Principal principal) {
+    public ResponseEntity<ApiResponse<IsMemberOfWorldResponseDto>> isMemberOfWorld(@PathVariable("worldId") Long worldId, Principal principal) {
 
         Long userId = Long.parseLong(principal.getName());
 
         boolean isMember = !worldService.isMemberOfWorldByUserId(userId, worldId).isEmpty();
-        IsMemberOfWorldResponse isMemberOfWorldResponse = new IsMemberOfWorldResponse(isMember);
+        IsMemberOfWorldResponseDto isMemberOfWorldResponseDto = new IsMemberOfWorldResponseDto(isMember);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponse));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponseDto));
     }
 
 

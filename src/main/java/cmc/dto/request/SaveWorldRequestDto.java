@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class SaveWorldRequest {
+public class SaveWorldRequestDto {
     private String worldName;
     private Integer worldUserLimit;
     private List<String> hashtags;

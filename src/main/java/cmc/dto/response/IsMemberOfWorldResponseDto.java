@@ -3,10 +3,10 @@ package cmc.dto.response;
 import lombok.Getter;
 
 @Getter
-public class IsMemberOfWorldResponse {
+public class IsMemberOfWorldResponseDto {
     private Boolean isMember;
 
-    public IsMemberOfWorldResponse(boolean isMember) {
+    public IsMemberOfWorldResponseDto(boolean isMember) {
         this.isMember = isMember;
     }
 }

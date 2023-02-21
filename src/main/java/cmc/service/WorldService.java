@@ -1,6 +1,7 @@
 package cmc.service;
 
 import cmc.domain.User;
+import cmc.domain.model.OrderType;
 import cmc.repository.WorldAvatarRepository;
 import cmc.domain.Hashtag;
 import cmc.domain.World;
@@ -94,5 +95,14 @@ public class WorldService {
 
     public List<User> isMemberOfWorldByUserId(Long userId, Long worldId) {
         return worldAvatarRepository.findWorldByUserId(userId, worldId);
+    }
+
+    public List<World> getWorldsWithOrder(OrderType orderType) {
+
+        if(orderType.equals("RECENT")) {
+            return worldRepository.getWorldsWithOrderRecent();
+        }
+        // recent가 아니라면 default로 id asc
+        return worldRepository.findAll();
     }
 }

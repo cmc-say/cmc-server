@@ -1,5 +1,6 @@
 package cmc.controller;
 
+import cmc.domain.model.OrderType;
 import cmc.dto.response.WorldHashtagsResponseDto;
 import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
@@ -57,7 +58,7 @@ public class WorldController {
                 .map(WorldHashtagsResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_FOUND_SUCCESS, worldHashtagsRespons));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_WITH_CHARACTER_FOUND_SUCCESS, worldHashtagsRespons));
     }
 
 
@@ -74,11 +75,21 @@ public class WorldController {
     }
 
 
-//    // 세계관 최신순 조회
-//    @GetMapping("/api/v1/world?order=recent")
-//    public ResponseEntity<ApiResponse<dto>> getWorldWithOrderRecent() {
-//
-//    }
+    // 세계관 최신순 조회
+    @GetMapping("/api/v1/world")
+    public ResponseEntity<ApiResponse<List<WorldHashtagsResponseDto>>> getWorldsWithOrder(
+            @RequestParam(value = "order", defaultValue = "id") String order) {
+
+        OrderType orderType = OrderType.fromString(order);
+
+        List<World> worldsWithOrder = worldService.getWorldsWithOrder(orderType);
+
+        List<WorldHashtagsResponseDto> worldHashtagsResponseDtoList = worldsWithOrder.stream()
+                .map(WorldHashtagsResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(ResponseCode.WORLD_FOUND_SUCCESS, worldHashtagsResponseDtoList));
+    }
 
 //    // 세계관 삭제
 //    @DeleteMapping("/api/v1/world/{worldId}")

@@ -13,12 +13,11 @@ public enum ErrorCode {
     INVALID_TYPE_VALUE(400, "C005", " Invalid Type Value"),
     ACCESS_DENIED(403, "C006", "Access is Denied"),
 
-    // Auth
-    EMAIL_DUPLICATION(400, "M001", "Email is Duplication"),
-    LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid"),
-
     // User
-    USER_NOT_FOUND(404, "U001", "User not found"),
+    USER_NOT_FOUND(404, "U001", "해당 유저가 존재하지 않습니다."),
+    DUPLICATED_BLOCK(400,"U002" , "중복된 차단입니다."),
+    DUPLICATED_REPORT(400, "U003", "중복된 신고입니다."),
+    SELF_BLOCK_OR_REPORT(400, "U004", "신고/차단하는 유저와 당하는 유저가 같습니다."),
 
     // Jwt
     TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다."),

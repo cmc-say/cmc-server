@@ -105,4 +105,8 @@ public class WorldService {
         // recent가 아니라면 default로 id asc
         return worldRepository.findAll();
     }
+
+    public void deleteWorld(Long worldId) {
+        worldRepository.deleteById(worldId);
+    }
 }

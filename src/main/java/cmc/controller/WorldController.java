@@ -91,11 +91,14 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(ResponseCode.WORLD_FOUND_SUCCESS, worldHashtagsUserCountResponseDtoList));
     }
 
-//    // 세계관 삭제
-//    @DeleteMapping("/api/v1/world/{worldId}")
-//    public ResponseEntity<ApiResponse> deleteWorld() {
-//
-//    }
+    // 세계관 삭제
+    @DeleteMapping("/api/v1/world/{worldId}")
+    public ResponseEntity<ApiResponse> deleteWorld(@PathVariable("worldId") Long worldId) {
+
+        worldService.deleteWorld(worldId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.WORLD_DELETED));
+    }
 //
 //    // 세계관 수정 (정보) for 방장
 //    @PutMapping("/api/v1/world/{worldId}/info")

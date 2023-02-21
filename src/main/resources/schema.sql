@@ -2,16 +2,16 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `User` CASCADE ;
 DROP TABLE IF EXISTS `Avatar` CASCADE;
 DROP TABLE IF EXISTS `Todo` CASCADE;
-DROP TABLE IF EXISTS `Character_World` CASCADE;
+DROP TABLE IF EXISTS `World_Avatar` CASCADE;
 DROP TABLE IF EXISTS `Hashtag` CASCADE;
 DROP TABLE IF EXISTS `World_Hashtag` CASCADE;
 DROP TABLE IF EXISTS `World` CASCADE;
 DROP TABLE IF EXISTS `Report` CASCADE;
-DROP TABLE IF EXISTS `Character_Todo` CASCADE;
-DROP TABLE IF EXISTS `RecommendedAlarm` CASCADE;
-DROP TABLE IF EXISTS `RecommendedWorld` CASCADE;
-DROP TABLE IF EXISTS `RecommendedTodo` CASCADE;
-DROP TABLE IF EXISTS `WordToday` CASCADE;
+DROP TABLE IF EXISTS `Avatar_Todo` CASCADE;
+DROP TABLE IF EXISTS `Recommended_Alarm` CASCADE;
+DROP TABLE IF EXISTS `Recommended_World` CASCADE;
+DROP TABLE IF EXISTS `Recommended_Todo` CASCADE;
+DROP TABLE IF EXISTS `Word_Today` CASCADE;
 DROP TABLE IF EXISTS `Block` CASCADE;
 SET FOREIGN_KEY_CHECKS=1;
 
@@ -40,16 +40,16 @@ CREATE TABLE `Todo` (
                         PRIMARY KEY (`todo_id`)
 );
 
-CREATE TABLE `Character_World` (
-                                   `character_world_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
-                                   `character_id`	bigint	NOT NULL,
+CREATE TABLE `World_Avatar` (
+                                   `world_avatar_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
+                                   `avatar_id`	bigint	NOT NULL,
                                    `world_id`	bigint	NOT NULL,
-                                   PRIMARY KEY (`character_world_id`)
+                                   PRIMARY KEY (`world_avatar_id`)
 );
 
 CREATE TABLE `Hashtag` (
                            `hashtag_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
-                           `hashtag_name`	varchar(20)	NULL,
+                           `hashtag_name`	varchar(20)	NOT NULL UNIQUE ,
                            PRIMARY KEY (`hashtag_id`)
 );
 
@@ -64,8 +64,7 @@ CREATE TABLE `World_Hashtag` (
 CREATE TABLE `World` (
                          `world_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                          `world_name`	varchar(14)	NULL,
-                         `world_user_limit`	bigint	NOT NULL,
-                         `world_is_public`	boolean	NULL,
+                         `world_user_limit`	tinyint	NOT NULL,
                          `world_img`	varchar(200)	NULL,
                          `world_start_date`	datetime	NULL,
                          `world_end_date`	datetime	NULL,
@@ -83,35 +82,35 @@ CREATE TABLE `Report` (
                           PRIMARY KEY (`report_id`)
 );
 
-CREATE TABLE `Character_Todo` (
-                                  `character_todo_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
+CREATE TABLE `Avatar_Todo` (
+                                  `avatar_todo_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                   `todo_id`	bigint	NOT NULL,
-                                  `character_id`	bigint	NOT NULL,
-                                  PRIMARY KEY (`character_todo_id`)
+                                  `avatar_id`	bigint	NOT NULL,
+                                  PRIMARY KEY (`avatar_todo_id`)
 );
 
-CREATE TABLE `RecommendedAlarm` (
-                                    `recommendedAlarm_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
-                                    `recommendedAlarm_content`	varchar(20)	NULL,
-                                    PRIMARY KEY (`recommendedAlarm_id`)
+CREATE TABLE `Recommended_Alarm` (
+                                    `recommended_alarm_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
+                                    `recommended_alarm_content`	varchar(20)	NULL,
+                                    PRIMARY KEY (`recommended_alarm_id`)
 );
 
-CREATE TABLE `RecommendedWorld` (
+CREATE TABLE `Recommended_World` (
                                     `recommended_world_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                     `recommended_world_name`	varchar(30)	NULL,
                                     PRIMARY KEY (`recommended_world_id`)
 );
 
-CREATE TABLE `RecommendedTodo` (
+CREATE TABLE `Recommended_Todo` (
                                    `recommended_todo_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                    `recommended_world_id`	bigint	NOT NULL,
                                    `recommended_todo_content`	varchar(50)	NULL,
                                    PRIMARY KEY (`recommended_todo_id`)
 );
 
-CREATE TABLE `WordToday` (
+CREATE TABLE `Word_Today` (
                              `word_today_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
-                             `character_world_id`	bigint	NOT NULL,
+                             `world_avatar_id`	bigint	NOT NULL,
                              `word_today_content`	varchar(300)	NULL,
                              PRIMARY KEY (`word_today_id`)
 );

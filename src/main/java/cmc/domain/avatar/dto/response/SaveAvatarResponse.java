@@ -19,7 +19,7 @@ public class SaveAvatarResponse {
         this.avatarMessage = avatarMessage;
     }
 
-    public static SaveAvatarResponse of (Avatar avatar) {
+    public static SaveAvatarResponse fromEntity (Avatar avatar) {
         return new SaveAvatarResponse(avatar.getAvatarId(), avatar.getAvatarName(), avatar.getAvatarImg(), avatar.getAvatarMessage());
     }
 }

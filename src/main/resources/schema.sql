@@ -76,7 +76,7 @@ CREATE TABLE `World` (
 
 CREATE TABLE `Report` (
                           `report_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
-                          `type`	varchar(10)	NULL,
+                          `report_type`	varchar(20)	NULL,
                           `reporting_user_id`	bigint	NULL,
                           `reported_user_id`	bigint	NULL,
                           PRIMARY KEY (`report_id`)

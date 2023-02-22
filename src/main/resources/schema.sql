@@ -21,6 +21,8 @@ CREATE TABLE `User` (
                         `social_type`	varchar(10)	NULL,
                         `refresh_token`	varchar(100)	NULL,
                         `device_token`	varchar(100)	NULL,
+                        `created_at` varchar(30) NULL,
+                        `modified_at` varchar(30) NULL,
                     PRIMARY KEY (`user_id`)
 );
 
@@ -30,6 +32,8 @@ CREATE TABLE `Avatar` (
                              `avatar_name`	varchar(12)	NULL,
                              `avatar_message`	varchar(30)	NULL,
                              `avatar_img`	varchar(200)	NULL,
+                             `created_at` varchar(30) NULL,
+                             `modified_at` varchar(30) NULL,
                              PRIMARY KEY (`avatar_id`)
 );
 
@@ -37,6 +41,8 @@ CREATE TABLE `Todo` (
                         `todo_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                         `world_id`	bigint	NOT NULL,
                         `todo_content`	varchar(50)	NULL,
+                        `created_at` varchar(30) NULL,
+                        `modified_at` varchar(30) NULL,
                         PRIMARY KEY (`todo_id`)
 );
 
@@ -44,12 +50,16 @@ CREATE TABLE `World_Avatar` (
                                    `world_avatar_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                    `avatar_id`	bigint	NOT NULL,
                                    `world_id`	bigint	NOT NULL,
+                                   `created_at` varchar(30) NULL,
+                                   `modified_at` varchar(30) NULL,
                                    PRIMARY KEY (`world_avatar_id`)
 );
 
 CREATE TABLE `Hashtag` (
                            `hashtag_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                            `hashtag_name`	varchar(20)	NOT NULL UNIQUE ,
+                           `created_at` varchar(30) NULL,
+                           `modified_at` varchar(30) NULL,
                            PRIMARY KEY (`hashtag_id`)
 );
 
@@ -57,6 +67,8 @@ CREATE TABLE `World_Hashtag` (
                                  `world_hashtag_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                  `world_id`	bigint	NOT NULL,
                                  `hashtag_id`	bigint	NOT NULL,
+                                 `created_at` varchar(30) NULL,
+                                 `modified_at` varchar(30) NULL,
                                  PRIMARY KEY (`world_hashtag_id`)
 );
 
@@ -71,6 +83,8 @@ CREATE TABLE `World` (
                          `world_notice`	varchar(200)	NULL,
                          `world_password`	varchar(20)	NULL,
                          `world_host_user_id`	bigint	NULL,
+                         `created_at` varchar(30) NULL,
+                         `modified_at` varchar(30) NULL,
                          PRIMARY KEY (`world_id`)
 );
 
@@ -79,6 +93,8 @@ CREATE TABLE `Report` (
                           `report_type`	varchar(20)	NULL,
                           `reporting_user_id`	bigint	NULL,
                           `reported_user_id`	bigint	NULL,
+                          `created_at` varchar(30) NULL,
+                          `modified_at` varchar(30) NULL,
                           PRIMARY KEY (`report_id`)
 );
 
@@ -86,18 +102,24 @@ CREATE TABLE `Avatar_Todo` (
                                   `avatar_todo_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                   `todo_id`	bigint	NOT NULL,
                                   `avatar_id`	bigint	NOT NULL,
+                                  `created_at` varchar(30) NULL,
+                                  `modified_at` varchar(30) NULL,
                                   PRIMARY KEY (`avatar_todo_id`)
 );
 
 CREATE TABLE `Recommended_Alarm` (
                                     `recommended_alarm_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                     `recommended_alarm_content`	varchar(20)	NULL,
+                                    `created_at` varchar(30) NULL,
+                                    `modified_at` varchar(30) NULL,
                                     PRIMARY KEY (`recommended_alarm_id`)
 );
 
 CREATE TABLE `Recommended_World` (
                                     `recommended_world_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                     `recommended_world_name`	varchar(30)	NULL,
+                                    `created_at` varchar(30) NULL,
+                                    `modified_at` varchar(30) NULL,
                                     PRIMARY KEY (`recommended_world_id`)
 );
 
@@ -105,6 +127,8 @@ CREATE TABLE `Recommended_Todo` (
                                    `recommended_todo_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                                    `recommended_world_id`	bigint	NOT NULL,
                                    `recommended_todo_content`	varchar(50)	NULL,
+                                   `created_at` varchar(30) NULL,
+                                   `modified_at` varchar(30) NULL,
                                    PRIMARY KEY (`recommended_todo_id`)
 );
 
@@ -112,6 +136,8 @@ CREATE TABLE `Word_Today` (
                              `word_today_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                              `world_avatar_id`	bigint	NOT NULL,
                              `word_today_content`	varchar(300)	NULL,
+                             `created_at` varchar(30) NULL,
+                             `modified_at` varchar(30) NULL,
                              PRIMARY KEY (`word_today_id`)
 );
 
@@ -119,5 +145,7 @@ CREATE TABLE `Block` (
                          `block_id`	bigint	NOT NULL AUTO_INCREMENT UNIQUE,
                          `blocking_user_id`	bigint	NULL,
                          `blocked_user_id`	bigint	NULL,
+                         `created_at` varchar(30) NULL,
+                         `modified_at` varchar(30) NULL,
                          PRIMARY KEY (`block_id`)
 );

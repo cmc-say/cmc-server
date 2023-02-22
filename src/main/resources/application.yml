@@ -20,10 +20,12 @@ spring:
     activate:
       on-profile: common
   jpa:
-    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
         default_batch_fetch_size: 100
+    database: mysql
 server:
   port: 8080
 
@@ -53,8 +55,7 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307/cmc_database
+    url: jdbc:mysql://localhost:3306/cmc_database
     username: ${LOCAL_DB_USERNAME}
     password: ${LOCAL_DB_PASSWORD}
   jpa:
@@ -74,7 +75,6 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
     url: ${REMOTE_DB_URL}
     username: ${REMOTE_DB_USERNAME}
     password: ${REMOTE_DB_PASSWORD}
@@ -90,14 +90,16 @@ spring:
     activate:
       on-profile: test
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307/cmc_database
+    url: jdbc:mysql://localhost:3306/cmc_database
     username: ${LOCAL_DB_USERNAME}
     password: ${LOCAL_DB_PASSWORD}
-  jpa:
+
     hibernate:
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
       ddl-auto: update
-    show-sql: true
   sql:
     init:
       mode: always

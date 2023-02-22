@@ -5,6 +5,8 @@ import cmc.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Table(name = "User", indexes = {
@@ -26,6 +28,9 @@ public class User extends BaseEntity
     @Enumerated(EnumType.STRING) @Setter @Column(nullable = false, length = 10) private SocialType socialType;
     @Setter @Column(length = 100) private String refreshToken;
     @Setter @Column(length= 100) private String deviceToken;
+
+    @OneToMany(targetEntity = Avatar.class, fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Avatar> avatars = new ArrayList<>();
 
     @Builder
     public User(Long userId, Long socialId, SocialType socialType, String refreshToken, String deviceToken) {

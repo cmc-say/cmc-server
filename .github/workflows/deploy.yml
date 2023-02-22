@@ -18,12 +18,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
           character set server: 'utf8'
           mysql database: 'cmc_database'
-          mysql user: ${{ secrets.LOCAL_DB_PASSWORD }}
+          mysql user: 'root'
           mysql password: ${{ secrets.LOCAL_DB_PASSWORD }} # github Secret 탭에서 설정하세요!
 
       - name: verify MySQL connection from host

@@ -56,6 +56,10 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
     private void checkDuplicatedBlock(Long blockingUserId, Long blockedUserId) {
         if(!userBlockRepository.findBlockByBlockingUserIdAndBlockedUserId(blockingUserId, blockedUserId).isEmpty()){
             throw new BusinessException(ErrorCode.DUPLICATED_BLOCK);

@@ -4,6 +4,8 @@ import cmc.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Table(name = "Avatar", indexes = {@Index(columnList = "userId")})
@@ -29,6 +31,9 @@ public class Avatar extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    @OneToMany(targetEntity = WorldAvatar.class, fetch = FetchType.LAZY, mappedBy = "avatar", cascade = CascadeType.ALL)
+    private List<WorldAvatar> worldAvatars = new ArrayList<>();
 
     @Builder
     public Avatar(Long avatarId, String avatarName, String avatarMessage, String avatarImg, User user) {

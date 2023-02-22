@@ -31,7 +31,7 @@ public class User extends BaseEntity
 
     @OneToMany(targetEntity = Avatar.class, fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Avatar> avatars = new ArrayList<>();
-    
+
     @Builder
     public User(Long userId, Long socialId, SocialType socialType, String refreshToken, String deviceToken) {
         this.userId = userId;

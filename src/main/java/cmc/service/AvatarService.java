@@ -4,6 +4,7 @@ package cmc.service;
 import cmc.domain.Avatar;
 import cmc.repository.AvatarRepository;
 import cmc.domain.User;
+import cmc.repository.UserRepository;
 import cmc.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,13 +18,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AvatarService {
+    private final UserRepository userRepository;
 
     private final AvatarRepository avatarRepository;
     private final UserService userService;
     private final S3Util s3Util;
 
     public List<Avatar> getCharactersByUserId(Long userId) {
-        return avatarRepository.findAllByUser(userId);
+        return userRepository.findAvatarsByUser(userId);
     }
 
     @Transactional

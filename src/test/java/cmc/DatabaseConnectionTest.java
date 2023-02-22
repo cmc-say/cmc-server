@@ -17,7 +17,7 @@ public class DatabaseConnectionTest extends TestSupport{
         }
     }
 
-    @Disabled("db 연결 테스트")
+//    @Disabled("db 연결 테스트")
     @Test
     public void testConnection() {
 

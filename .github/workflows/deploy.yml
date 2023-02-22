@@ -14,7 +14,6 @@ jobs:
       mariadb:
         image: mariadb:10.6
         env:
-          MYSQL_ROOT_PASSWORD: 'root'
           MYSQL_DATABASE: 'cmc_databse'
           MYSQL_USER: 'root'
           MYSQL_PASSWORD: 'passwordtest'

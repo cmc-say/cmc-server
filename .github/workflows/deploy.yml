@@ -36,13 +36,14 @@ jobs:
 
       - name: Build with Gradle
         env:
-          IAM_ACCESS_KEY = ${{ secrets.IAM_ACCESS_KEY }}
-          IAM_SECRET_KEY = ${{ secrets.IAM_SECRET_KEY }}
-          JWT_SECRET = ${{ secrets.JWT_SECRET }}
-          LOCAL_DB_PASSWORD = ${{ secrets.LOCAL_DB_PASSWORD }}
-          LOCAL_DB_USERNAME = ${{ secrets.LOCAL_DB_USERNAME }}
-          S3_BUCKET_NAME = ${{ secrets.S3_BUCKET_NAME }}
-        run:
+          IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
+          IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+          LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        run: |
+          echo LOCAL_DB_USERNAME
           ./gradlew clean build
         shell: bash
 

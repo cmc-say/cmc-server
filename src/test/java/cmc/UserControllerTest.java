@@ -1,4 +1,4 @@
-package cmc.domain.user.controller;
+package cmc;
 
 import cmc.TestSupport;
 import org.junit.jupiter.api.DisplayName;

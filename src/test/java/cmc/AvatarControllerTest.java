@@ -1,4 +1,4 @@
-package cmc.domain.avatar.controller;
+package cmc;
 
 import cmc.TestSupport;
 import org.junit.jupiter.api.BeforeAll;

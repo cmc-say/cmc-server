@@ -43,8 +43,8 @@ jobs:
           LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
         run: |
-          echo LOCAL_DB_USERNAME
-          ./gradlew clean build
+          echo "$LOCAL_DB_USERNAME"
+          ./gradlew clean build -i
         shell: bash
 
       - name: Get current time
@@ -66,7 +66,7 @@ jobs:
           cp -r .ebextensions deploy/.ebextensions
           cp -r .platform deploy/.platform
           cd deploy && zip -r deploy.zip .
-          -i
+          
 
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20

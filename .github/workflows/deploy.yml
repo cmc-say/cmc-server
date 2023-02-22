@@ -26,14 +26,6 @@ jobs:
           mysql user: ${{ secrets.LOCAL_DB_PASSWORD }}
           mysql password: ${{ secrets.LOCAL_DB_PASSWORD }} # github Secret 탭에서 설정하세요!
 
-      - name: verify MySQL connection from host
-        run: |
-            mysql --version
-            sudo apt-get install -y mysql-client
-            sudo service mysql start
-            mysql -uroot -proot -e "CREATE DATABASE kyuwon"
-            mysql -uroot -proot -e "SHOW DATABASES"
-
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash

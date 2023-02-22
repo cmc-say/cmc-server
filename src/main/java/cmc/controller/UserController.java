@@ -22,7 +22,11 @@ public class UserController {
 
     // 회원 탈퇴
     @DeleteMapping("/api/v1/user")
-    public ResponseEntity<ApiResponse> deleteUser() {
+    public ResponseEntity<ApiResponse> deleteUser(Principal principal) {
+
+        Long tokenUserId = Long.parseLong(principal.getName());
+
+        userService.deleteUser(tokenUserId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_DELETE_SUCCESS));
     }

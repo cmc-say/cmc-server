@@ -10,21 +10,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services: # 서비스할 목록들 (ex. Redis, Postgresql ...)
-      mysql: # 사용할 서비스 명
-        image: mysql:5.7  # 사용할 서비스의 이미지(도커 개념 기반)
-        env: # 사용할 서비스의 환경설정
-          MYSQL_USER: test
-          MYSQL_PASSWORD: test
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: PLAM
-        ports: # 열어줄 포트, 8080:3306 형태로도 가능
-          - 3307
-        options: >-  # 서비스에 걸어줄 옵션
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+    services:
+      mariadb:
+        image: mariadb:10.6
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MARIADB_PASSWORD }}
+          MYSQL_DATABASE: cmc_databse
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ${{ secrets.MARIADB_PASSWORD }}
+        ports:
+          - 3307:3307
     steps:
 
       - name: Checkout
@@ -38,11 +33,11 @@ jobs:
       - name: verify MySQL connection from host
           # 아래는 실행문, cli에 입력하듯이 명령어를 작성하면 된다.
         run: |
-          mysql --version
-          sudo apt-get install -y mysql-client
-          sudo service mysql start
-          mysql -uroot -proot -e "CREATE DATABASE PLAM"
-          mysql -uroot -proot -e "SHOW DATABASES"
+          mariadb --version
+          sudo apt-get install -y mariadb-client
+          sudo service mariadb start
+          mariadb -uroot -proot -e "CREATE DATABASE PLAM"
+          mariadb -uroot -proot -e "SHOW DATABASES"
 
 #      - name: Set MariaDb
 #        uses: getong/mariadb-action@v1.1

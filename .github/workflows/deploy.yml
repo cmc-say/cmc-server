@@ -10,26 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      mariadb:
-        image: mariadb:10.6
-        env:
-          MYSQL_ROOT_PASSWORD: 'passwordtest'
-          MYSQL_DATABASE: 'cmc_databse'
-          MYSQL_USER: 'root'
-          MYSQL_PASSWORD: 'passwordtest'
-        ports:
-          - 3307:3307
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
-      - name: Verify MariaDB connection
-        env:
-          PORT: ${{ job.services.mariadb.ports[3307] }}
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-            sleep 1
-          done
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,17 +20,24 @@ jobs:
         with:
           java-version: 11
 
-#      - name: Set MariaDb
-#        uses: getong/mariadb-action@v1.1
-#        with:
-#          host port: 3307
-#          container port: 3307
-#          character set server: 'utf8'
-#          mariadb version: '10.6.10'
-#          mysql database: 'cmc_database'
-#          mysql user: 'root'
-#          mysql password: ${{ secrets.MARIADB_PASSWORD }}
+      - name: Set MariaDb
+        uses: getong/mariadb-action@v1.1
+        with:
+          host port: 3307
+          container port: 3307
+          character set server: 'utf8'
+          mariadb version: '10.6.10'
+          mysql database: 'cmc_database'
+          mysql user: 'root'
+          mysql password: ${{ secrets.MARIADB_PASSWORD }}
 
+      - name: Verify MariaDB connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3307] }}
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+            sleep 1
+          done
 
       - name: check MariaDb setup
         run: |

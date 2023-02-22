@@ -14,10 +14,10 @@ jobs:
       mariadb:
         image: mariadb:10.6
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: cmc_databse
-          MYSQL_USER: root
-          MYSQL_PASSWORD: passwordtest
+          MYSQL_ROOT_PASSWORD: 'root'
+          MYSQL_DATABASE: 'cmc_databse'
+          MYSQL_USER: 'root'
+          MYSQL_PASSWORD: 'passwordtest'
         ports:
           - 3307:3307
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3

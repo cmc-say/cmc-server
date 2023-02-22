@@ -11,12 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: env check
-        run: echo "env is $env"
-
-      - name: env local db username check
-        run: echo "local db on the runner is $env.LOCAL_DB_USERNAME"
-
       - name: Checkout
         uses: actions/checkout@v2
 

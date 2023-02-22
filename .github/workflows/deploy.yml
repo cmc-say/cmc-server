@@ -14,14 +14,23 @@ jobs:
       mariadb:
         image: mariadb:10.6
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MARIADB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: cmc_databse
           MYSQL_USER: root
-          MYSQL_PASSWORD: ${{ secrets.MARIADB_PASSWORD }}
+          MYSQL_PASSWORD: passwordtest
         ports:
           - 3307:3307
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
+      - name: Verify MariaDB connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3307] }}
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+            sleep 1
+          done
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -42,8 +51,9 @@ jobs:
 #          mysql password: ${{ secrets.MARIADB_PASSWORD }}
 
 
-      - name: wait for MariaDb setup
-        run: sleep 30
+      - name: check MariaDb setup
+        run: |
+          echo 
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew

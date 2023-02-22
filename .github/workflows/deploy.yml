@@ -10,22 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      mysql: # 사용할 서비스 명
-        image: mysql:5.7  # 사용할 서비스의 이미지(도커 개념 기반)
-        env: # 사용할 서비스의 환경설정
-          MYSQL_USER: root
-          MYSQL_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-          MYSQL_DATABASE: cmc_database
-        ports: # 열어줄 포트, 8080:3306 형태로도 가능
-          - 3306
-        options: >-  # 서비스에 걸어줄 옵션
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,6 +18,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
+        with:
+          character set server: 'utf8'
+          mysql database: 'cmc_database'
+          mysql user: ${{ secrets.LOCAL_DB_PASSWORD }}
+          mysql password: ${{ secrets.LOCAL_DB_PASSWORD }} # github Secret 탭에서 설정하세요!
+
       - name: verify MySQL connection from host
         run: |
             mysql --version

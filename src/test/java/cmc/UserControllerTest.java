@@ -1,10 +1,9 @@
 package cmc;
 
-import cmc.TestSupport;
+import cmc.dto.request.ReportUserRequestDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -13,8 +12,6 @@ import java.security.Principal;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 class UserControllerTest extends TestSupport {
 
 //    @DisplayName("user/characters")
@@ -46,8 +43,13 @@ class UserControllerTest extends TestSupport {
     @DisplayName("유저 신고 테스트")
     @Test
     void reportUser() throws Exception{
+        // given
+        String body = objectMapper.writeValueAsString(new ReportUserRequestDto("world"));
+
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/v1/user/2/report")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .principal(new Principal() {
                             @Override
                             public String getName() {

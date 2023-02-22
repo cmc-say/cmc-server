@@ -33,7 +33,7 @@ public class WorldHashtagsUserCountResponseDto {
             String worldImg,
             LocalDateTime worldStartDate,
             LocalDateTime worldEndDate,
-            List<Hashtag> hashtags,
+            List<WorldHashtag> hashtags,
             Long worldHostUserId,
             String worldNotice,
             String worldPassword,
@@ -63,7 +63,7 @@ public class WorldHashtagsUserCountResponseDto {
                 .worldHostUserId(world.getWorldHostUserId())
                 .worldNotice(world.getWorldNotice())
                 .worldPassword(world.getWorldPassword())
-                .hashtags(world.getWorldHashtags().stream().map(WorldHashtag::getHashtag).collect(Collectors.toList()))
+                .hashtags(world.getWorldHashtags())
                 .worldAvatars(world.getWorldAvatars())
                 .build();
     }

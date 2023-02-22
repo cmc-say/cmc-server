@@ -3,7 +3,8 @@ name: dev-spring-springboot
 on:
   push:
     branches:
-      - master
+      - Fix/#50
+#      - master
   workflow_dispatch:
 
 jobs:

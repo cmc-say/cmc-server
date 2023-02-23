@@ -5,11 +5,21 @@ on:
     branches:
       - Fix/#50
 #      - master
+env:
+  IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
+  IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+  LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
+  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name : env check
+        run: echo ${{ env.LOCAL_DB_USERNAME }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -38,13 +48,7 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
       - name: Build with Gradle
-        env:
-          IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
-          IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-          LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
-          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build

@@ -7,8 +7,8 @@ on:
 #      - master
 
 env:
-  IMAGE_IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
-  IMAGE_IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
+  IMAGE_IAM_ACCESS_KEY: ${{ secrets.IMAGE_IAM_ACCESS_KEY }}
+  IMAGE_IAM_SECRET_KEY: ${{ secrets.IMAGE_IAM_SECRET_KEY }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
   LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
   LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
@@ -40,8 +40,8 @@ jobs:
 
 #      - name: set environment variable
 #        run: |
-#          echo "IAM_ACCESS_KEY= ${{ secrets.IAM_ACCESS_KEY }}" >> $GITHUB_ENV
-#          echo "IAM_SECRET_KEY= ${{ secrets.IAM_SECRET_KEY }}" >> $GITHUB_ENV
+#          echo "IMAGE_IAM_ACCESS_KEY= ${{ secrets.IMAGE_IAM_ACCESS_KEY }}" >> $GITHUB_ENV
+#          echo "IMAGE_IAM_SECRET_KEY= ${{ secrets.IMAGE_IAM_SECRET_KEY }}" >> $GITHUB_ENV
 #          echo "JWT_SECRET= ${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
 #          echo "LOCAL_DB_PASSWORD= ${{ secrets.LOCAL_DB_PASSWORD }}" >> $GITHUB_ENV
 #          echo "LOCAL_DB_USERNAME= ${{ secrets.LOCAL_DB_USERNAME }}" >> $GITHUB_ENV

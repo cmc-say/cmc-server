@@ -17,15 +17,16 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_DATABASE: 'cmc_database'
-          MYSQL_ROOT_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+#    services:
+#      mysql:
+#        image: mysql:5.7
+#        env:
+#          MYSQL_DATABASE: 'cmc_database'
+#          MYSQL_ROOT
+#          MYSQL_ROOT_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+#        ports:
+#          - 3306:3306
+#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
@@ -35,6 +36,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
+        with:
+          character set server: 'utf8'
+          mysql database: 'cmc_database'
+          mysql user: 'root'
+          mysql password: ${{ secrets.LOCAL_DB_PASSWORD }} # github Secret 탭에서 설정하세요!
 
       - name: Verify MySQL connection
         run: |

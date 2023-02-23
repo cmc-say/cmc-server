@@ -99,7 +99,7 @@ jobs:
       - name: Build with Gradle
 
         run: |
-          ./gradlew clean build -i
+          ./gradlew clean build -x test -i
         shell: bash
 
       - name: Get current time

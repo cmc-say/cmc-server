@@ -17,16 +17,17 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    mysql:
-      image: mysql:5.7
-      env:
-        MYSQL_DATABASE: 'waffle_backend_assignment_2'
-        MYSQL_USER: 'waffle-backend'
-        MYSQL_PASSWORD: 'seminar'
-        MYSQL_ROOT_PASSWORD: password
-      ports:
-        - 3306:3306
-      options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: 'cmc_database'
+          MYSQL_USER: 'root'
+          MYSQL_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout

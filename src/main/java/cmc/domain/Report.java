@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Getter
 @Table(
-        name = "Report",
+        name = "report",
         indexes = {
         @Index(columnList = "reportingUserId"),
         },

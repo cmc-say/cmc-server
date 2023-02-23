@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Table(name = "Avatar", indexes = {@Index(columnList = "userId")})
+@Table(name = "avatar", indexes = {@Index(columnList = "userId")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Avatar extends BaseEntity {

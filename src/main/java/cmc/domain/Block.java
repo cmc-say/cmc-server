@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "Block",
+@Table(name = "block",
         indexes = {
             @Index(columnList = "blockingUserId"),
         },

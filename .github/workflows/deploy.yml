@@ -40,7 +40,7 @@ jobs:
         run: |
             mysql --version
             sudo apt-get install -y mysql-client
-            mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "SHOW DATABASES"
+            mysql --host 127.0.0.1 --port 3306 -uroot -p${{ secrets.LOCAL_DB_PASSWORD }} -e "SHOW DATABASES"
 
 #      - name: Setup MySQL
 #        uses: samin/mysql-action@v1

@@ -17,9 +17,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name : env check
-        run: echo ${{ LOCAL_DB_USERNAME }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -40,6 +37,18 @@ jobs:
         run: |
             mysql --version
 
+      - name: set environment variable
+        run: |
+          echo "IAM_ACCESS_KEY= ${{ secrets.IAM_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "IAM_SECRET_KEY= ${{ secrets.IAM_SECRET_KEY }}" >> $GITHUB_ENV
+          echo "JWT_SECRET= ${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+          echo "LOCAL_DB_PASSWORD= ${{ secrets.LOCAL_DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "LOCAL_DB_USERNAME= ${{ secrets.LOCAL_DB_USERNAME }}" >> $GITHUB_ENV
+          echo "S3_BUCKET_NAME= ${{ secrets.S3_BUCKET_NAME }}" >> $GITHUB_ENV
+
+      - name : env check
+        run: echo ${{ env.LOCAL_DB_USERNAME }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash
@@ -48,7 +57,6 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
       - name: Build with Gradle
-
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build

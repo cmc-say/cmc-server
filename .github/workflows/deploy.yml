@@ -5,13 +5,6 @@ on:
     branches:
       - Fix/#50
 #      - master
-env:
-  IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
-  IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
-  JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-  LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
-  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
 jobs:
   build:
@@ -37,42 +30,42 @@ jobs:
         run: |
             mysql --version
 
-      - name: set environment variable
-        run: |
-          echo "IAM_ACCESS_KEY= ${{ secrets.IAM_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "IAM_SECRET_KEY= ${{ secrets.IAM_SECRET_KEY }}" >> $GITHUB_ENV
-          echo "JWT_SECRET= ${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-          echo "LOCAL_DB_PASSWORD= ${{ secrets.LOCAL_DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "LOCAL_DB_USERNAME= ${{ secrets.LOCAL_DB_USERNAME }}" >> $GITHUB_ENV
-          echo "S3_BUCKET_NAME= ${{ secrets.S3_BUCKET_NAME }}" >> $GITHUB_ENV
+#      - name: set environment variable
+#        run: |
+#          echo "IAM_ACCESS_KEY= ${{ secrets.IAM_ACCESS_KEY }}" >> $GITHUB_ENV
+#          echo "IAM_SECRET_KEY= ${{ secrets.IAM_SECRET_KEY }}" >> $GITHUB_ENV
+#          echo "JWT_SECRET= ${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+#          echo "LOCAL_DB_PASSWORD= ${{ secrets.LOCAL_DB_PASSWORD }}" >> $GITHUB_ENV
+#          echo "LOCAL_DB_USERNAME= ${{ secrets.LOCAL_DB_USERNAME }}" >> $GITHUB_ENV
+#          echo "S3_BUCKET_NAME= ${{ secrets.S3_BUCKET_NAME }}" >> $GITHUB_ENV
 
-      - name : env check
-        run: echo ${{ env.LOCAL_DB_USERNAME }}
+#      - name : env check
+#        run: echo ${{ env.LOCAL_DB_USERNAME }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+#      - name: Validate Gradle wrapper
+#        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+#
+#      - name: Build with Gradle
+#        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+#        with:
+#          arguments: build
 
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-        with:
-          arguments: build
-
-#      - name: Build with Gradle
-#        env:
-#          IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
-#          IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
-#          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-#          LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
-#          LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
-#          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-#        run: |
-#          echo "$LOCAL_DB_USERNAME"
-#          ./gradlew clean build
-#        shell: bash
+        env:
+          IMAGE_IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
+          IMAGE_IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+          LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        run: |
+          echo "$LOCAL_DB_USERNAME"
+          ./gradlew clean build
+        shell: bash
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2

@@ -34,6 +34,9 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+
       - name: Build with Gradle
         env:
           IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
@@ -42,10 +45,22 @@ jobs:
           LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
           LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-        run: |
-          echo "$LOCAL_DB_USERNAME"
-          ./gradlew clean build
-        shell: bash
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: build
+
+#      - name: Build with Gradle
+#        env:
+#          IAM_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY }}
+#          IAM_SECRET_KEY: ${{ secrets.IAM_SECRET_KEY }}
+#          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+#          LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+#          LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
+#          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+#        run: |
+#          echo "$LOCAL_DB_USERNAME"
+#          ./gradlew clean build
+#        shell: bash
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2

@@ -1,6 +1,7 @@
-package cmc.domain.avatar.controller;
+package cmc;
 
 import cmc.TestSupport;
+import cmc.dto.request.ReportUserRequestDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 class AvatarControllerTest extends TestSupport {
 
     @DisplayName("유저가 갖고 있는 캐릭터 조회")
     @Test
     void getAvatars() throws Exception{
+        // given
+
+        //when, then
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/v1/user/avatars")
                 .principal(new Principal() {

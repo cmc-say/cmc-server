@@ -1,4 +1,4 @@
-package cmc.domain.world.controller;
+package cmc;
 
 import cmc.TestSupport;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 class WorldControllerTest extends TestSupport {
 
 //    @Test

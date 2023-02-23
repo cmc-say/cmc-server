@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Table(name = "User", indexes = {
+@Table(name = "user", indexes = {
         @Index(columnList = "refreshToken"),
         @Index(columnList = "deviceToken")
 },

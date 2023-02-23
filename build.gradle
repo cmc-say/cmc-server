@@ -30,7 +30,7 @@ dependencies {
 
 	// db
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
-//	runtimeOnly ''
+	implementation 'mysql:mysql-connector-java'
 
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
@@ -39,6 +39,7 @@ dependencies {
 
 	// s3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

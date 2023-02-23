@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Getter
 @Table(
-        name = "World_Hashtag",
+        name = "world_hashtag",
         uniqueConstraints = {
             @UniqueConstraint(
                     name = "worldId_hashtagId_unique",

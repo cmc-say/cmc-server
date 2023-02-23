@@ -24,7 +24,7 @@ jobs:
           character set server: 'utf8'
           mysql database: 'cmc_database'
           mysql user: 'root'
-          mysql password: ${{ secrets.LOCAL_DB_PASSWORD }} # github Secret 탭에서 설정하세요!
+          mysql password: ${{ secrets.LOCAL_DB_PASSWORD }}
 
       - name: verify MySQL connection from host
         run: |
@@ -44,7 +44,7 @@ jobs:
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
         run: |
           echo "$LOCAL_DB_USERNAME"
-          ./gradlew clean build -i
+          ./gradlew clean build
         shell: bash
 
       - name: Get current time

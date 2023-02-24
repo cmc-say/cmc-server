@@ -18,7 +18,7 @@ jobs:
           echo $TEST >> test.properties
           echo -e $(cat test.properties)
         env:
-          TEST: ${{ vars.TEST }}
+          TEST: ${{ env.TEST }}
 
 #      - name: checkout
 #        uses: actions/checkout@v3

@@ -30,14 +30,19 @@ jobs:
           touch ./src/test/resources/jasypt-encryptor-password.txt
           echo $FILE >> ./src/test/resources/jasypt-encryptor-password.txt
           
+          echo "copy application-prod.yml from github action secret"
+          touch ./src/main/resources/application-prod.yml
+          echo $APPLICATION_PROD_YML >> ./src/main/resources/application-prod.yml
+          
           echo "confirm file in main"
           cd ./src/main/resources
           pwd
           ls -a
-          
+
         shell: bash
         env:
           FILE: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+          APPLICATION_PROD_YML: ${{ secrets.APPLICATION_PROD_YML }}
 
       ## gradlew 권한
       - name: Grant execute permission for gradlew

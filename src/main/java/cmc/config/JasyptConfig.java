@@ -3,23 +3,16 @@ package cmc.config;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.jasypt.encryption.StringEncryptor;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 
 @Slf4j
 @Configuration
@@ -47,9 +40,9 @@ public class JasyptConfig {
 
     private String getJasyptEncryptorPassword() {
         try {
-            ClassPathResource resource = new ClassPathResource("jasypt-encryptor-password.txt");
-            return Files.readAllLines(Paths.get(resource.getURI())).stream()
-                    .collect(Collectors.joining(""));
+            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("jasypt-encryptor-password.txt");
+            byte[] bytes = in.readAllBytes();
+            return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Not found Jasypt password file.");
         }

@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 .run
+src/main/resources/application-prod.yml
+**/resources/jasypt-encryptor-password.txt
 
 ### STS ###
 .apt_generated

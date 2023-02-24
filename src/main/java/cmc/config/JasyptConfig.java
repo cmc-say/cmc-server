@@ -45,6 +45,8 @@ public class JasyptConfig {
             return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Not found Jasypt password file.");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

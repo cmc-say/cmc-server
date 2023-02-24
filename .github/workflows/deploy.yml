@@ -13,10 +13,10 @@ jobs:
         run: |
           touch test.properties
           echo -e $TEST >> test.properties
-          cat test.properties
+          echo -e $(cat test.properties)
           
           echo $TEST >> test.properties
-          cat test.properties
+          echo -e $(cat test.properties)
         env:
           TEST: ${{ vars.TEST }}
 

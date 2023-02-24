@@ -43,6 +43,8 @@ spring.servlet.multipart.max-request-size: 10MB
 # s3 설정
 cloud:
   aws:
+    stack:
+      auto: false
     s3:
       bucket: ENC(WtZKOIsxJeUwmxn9eLlLWYWj4dyYHDn1)
       iamAccessKey: ENC(3eAIRrUHGkx9xVF4XtBaaYdi+17r7/GT2wbRspDjOvo=)

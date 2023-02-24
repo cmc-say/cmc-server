@@ -42,7 +42,7 @@ public class JasyptConfig {
         try {
             InputStream in = JasyptConfig.class.getClassLoader().getResourceAsStream("jasypt-encryptor-password.txt");
             byte[] bytes = in.readAllBytes();
-            return new String(bytes, StandardCharsets.UTF_8);
+            return new String(bytes, "ASCII");
         } catch (IOException e) {
             throw new RuntimeException("Not found Jasypt password file.");
         } catch (Exception e) {

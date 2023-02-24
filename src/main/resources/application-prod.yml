@@ -12,9 +12,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(I9XnX4FSSme7nkhJy4aZauo6DXMiA608PkGaNkzHmPlpjQOMuc97te2YGsXUI5yysqdH7HDkhGrWyxDphNTTcMsfwbnEJ/xJu/JBrHZL/WeaNVMG6hOc/A==)
-    username: ENC(GARmfluZGozfJY9FKtOEeg==)
-    password: ENC(kkWnUhWAWeg5333yepKp65nk+7UXvFid)
+    url: ENC(TtPKpqYW93A8BNTT3i1ZTV0V6sU7u+LsoAFWGyF9CDn0IiPRtKoNjDpzD5iGYL+NaiI2fVuArBveYnco+bjWgxWuoV/FEuJJ4tOyzwn+FC1PDxWO3MeHrw==)
+    username: ENC(91bFCFgDIMrhl9FIfbnjKA==)
+    password: ENC(2bomm7GGTtwoczXU0+90CQOUFJLvBasu)
   sql:
     init:
       mode: always

@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'temurin'
+          distribution: 'temurin' 
 
       ## jasypt-encryptor-password.txt 를 main/resources & test/resources 에 넣어주기
       - name: make jasypt-encryptor-password.txt

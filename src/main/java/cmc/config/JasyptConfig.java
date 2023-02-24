@@ -26,13 +26,16 @@ public class JasyptConfig {
     private String stringOutputType;
     @Value("${jasypt.encryptor.key-obtention-iterations}")
     private int keyObtentionIterations;
+    @Value("${jasypt.encryptor.secret-key}")
+    private String password;
 
     @Bean
     public StringEncryptor jasyptStringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         encryptor.setPoolSize(poolSize);
         encryptor.setAlgorithm(algorithm);
-        encryptor.setPassword(getJasyptEncryptorPassword());
+        encryptor.setPassword(password);
+//        encryptor.setPassword(getJasyptEncryptorPassword());
         encryptor.setStringOutputType(stringOutputType);
         encryptor.setKeyObtentionIterations(keyObtentionIterations);
         return encryptor;

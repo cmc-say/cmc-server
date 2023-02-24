@@ -59,5 +59,6 @@ jasypt:
     string-output-type: base64
     key-obtention-iterations: 100000
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    secret-key: ${JASYPT_SECRET_KEY}
 
 

@@ -12,9 +12,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://prota-database.cniloozbww3x.ap-northeast-2.rds.amazonaws.com:3306/cmc_database
-    username: root
-    password: cmcdbwpqkf
+    url: ENC(rHCYaZOVQI0V7YMtbofxRxBbgcrgI9xxMyJq1Sq+6b4DMdchnI65xvXjsi6mcwqfgXasDbrqIlDNjW6BtHKdc9Vj+YOOM+2mYwOhmL9Xc/plH6EUcB/leVsnFj5uOWOC/DH7a0I0XLw=)
+    username: ENC(mchGcb/C+wJDKp1ReAr5dg==)
+    password: ENCyWXUzKmvIIRNACbH4OAvLiQPKCxVTicl)
     show-sql: true
     properties:
       hibernate:
@@ -27,7 +27,7 @@ server:
   port: 8080
 
 jwt:
-  secret: ENC(By3yFl8amJZbh+nnFWQQ8xX5RVOdERBgxmP5FsWViKeQoXcW8YRknJH/fTA/CiI43htZd28f33nIGtLJk0YlslTUlxrCg1C7c5TFM3RG6Fw=)
+  secret: ENC(+cYH8mP/Hfx82X+51RMtZm4vDwdGeMrBsfQGVuXk0DUmd5BRVfmHp9uC0NK31gt5dXU0VfVTIjieLCPRCUIKofslfgKhPz08+O/hK6OrxYg=)
   access-token-validity: 86400  # 60*60*24 : 1day
   refresh-token-validity: 7776000 # 60*60*24*90 : 3month
 
@@ -39,9 +39,9 @@ spring.servlet.multipart.max-request-size: 10MB
 cloud:
   aws:
     s3:
-      bucket: ENC(1QtHOXWxxundm39hMZpIq8HMy6NgIrcB)
-      iamAccessKey: ENC(VLvRNUM/yWOOcdmXwod4B8nT8d+0o4oYhqGSiClZ7JY=)
-      iamSecretKey: ENC(y7gd8tWKqrMs09hqrvln2UW+EfmXShELZbWBjkS1+EslvSvBEx3r8KP4o5Y+x2yTUQjkaitMGdk=)
+      bucket: ENC(WtZKOIsxJeUwmxn9eLlLWYWj4dyYHDn1)
+      iamAccessKey: ENC(3eAIRrUHGkx9xVF4XtBaaYdi+17r7/GT2wbRspDjOvo=)
+      iamSecretKey: ENC(UXlxGMCXGbYug9dT4WkWHeqkRHXfY6KmFW13l95ZdpxvLe0XH/J9hNTL/Pf+fyT/NCKOvLIvcys=)
     region:
       static: ap-northeast-2
 

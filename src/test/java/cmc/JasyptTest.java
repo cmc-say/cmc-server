@@ -30,27 +30,33 @@ public class JasyptTest extends TestSupport{
         String REMOTE_DB_URL = "";
         String REMOTE_DB_USERNAME = "";
 
+        System.out.println(jasyptEncoding(S3_BUCKET_NAME));
         System.out.println(jasyptEncoding(IMAGE_IAM_ACCESS_KEY));
         System.out.println(jasyptEncoding(IMAGE_IAM_SECRET_KEY));
+
         System.out.println(jasyptEncoding(JWT_SECRET));
-        System.out.println(jasyptEncoding(LOCAL_DB_PASSWORD));
+
         System.out.println(jasyptEncoding(LOCAL_DB_USERNAME));
-        System.out.println(jasyptEncoding(S3_BUCKET_NAME));
-        System.out.println(jasyptEncoding(REMOTE_DB_PASSWORD));
+        System.out.println(jasyptEncoding(LOCAL_DB_PASSWORD));
+
         System.out.println(jasyptEncoding(REMOTE_DB_URL));
         System.out.println(jasyptEncoding(REMOTE_DB_USERNAME));
+        System.out.println(jasyptEncoding(REMOTE_DB_PASSWORD));
 
         System.out.println("-----------------------");
 
+        System.out.println(jasyptDecoding(jasyptEncoding(S3_BUCKET_NAME)));
         System.out.println(jasyptDecoding(jasyptEncoding(IMAGE_IAM_ACCESS_KEY)));
         System.out.println(jasyptDecoding(jasyptEncoding(IMAGE_IAM_SECRET_KEY)));
+
         System.out.println(jasyptDecoding(jasyptEncoding(JWT_SECRET)));
-        System.out.println(jasyptDecoding(jasyptEncoding(LOCAL_DB_PASSWORD)));
+
         System.out.println(jasyptDecoding(jasyptEncoding(LOCAL_DB_USERNAME)));
-        System.out.println(jasyptDecoding(jasyptEncoding(S3_BUCKET_NAME)));
-        System.out.println(jasyptDecoding(jasyptEncoding(REMOTE_DB_PASSWORD)));
+        System.out.println(jasyptDecoding(jasyptEncoding(LOCAL_DB_PASSWORD)));
+
         System.out.println(jasyptDecoding(jasyptEncoding(REMOTE_DB_URL)));
         System.out.println(jasyptDecoding(jasyptEncoding(REMOTE_DB_USERNAME)));
+        System.out.println(jasyptDecoding(jasyptEncoding(REMOTE_DB_PASSWORD)));
 
     }
 

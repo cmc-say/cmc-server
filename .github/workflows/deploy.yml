@@ -9,66 +9,76 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-
-      ## jasypt-encryptor-password.txt 를 main/resources & test/resources 에 넣어주기
-      - name: make jasypt-encryptor-password.txt
+      - name: test github action secret escape
         run: |
-          echo "copy to main/resources"
-          touch ./src/main/resources/jasypt-encryptor-password.txt
-          echo $FILE >> ./src/main/resources/jasypt-encryptor-password.txt
+          touch test.properties
+          echo -e $TEST >> test.properties
+          cat test.properties
           
-          echo "copy to test/resources"
-          touch ./src/test/resources/jasypt-encryptor-password.txt
-          echo $FILE >> ./src/test/resources/jasypt-encryptor-password.txt
-          
-          echo "copy application-prod.yml from github action secret"
-          touch ./src/main/resources/application-prod.properties
-          echo $APPLICATION_PROD_YML >> ./src/main/resources/application-prod.properties
-          
-          echo "confirm file in main"
-          cd ./src/main/resources
-          pwd
-          ls -a 
-
-        shell: bash
+          echo $TEST >> test.properties
+          cat test.properties
         env:
-          FILE: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-          APPLICATION_PROD_YML: ${{ secrets.APPLICATION_PROD_YML }}
+          TEST: ${{ secrets.TEST }}
 
-      ## gradlew 권한
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-        shell: bash
-
-      - name: Build with Gradle
-        run: ./gradlew clean build -x test
-
-      ## 웹 이미지 빌드 및 도커허브에 push
-      - name: web docker build and push 
-        run: | 
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/cmc-server .
-          docker push ${{ secrets.DOCKER_USERNAME }}/cmc-server
-
-      ## docker compose up
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_KEY }}
-          script: | 
-            sudo docker rm -f $( docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/nginx
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/cmc-server
-            docker-compose up -d
-            docker image prune -f
+#      - name: checkout
+#        uses: actions/checkout@v3
+#
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '11'
+#          distribution: 'temurin'
+#
+#      ## jasypt-encryptor-password.txt 를 main/resources & test/resources 에 넣어주기
+#      - name: make jasypt-encryptor-password.txt
+#        run: |
+#          echo "copy to main/resources"
+#          touch ./src/main/resources/jasypt-encryptor-password.txt
+#          echo $FILE >> ./src/main/resources/jasypt-encryptor-password.txt
+#
+#          echo "copy to test/resources"
+#          touch ./src/test/resources/jasypt-encryptor-password.txt
+#          echo $FILE >> ./src/test/resources/jasypt-encryptor-password.txt
+#
+#          echo "copy application-prod.yml from github action secret"
+#          touch ./src/main/resources/application-prod.properties
+#          echo $APPLICATION_PROD_YML >> ./src/main/resources/application-prod.properties
+#
+#          echo "confirm file in main"
+#          cd ./src/main/resources
+#          pwd
+#          ls -a
+#
+##        shell: bash
+#        env:
+#          FILE: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+#          APPLICATION_PROD_YML: ${{ secrets.APPLICATION_PROD_YML }}
+#
+#      ## gradlew 권한
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x ./gradlew
+#        shell: bash
+#
+#      - name: Build with Gradle
+#        run: ./gradlew clean build -x test
+#
+#      ## 웹 이미지 빌드 및 도커허브에 push
+#      - name: web docker build and push
+#        run: |
+#          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#          docker build -t ${{ secrets.DOCKER_USERNAME }}/cmc-server .
+#          docker push ${{ secrets.DOCKER_USERNAME }}/cmc-server
+#
+#      ## docker compose up
+#      - name: executing remote ssh commands using password
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.SSH_KEY }}
+#          script: |
+#            sudo docker rm -f $( docker ps -qa)
+#            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/nginx
+#            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/cmc-server
+#            docker-compose up -d
+#            docker image prune -f

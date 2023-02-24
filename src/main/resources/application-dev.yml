@@ -12,9 +12,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cmc_database
-    username: ENC(YWlcak7X8JYl/wEFooCjYg==)
-    password: ENC(SLb7HnDFvBL0f2MtWzpA1lmZozcmpW7r)
+    url: jdbc:mysql://prota-database.cniloozbww3x.ap-northeast-2.rds.amazonaws.com:3306/cmc_database
+    username: root
+    password: cmcdbwpqkf
     show-sql: true
     properties:
       hibernate:

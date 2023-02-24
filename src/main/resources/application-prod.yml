@@ -14,7 +14,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ENC(I9XnX4FSSme7nkhJy4aZauo6DXMiA608PkGaNkzHmPlpjQOMuc97te2YGsXUI5yysqdH7HDkhGrWyxDphNTTcMsfwbnEJ/xJu/JBrHZL/WeaNVMG6hOc/A==)
     username: ENC(GARmfluZGozfJY9FKtOEeg==)
-    password: ENC(RNql443NBG/QHNaPZ3pDrINmvPOh+Uog)
+    password: ENC(kkWnUhWAWeg5333yepKp65nk+7UXvFid)
   sql:
     init:
       mode: always

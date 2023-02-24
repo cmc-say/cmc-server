@@ -29,7 +29,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// db
-	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
 	implementation 'mysql:mysql-connector-java'
 
 	// jwt
@@ -39,6 +38,9 @@ dependencies {
 
 	// s3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
+	// jasypt
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

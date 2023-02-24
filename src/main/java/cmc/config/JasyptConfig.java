@@ -40,7 +40,7 @@ public class JasyptConfig {
 
     private String getJasyptEncryptorPassword() {
         try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("jasypt-encryptor-password.txt");
+            InputStream in = JasyptConfig.class.getClassLoader().getResourceAsStream("jasypt-encryptor-password.txt");
             byte[] bytes = in.readAllBytes();
             return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {

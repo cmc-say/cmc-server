@@ -20,7 +20,7 @@ jobs:
 
       ## jasypt-encryptor-password.txt 를 main/resources & test/resources 에 넣어주기
       - name: make jasypt-encryptor-password.txt
-        run:  
+        run:
           echo "copy to main/resources"
           touch ./src/main/resources/jasypt-encryptor-password.txt
           echo $FILE >> ./src/main/resources/jasypt-encryptor-password.txt

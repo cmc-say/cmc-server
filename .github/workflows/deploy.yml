@@ -31,8 +31,8 @@ jobs:
           echo $FILE >> ./src/test/resources/jasypt-encryptor-password.txt
           
           echo "copy application-prod.yml from github action secret"
-          touch ./src/main/resources/application-prod.yml
-          echo $APPLICATION_PROD_YML >> ./src/main/resources/application-prod.yml
+          touch ./src/main/resources/application-prod.properties
+          echo $APPLICATION_PROD_YML >> ./src/main/resources/application-prod.properties
           
           echo "confirm file in main"
           cd ./src/main/resources

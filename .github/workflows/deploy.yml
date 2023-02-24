@@ -29,6 +29,12 @@ jobs:
           echo "copy to test/resources"
           touch ./src/test/resources/jasypt-encryptor-password.txt
           echo $FILE >> ./src/test/resources/jasypt-encryptor-password.txt
+          
+          echo "confirm file in main"
+          cd ./src/main/resources
+          pwd
+          ls -a
+          
         shell: bash
         env:
           FILE: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}

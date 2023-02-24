@@ -37,7 +37,7 @@ jobs:
           echo "confirm file in main"
           cd ./src/main/resources
           pwd
-          ls -a
+          ls -a 
 
         shell: bash
         env:

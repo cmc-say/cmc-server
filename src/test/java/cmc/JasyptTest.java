@@ -20,15 +20,18 @@ public class JasyptTest extends TestSupport{
 
     @Test
     void jasypt() {
+        String S3_BUCKET_NAME = "";
         String IMAGE_IAM_ACCESS_KEY = "";
         String IMAGE_IAM_SECRET_KEY = "";
+
         String JWT_SECRET = "";
-        String LOCAL_DB_PASSWORD = "";
+        
         String LOCAL_DB_USERNAME = "";
-        String S3_BUCKET_NAME = "";
-        String REMOTE_DB_PASSWORD = "";
+        String LOCAL_DB_PASSWORD = "";
+
         String REMOTE_DB_URL = "";
         String REMOTE_DB_USERNAME = "";
+        String REMOTE_DB_PASSWORD = "";
 
         System.out.println(jasyptEncoding(S3_BUCKET_NAME));
         System.out.println(jasyptEncoding(IMAGE_IAM_ACCESS_KEY));

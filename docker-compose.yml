@@ -1,3 +1,4 @@
+# ec2 안에 들어가는 파일
 version: '3'
 services:
 
@@ -8,6 +9,8 @@ services:
       - 8080
     ports:
       - 8080:8080
+#    env:
+#      - JASYPT_SECRET_KEY= jasypt key 넣기
 
   nginx:
     container_name: nginx

@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 .run
+**/resources/jasypt-encryptor-password.txt
+src/resources/application-prod.yml
 
 ### STS ###
 .apt_generated
@@ -36,3 +38,6 @@ out/
 
 ### VS Code ###
 .vscode/
+src/main/resources/application-prod.yml
+src/resources/application-prod.properties
+src/main/resources/application-prod.properties

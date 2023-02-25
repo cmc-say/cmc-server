@@ -3,13 +3,12 @@ name: Java CI with Gradle
 on:
   push:
     branches:
-      - Feat/#51
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-
       - name: checkout
         uses: actions/checkout@v3
 

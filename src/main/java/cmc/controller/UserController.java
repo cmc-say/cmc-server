@@ -33,12 +33,12 @@ public class UserController {
 
     // 유저 신고
     @PostMapping("/api/v1/user/{userId}/report")
-    public ResponseEntity<ApiResponse> reportUser(@PathVariable("userId") Long userId, Principal principal, @RequestBody ReportUserRequestDto req) {
+    public ResponseEntity<ApiResponse> reportUser(@PathVariable("userId") Long reportedUserId, Principal principal, @RequestBody ReportUserRequestDto req) {
 
-        Long tokenUserId = Long.parseLong(principal.getName());
+        Long reportingUserId = Long.parseLong(principal.getName());
         ReportType reportType = ReportType.fromString(req.getReportType());
 
-        userService.reportUser(tokenUserId, userId, reportType);
+        userService.reportUser(reportingUserId, reportedUserId, reportType);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_REPORT_SUCCESS));
     }

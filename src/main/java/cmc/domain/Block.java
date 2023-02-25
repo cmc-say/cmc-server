@@ -23,7 +23,7 @@ public class Block extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long blockId;
 
-    @Setter @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private Long blockingUserId;
 
     @ManyToOne

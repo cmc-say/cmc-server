@@ -27,12 +27,11 @@ public class Report extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
-    @Setter @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private Long reportingUserId;
 
     @ManyToOne
     @JoinColumn(name = "reportedUserId")
-    @Setter @Column(nullable = false, length = 50)
     private User reportedUser;
 
     @Enumerated(EnumType.STRING)

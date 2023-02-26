@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Getter
 @Table(
-        name = "Hashtag",
+        name = "hashtag",
         indexes = {
                 @Index(columnList = "hashtagName")
         }

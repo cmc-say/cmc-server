@@ -9,6 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT a FROM User u LEFT JOIN Avatar a on a.user.userId = u.userId WHERE u.userId = :userId")
-    List<Avatar> findAvatarsByUser(@Param("userId") Long userId);
+    @Query(value = "SELECT u FROM WorldAvatar wa " +
+            "JOIN wa.avatar a " +
+            "JOIN a.user u " +
+            "WHERE u.userId = :userId " +
+            "AND wa.world.worldId = :worldId ")
+    List<User> findUserByUserIdAndWorldId(@Param("userId") Long userId, @Param("worldId") Long worldId);
 }

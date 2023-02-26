@@ -29,8 +29,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// db
-	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
-//	runtimeOnly ''
+	implementation 'mysql:mysql-connector-java'
 
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
@@ -39,9 +38,16 @@ dependencies {
 
 	// s3
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
+	// jasypt
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// swagger
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
 }
 
 tasks.named('test') {

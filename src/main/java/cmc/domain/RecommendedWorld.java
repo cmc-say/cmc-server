@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "RecommendedWorld")
+@Table(name = "recommended_world")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class RecommendedWorld {

@@ -1,0 +1,58 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        ddl-auto: update
+        default_batch_fetch_size: 100
+    database: mysql
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cmc_database
+    username: ENC(5t3trXl6x9B1GSY40+G3BA==)
+    password: ENC(hk78W5mR3kbAumncZiPXB7toeK+f4jmX)
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8080
+
+jwt:
+  secret: ENC(By3yFl8amJZbh+nnFWQQ8xX5RVOdERBgxmP5FsWViKeQoXcW8YRknJH/fTA/CiI43htZd28f33nIGtLJk0YlslTUlxrCg1C7c5TFM3RG6Fw=)
+  access-token-validity: 86400  # 60*60*24 : 1day
+  refresh-token-validity: 7776000 # 60*60*24*90 : 3month
+
+# multipart 설정
+spring.servlet.multipart.max-file-size: 5MB
+spring.servlet.multipart.max-request-size: 10MB
+
+# s3 설정
+cloud:
+  aws:
+    s3:
+      bucket: ENC(1QtHOXWxxundm39hMZpIq8HMy6NgIrcB)
+      iamAccessKey: ENC(VLvRNUM/yWOOcdmXwod4B8nT8d+0o4oYhqGSiClZ7JY=)
+      iamSecretKey: ENC(y7gd8tWKqrMs09hqrvln2UW+EfmXShELZbWBjkS1+EslvSvBEx3r8KP4o5Y+x2yTUQjkaitMGdk=)
+    region:
+      static: ap-northeast-2
+
+# Jasypt
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    algorithm: PBEWithMD5AndDES
+    pool-size: 2
+    string-output-type: base64
+    key-obtention-iterations: 100000
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+

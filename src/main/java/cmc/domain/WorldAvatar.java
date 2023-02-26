@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "WorldAvatar", indexes = {@Index(columnList = "worldId"), @Index(columnList = "avatarId")})
+@Table(name = "world_avatar", indexes = {@Index(columnList = "worldId"), @Index(columnList = "avatarId")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class WorldAvatar extends BaseEntity {

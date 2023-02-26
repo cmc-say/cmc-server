@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "Block",
+@Table(name = "block",
         indexes = {
             @Index(columnList = "blockingUserId"),
         },
@@ -23,16 +23,17 @@ public class Block extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long blockId;
 
-    @Setter @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private Long blockingUserId;
 
-    @Setter @Column(nullable = false, length = 50)
-    private Long blockedUserId;
+    @ManyToOne
+    @JoinColumn(name = "blockedUserId")
+    private User blockedUser;
 
     @Builder
-    public Block(Long blockId, Long blockingUserId, Long blockedUserId) {
+    public Block(Long blockId, Long blockingUserId, User blockedUser) {
         this.blockId = blockId;
         this.blockingUserId = blockingUserId;
-        this.blockedUserId = blockedUserId;
+        this.blockedUser = blockedUser;
     }
 }

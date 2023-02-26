@@ -42,12 +42,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(GET_PERMITTED_URLS).permitAll()
                 .antMatchers(POST_PERMITTED_URLS).permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
                 .anyRequest().authenticated();
         // jwt filter
         http.addFilterBefore(
                 new JwtAuthenticationFilter(jwtProvider),
                 UsernamePasswordAuthenticationFilter.class
         );
+        ;
     }
 
     @Override

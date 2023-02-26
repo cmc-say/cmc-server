@@ -2,6 +2,8 @@ package cmc.service;
 
 
 import cmc.domain.Avatar;
+import cmc.error.exception.BusinessException;
+import cmc.error.exception.ErrorCode;
 import cmc.repository.AvatarRepository;
 import cmc.domain.User;
 import cmc.repository.UserRepository;
@@ -21,18 +23,19 @@ public class AvatarService {
     private final UserRepository userRepository;
 
     private final AvatarRepository avatarRepository;
-    private final UserService userService;
     private final S3Util s3Util;
 
     public List<Avatar> getCharactersByUserId(Long userId) {
-        return userRepository.findAvatarsByUser(userId);
+        return avatarRepository.findAvatarsByUserId(userId);
     }
 
     @Transactional
-    public void saveAvatar(Long tokenUserId, String avatarName, String avatarMessage, MultipartFile file) {
+    public void saveAvatar(Long userId, String avatarName, String avatarMessage, MultipartFile file) {
+
         String imgUrl = s3Util.upload(file, "character");
-        User user = userService.findUser(tokenUserId);
-        log.info("img url {}", imgUrl.length());
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         Avatar avatar = Avatar.builder()
                 .avatarName(avatarName)
@@ -40,6 +43,7 @@ public class AvatarService {
                 .avatarImg(imgUrl)
                 .user(user)
                 .build();
+
         avatarRepository.save(avatar);
     }
 }

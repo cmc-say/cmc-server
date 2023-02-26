@@ -27,21 +27,22 @@ public class Report extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
-    @Setter @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private Long reportingUserId;
 
-    @Setter @Column(nullable = false, length = 50)
-    private Long reportedUserId;
+    @ManyToOne
+    @JoinColumn(name = "reportedUserId")
+    private User reportedUser;
 
     @Enumerated(EnumType.STRING)
     @Setter @Column(nullable = false, length = 20)
     private ReportType reportType;
 
     @Builder
-    public Report(Long reportId, Long reportingUserId, Long reportedUserId, ReportType reportType) {
+    public Report(Long reportId, Long reportingUserId, User reportedUser, ReportType reportType) {
         this.reportId = reportId;
         this.reportingUserId = reportingUserId;
-        this.reportedUserId = reportedUserId;
+        this.reportedUser = reportedUser;
         this.reportType = reportType;
     }
 }

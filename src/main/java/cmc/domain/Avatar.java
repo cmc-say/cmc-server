@@ -43,4 +43,15 @@ public class Avatar extends BaseEntity {
         this.avatarImg = avatarImg;
         this.user = user;
     }
+
+    // 신고 기준치를 넘은 유저의 캐릭터들을 규칙에 맞게 바꿔주는 함수
+    public Avatar changeToReportedAvatar() {
+        String BLOCKED_AVATAR_NAME = "차단된 캐릭터";
+        String BLOCKED_AVATAR_MESSAGE = "차단된 메세지";
+
+        this.setAvatarName(BLOCKED_AVATAR_NAME);
+        this.setAvatarMessage(BLOCKED_AVATAR_MESSAGE);
+
+        return this;
+    }
 }

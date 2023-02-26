@@ -51,9 +51,12 @@ public class UserController {
                     "회원 신고(닉네임 or 상태메세지)가 5번 누적됐을 경우 신고 당한 유저의 캐릭터들" +
                     "모두 캐릭터 닉네임과 캐릭터 상태메세지가 각각 `차단된 유저`와 `차단된 상태메세지` 로 변경됩니다.  "
     )
-    @ApiResponses({
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원 신고 성공"),
-            @ApiResponse(responseCode = "400", description = "user not found")
+            @ApiResponse(responseCode = "400", description = "user not found"),
+            @ApiResponse(responseCode = "400", description = "중복된 신고입니다."),
+            @ApiResponse(responseCode = "400", description = "신고하는 유저와 당하는 유저가 같습니다."),
+            @ApiResponse(responseCode = "400", description = "신고 타입이 잘못되었습니다.")
     })
     @PostMapping("/{userId}/report")
     public ResponseEntity<ResponseDto> reportUser(
@@ -69,10 +72,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_REPORT_SUCCESS));
     }
 
-    // 유저 차단
+    @Operation(
+            summary = "회원 차단",
+            description = "param userId에 해당하는 회원을 차단합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "회원 차단 성공"),
+            @ApiResponse(responseCode = "400", description = "user not found"),
+            @ApiResponse(responseCode = "400", description = "차단하는 유저와 당하는 유저가 같습니다.")
+    })
     @PostMapping("/{userId}/block")
     public ResponseEntity<ResponseDto> blockUser(
-            @PathVariable("userId") Long userId,
+            @Parameter(description = "차단 당하는 유저 아이디", required = true) @PathVariable("userId") Long userId,
             Principal principal) {
 
         Long tokenUserId = Long.parseLong(principal.getName());

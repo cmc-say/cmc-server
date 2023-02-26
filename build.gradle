@@ -47,8 +47,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	// swagger
-	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
 }
 
 tasks.named('test') {

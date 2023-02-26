@@ -10,6 +10,8 @@ import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -97,7 +99,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_BLOCK_SUCCESS));
     }
 
-    // 유저의 캐릭터들 조회
+    @Operation(
+            summary = "유저가 갖는 캐릭터들 조회",
+            description = "토큰에 해당하는 유저가 갖고 있는 캐릭터들을 조회합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터 조회 성공")
+    })
     @GetMapping("/avatars")
     public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatars(Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
@@ -109,8 +117,17 @@ public class UserController {
     }
 
     // 세계관에 참여하고 있는 유저인지 조회
+    @Operation(
+            summary = "세계관에 참여하고 있는 유저인지 조회",
+            description = "토큰에 해당하는 유저가 세계관에 참여하고 있는 유저인지 조회합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관에 참여하고 있는 유저인지 조회 성공")
+    })
     @GetMapping("/world/{worldId}/is-member")
-    public ResponseEntity<ResponseDto<IsMemberOfWorldResponseDto>> isMemberOfWorld(@PathVariable("worldId") Long worldId, Principal principal) {
+    public ResponseEntity<ResponseDto<IsMemberOfWorldResponseDto>> isMemberOfWorld(
+            @Parameter(description = "확인하는 세계관 아이디", required = true) @PathVariable("worldId") Long worldId,
+            Principal principal) {
 
         Long userId = Long.parseLong(principal.getName());
 

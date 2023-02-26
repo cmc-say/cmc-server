@@ -1,7 +1,10 @@
 package cmc.controller;
 
+import cmc.domain.Avatar;
 import cmc.domain.model.ReportType;
 import cmc.dto.request.ReportUserRequestDto;
+import cmc.dto.response.AvatarResponseDto;
+import cmc.dto.response.IsMemberOfWorldResponseDto;
 import cmc.service.UserService;
 import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
@@ -17,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -92,4 +97,26 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_BLOCK_SUCCESS));
     }
 
+    // 유저의 캐릭터들 조회
+    @GetMapping("/avatars")
+    public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatars(Principal principal) {
+        Long tokenUserId = Long.parseLong(principal.getName());
+        List<Avatar> avatars = userService.getCharactersByUserId(tokenUserId);
+
+        List<AvatarResponseDto> saveAvatarResponse = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
+    }
+
+    // 세계관에 참여하고 있는 유저인지 조회
+    @GetMapping("/world/{worldId}/is-member")
+    public ResponseEntity<ResponseDto<IsMemberOfWorldResponseDto>> isMemberOfWorld(@PathVariable("worldId") Long worldId, Principal principal) {
+
+        Long userId = Long.parseLong(principal.getName());
+
+        boolean isMember = userService.isMemberOfWorldByUserId(userId, worldId);
+        IsMemberOfWorldResponseDto isMemberOfWorldResponseDto = new IsMemberOfWorldResponseDto(isMember);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponseDto));
+    }
 }

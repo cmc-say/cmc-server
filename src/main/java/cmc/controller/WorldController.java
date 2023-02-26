@@ -62,17 +62,7 @@ public class WorldController {
     }
 
 
-    // 세계관에 참여하고 있는 유저인지 조회
-    @GetMapping("/api/v1/user/world/{worldId}/isMember")
-    public ResponseEntity<ResponseDto<IsMemberOfWorldResponseDto>> isMemberOfWorld(@PathVariable("worldId") Long worldId, Principal principal) {
 
-        Long userId = Long.parseLong(principal.getName());
-
-        boolean isMember = worldService.isMemberOfWorldByUserId(userId, worldId);
-        IsMemberOfWorldResponseDto isMemberOfWorldResponseDto = new IsMemberOfWorldResponseDto(isMember);
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponseDto));
-    }
 
 
     // 세계관 최신순 조회

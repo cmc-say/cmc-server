@@ -74,6 +74,17 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    public List<Avatar> getCharactersByUserId(Long userId) {
+        return avatarRepository.findAvatarsByUserId(userId);
+    }
+
+    public boolean isMemberOfWorldByUserId(Long userId, Long worldId) {
+
+        boolean isMemeber = !userRepository.findUserByUserIdAndWorldId(userId, worldId).isEmpty();
+
+        return isMemeber;
+    }
+
     private void checkDuplicatedBlock(Long blockingUserId, Long blockedUserId) {
 
         if(!blockRepository.findBlockByBlockingUserIdAndBlockedUser(blockingUserId, blockedUserId).isEmpty()){

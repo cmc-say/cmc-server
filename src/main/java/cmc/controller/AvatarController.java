@@ -27,16 +27,7 @@ public class AvatarController {
     private final AvatarService avatarService;
     private final S3Util s3Util;
 
-    // 유저의 캐릭터들 조회
-    @GetMapping("/api/v1/user/avatars")
-    public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatars(Principal principal) {
-        Long tokenUserId = Long.parseLong(principal.getName());
-        List<Avatar> avatars = avatarService.getCharactersByUserId(tokenUserId);
 
-        List<AvatarResponseDto> saveAvatarResponse = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
-    }
 
     // 캐릭터 저장 (사진, 정보)
     @PostMapping("/api/v1/avatar")

@@ -25,9 +25,6 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final S3Util s3Util;
 
-    public List<Avatar> getCharactersByUserId(Long userId) {
-        return avatarRepository.findAvatarsByUserId(userId);
-    }
 
     @Transactional
     public void saveAvatar(Long userId, String avatarName, String avatarMessage, MultipartFile file) {

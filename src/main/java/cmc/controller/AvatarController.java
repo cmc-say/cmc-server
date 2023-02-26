@@ -4,9 +4,10 @@ import cmc.dto.request.SaveAvatarRequestDto;
 import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
 import cmc.service.AvatarService;
-import cmc.common.ApiResponse;
+import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
 import cmc.utils.S3Util;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,30 +22,31 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "캐릭터 컨트롤러")
 public class AvatarController {
     private final AvatarService avatarService;
     private final S3Util s3Util;
 
     // 유저의 캐릭터들 조회
     @GetMapping("/api/v1/user/avatars")
-    public ResponseEntity<ApiResponse<List<AvatarResponseDto>>> getAvatars(Principal principal) {
+    public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatars(Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         List<Avatar> avatars = avatarService.getCharactersByUserId(tokenUserId);
 
         List<AvatarResponseDto> saveAvatarResponse = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
     }
 
     // 캐릭터 저장 (사진, 정보)
     @PostMapping("/api/v1/avatar")
-    public ResponseEntity<ApiResponse> saveAvatar(
+    public ResponseEntity<ResponseDto> saveAvatar(
             @RequestPart(value = "data") SaveAvatarRequestDto req,
             @RequestPart(value = "file") MultipartFile file,
             Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), file);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.AVATAR_SAVE_SUCCESS));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.AVATAR_SAVE_SUCCESS));
     }
 //
 //    // 캐릭터 수정 (사진) PUT /{characterId}/img

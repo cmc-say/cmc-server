@@ -63,4 +63,21 @@ jasypt:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     secret-key: ${JASYPT_SECRET_KEY}
 
+# swaggerdoc
+springdoc:
+  version: '@v1'
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    disable-swagger-default-url: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+  cache:
+    disabled: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+
 

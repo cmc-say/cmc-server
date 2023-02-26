@@ -116,7 +116,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_CHARACTERS_FOUND, saveAvatarResponse));
     }
 
-    // 세계관에 참여하고 있는 유저인지 조회
     @Operation(
             summary = "세계관에 참여하고 있는 유저인지 조회",
             description = "토큰에 해당하는 유저가 세계관에 참여하고 있는 유저인지 조회합니다."

@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface AvatarRepository extends JpaRepository<Avatar, Long> {
     @Query(value = "SELECT a FROM Avatar a LEFT JOIN User u on a.user.userId = u.userId WHERE u.userId = :userId")
-    List<Avatar> findAvatarsByUser(@Param("userId") Long userId);
+    List<Avatar> findAvatarsByUserId(@Param("userId") Long userId);
 }

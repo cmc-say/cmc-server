@@ -28,5 +28,5 @@ public interface WorldRepository extends JpaRepository<World, Long> {
             "WHERE w.worldName LIKE CONCAT('%', :keyword, '%') " +
             "OR h.hashtagName LIKE :keyword " +
             "ORDER BY w.createdAt desc ")
-    List<World> searchWorld(@Param("keyword") String keyword);
+    List<World> searchWorldByWorldNameAndHashtagName(@Param("keyword") String keyword);
 }

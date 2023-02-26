@@ -6,13 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query(value = "SELECT r " +
             "FROM Report r " +
-            "WHERE r.reportedUser.userId = :reportingUserId " +
-            "AND r.reportingUserId = :reportedUserId ")
-    List<Report> findByReportingUserIdAndReportedUser(@Param("reportingUserId") Long reportingUserId, @Param("reportedUserId") Long reportedUserId);
+            "JOIN r.reportedUser ru " +
+            "WHERE ru.userId = :reportedUserId " +
+            "AND r.reportingUserId = :reportingUserId ")
+    Optional<Report> findByReportingUserIdAndReportedUserId(@Param("reportingUserId") Long reportingUserId, @Param("reportedUserId") Long reportedUserId);
 
     @Query(value = "SELECT r " +
             "FROM Report r " +

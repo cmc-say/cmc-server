@@ -14,5 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "JOIN a.user u " +
             "WHERE u.userId = :userId " +
             "AND wa.world.worldId = :worldId ")
-    List<User> findWorldByUserId(@Param("userId") Long userId, @Param("worldId") Long worldId);
+    List<User> findUserByUserIdAndWorldId(@Param("userId") Long userId, @Param("worldId") Long worldId);
 }

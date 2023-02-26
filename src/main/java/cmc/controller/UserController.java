@@ -5,8 +5,11 @@ import cmc.dto.request.ReportUserRequestDto;
 import cmc.service.UserService;
 import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,16 +21,21 @@ import java.security.Principal;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@Api(tags = "User 컨트롤러")
+@RequestMapping("/api/v1/user")
+@Tag(name = "User 컨트롤러")
 public class UserController {
 
     private final UserService userService;
 
-    // 회원 탈퇴
-    @DeleteMapping("/api/v1/user")
+    @Operation(
+            summary = "회원 탈퇴",
+            description = "토큰에 해당하는 회원을 탈퇴합니다."
+    )
     @ApiResponses({
-            ()
+            @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공"),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
+    @DeleteMapping
     public ResponseEntity<ResponseDto> deleteUser(Principal principal) {
 
         Long tokenUserId = Long.parseLong(principal.getName());
@@ -37,9 +45,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_DELETE_SUCCESS));
     }
 
-    // 유저 신고
-    @PostMapping("/api/v1/user/{userId}/report")
-    public ResponseEntity<ResponseDto> reportUser(@PathVariable("userId") Long reportedUserId, Principal principal, @RequestBody ReportUserRequestDto req) {
+    @Operation(
+            summary = "회원 신고",
+            description = "param userId에 해당하는 회원을 신고합니다. \n" +
+                    "회원 신고(닉네임 or 상태메세지)가 5번 누적됐을 경우 신고 당한 유저의 캐릭터들" +
+                    "모두 캐릭터 닉네임과 캐릭터 상태메세지가 각각 `차단된 유저`와 `차단된 상태메세지` 로 변경됩니다.  "
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "회원 신고 성공"),
+            @ApiResponse(responseCode = "400", description = "user not found")
+    })
+    @PostMapping("/{userId}/report")
+    public ResponseEntity<ResponseDto> reportUser(
+            @Parameter(description = "신고 당하는 유저 id", required = true) @PathVariable("userId") Long reportedUserId,
+            @RequestBody ReportUserRequestDto req,
+            Principal principal) {
 
         Long reportingUserId = Long.parseLong(principal.getName());
         ReportType reportType = ReportType.fromString(req.getReportType());
@@ -50,9 +70,10 @@ public class UserController {
     }
 
     // 유저 차단
-    @PostMapping("/api/v1/user/{userId}/block")
-    public ResponseEntity<ResponseDto> blockUser(@PathVariable("userId") Long userId, Principal principal) {
-        log.info("block user - authentication name {}", principal.getName());
+    @PostMapping("/{userId}/block")
+    public ResponseEntity<ResponseDto> blockUser(
+            @PathVariable("userId") Long userId,
+            Principal principal) {
 
         Long tokenUserId = Long.parseLong(principal.getName());
         userService.blockUser(tokenUserId, userId);

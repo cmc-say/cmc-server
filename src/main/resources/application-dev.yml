@@ -71,9 +71,13 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     display-request-duration: true
-  show-actuator: true
+    disable-swagger-default-url: true
+    tags-sorter: alpha
+    operations-sorter: alpha
   cache:
     disabled: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
 
 
 

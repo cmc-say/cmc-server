@@ -4,14 +4,10 @@ import cmc.domain.User;
 import cmc.domain.model.OrderType;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
-import cmc.repository.WorldAvatarRepository;
+import cmc.repository.*;
 import cmc.domain.Hashtag;
 import cmc.domain.World;
 import cmc.domain.WorldHashtag;
-import cmc.repository.HashtagRepository;
-import cmc.repository.RecommendedWorldRepository;
-import cmc.repository.WorldHashtagRepository;
-import cmc.repository.WorldRepository;
 import cmc.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class WorldService {
+    private final UserRepository userRepository;
     private final WorldRepository worldRepository;
     private final HashtagRepository hashtagRepository;
     private final WorldHashtagRepository worldHashtagRepository;
@@ -50,11 +47,10 @@ public class WorldService {
 
         // savedHashtags : 이미 저장되어 있는 해시태그
         // newHashtags : 저장되어 있지 않은 새로운 해시태그
-        List<Hashtag> savedHashtags = hashtagRepository.findByHashtagNameIn(hashtagNames);
+        List<Hashtag> savedHashtags = hashtagRepository.findHashtagByNameIn(hashtagNames);
         List<Hashtag> newHashtags = hashtagNames.stream()
                 .filter(hashtag -> savedHashtags.stream().noneMatch(h -> h.getHashtagName().equals(hashtag)))
-                .map(h ->
-                        Hashtag.builder()
+                .map(h -> Hashtag.builder()
                                 .hashtagName(h)
                                 .build())
                 .collect(Collectors.toList());
@@ -92,11 +88,14 @@ public class WorldService {
     }
 
     public List<World> getWorldsByAvatar(Long avatarId) {
-        return worldAvatarRepository.findWorldWithAvatar(avatarId);
+        return worldRepository.findWorldWithAvatar(avatarId);
     }
 
-    public List<User> isMemberOfWorldByUserId(Long userId, Long worldId) {
-        return worldAvatarRepository.findWorldByUserId(userId, worldId);
+    public boolean isMemberOfWorldByUserId(Long userId, Long worldId) {
+
+        boolean isMemeber = !userRepository.findUserByUserIdAndWorldId(userId, worldId).isEmpty();
+
+        return isMemeber;
     }
 
     public List<World> getWorldsWithOrder(OrderType orderType) {
@@ -104,6 +103,7 @@ public class WorldService {
         if(orderType.equals("RECENT")) {
             return worldRepository.getWorldsWithOrderRecent();
         }
+
         // recent가 아니라면 default로 id asc
         return worldRepository.findAll();
     }
@@ -119,6 +119,6 @@ public class WorldService {
     }
 
     public List<World> searchWorldByKeyword(String keyword) {
-        return worldHashtagRepository.searchWorld(keyword);
+        return worldRepository.searchWorldByWorldNameAndHashtagName(keyword);
     }
 }

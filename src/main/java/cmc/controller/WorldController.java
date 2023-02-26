@@ -68,7 +68,7 @@ public class WorldController {
 
         Long userId = Long.parseLong(principal.getName());
 
-        boolean isMember = !worldService.isMemberOfWorldByUserId(userId, worldId).isEmpty();
+        boolean isMember = worldService.isMemberOfWorldByUserId(userId, worldId);
         IsMemberOfWorldResponseDto isMemberOfWorldResponseDto = new IsMemberOfWorldResponseDto(isMember);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(ResponseCode.USER_IS_MEMBER_OF_WORLD_FOUND, isMemberOfWorldResponseDto));

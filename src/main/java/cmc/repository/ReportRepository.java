@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface UserReportRepository extends JpaRepository<Report, Long> {
+public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query(value = "SELECT r " +
             "FROM Report r " +
             "WHERE r.reportedUser.userId = :reportingUserId " +

@@ -8,7 +8,6 @@ import cmc.dto.response.IsMemberOfWorldResponseDto;
 import cmc.service.WorldService;
 import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
-import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Api(tags = "세계관 컨트롤러")
 public class WorldController {
 
     private final WorldService worldService;

@@ -7,7 +7,7 @@ import cmc.service.AvatarService;
 import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
 import cmc.utils.S3Util;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Api(tags = "캐릭터 컨트롤러")
+@Tag(name = "캐릭터 컨트롤러")
 public class AvatarController {
     private final AvatarService avatarService;
     private final S3Util s3Util;

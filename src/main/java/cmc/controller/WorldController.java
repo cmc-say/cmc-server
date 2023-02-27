@@ -30,13 +30,14 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/world")
 @Slf4j
-@Tag(name = "세계관 컨트롤러")
+@Tag(name = "World 컨트롤러")
 public class WorldController {
 
     private final WorldService worldService;
@@ -51,7 +52,7 @@ public class WorldController {
     })
     @PostMapping
     public ResponseEntity<ResponseDto> saveWorld(
-            @Parameter(description = "세계관 정보", required = true)@RequestPart(value = "data") SaveWorldRequestDto req,
+            @Parameter(description = "세계관 정보", required = true) @RequestPart(value = "data") SaveWorldRequestDto req,
             @Parameter(description = "세계관 이미지", required = true) @RequestParam(value = "file") MultipartFile file,
             Principal principal
             ) {
@@ -114,7 +115,8 @@ public class WorldController {
 
     @Operation(
             summary = "세계관 정보 수정",
-            description = "세계관의 해시태그와 세계관 이미지를 제외한 정보를 수정합니다."
+            description = "세계관의 해시태그와 세계관 이미지를 제외한 정보를 수정합니다. \n " +
+                    "방장이 아닌 경우 Unauthorized 됩니다. "
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 상세 정보 수정 성공"),
@@ -146,11 +148,22 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_INFO_UPDATED));
     }
 
-    // 세계관 정보 (사진) for 방장
+    @Operation(
+            summary = "세계관 이미지 수정",
+            description = "param 으로 들어오는 세계관의 이미지를 수정합니다. \n " +
+                    "사진 크기 제한은 5MB 입니다." +
+                    "방장이 아닌 경우 Unauthorized 됩니다. "
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "세계관 이미지 수정 성공"),
+            @ApiResponse(responseCode = "400", description = "파일이 제한 크기를 초과하였습니다. <br>" +
+                    "파일 업로드에 실패하였습니다. ", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @PostMapping("/{worldId}/img")
     public ResponseEntity<ResponseDto> updateWorldImg(
-            @PathVariable Long worldId,
-            @RequestParam(value = "file") MultipartFile file,
+            @Parameter(description = "세계관 id", required = true) @PathVariable Long worldId,
+            @Parameter(description = "세계관 이미지", required = true) @RequestParam(value = "file") MultipartFile file,
             Principal principal
     ) {
         Long tokenUserId = Long.parseLong(principal.getName());

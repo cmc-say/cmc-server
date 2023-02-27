@@ -116,7 +116,8 @@ public class WorldController {
     @Operation(
             summary = "세계관 정보 수정",
             description = "세계관의 해시태그와 세계관 이미지를 제외한 정보를 수정합니다. \n " +
-                    "방장이 아닌 경우 Unauthorized 됩니다. "
+                    "방장이 아닌 경우 Unauthorized 됩니다. " +
+                    "(세계관 방장 넘겨주기 기능은 후순위 기능이므로 그대로 픽스 해주세요) "
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 상세 정보 수정 성공"),

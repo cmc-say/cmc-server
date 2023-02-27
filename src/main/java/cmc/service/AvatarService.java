@@ -2,11 +2,13 @@ package cmc.service;
 
 
 import cmc.domain.Avatar;
+import cmc.domain.World;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.AvatarRepository;
 import cmc.domain.User;
 import cmc.repository.UserRepository;
+import cmc.repository.WorldRepository;
 import cmc.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AvatarService {
     private final UserRepository userRepository;
-
     private final AvatarRepository avatarRepository;
+    private final WorldRepository worldRepository;
     private final S3Util s3Util;
-
-    public List<Avatar> getCharactersByUserId(Long userId) {
-        return avatarRepository.findAvatarsByUserId(userId);
-    }
 
     @Transactional
     public void saveAvatar(Long userId, String avatarName, String avatarMessage, MultipartFile file) {
@@ -45,5 +43,9 @@ public class AvatarService {
                 .build();
 
         avatarRepository.save(avatar);
+    }
+
+    public List<World> getWorldsByAvatar(Long avatarId) {
+        return worldRepository.findWorldWithAvatar(avatarId);
     }
 }

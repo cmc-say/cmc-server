@@ -89,7 +89,7 @@ public class WorldService {
 
     public List<World> getWorldsWithOrder(OrderType orderType) {
 
-        if(orderType.equals("RECENT")) {
+        if(orderType == OrderType.RECENT) {
             return worldRepository.getWorldsWithOrderRecent();
         }
 

@@ -1,6 +1,7 @@
 package cmc.error;
 
 import cmc.error.exception.ErrorCode;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,16 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
 
+    @Schema(name = "에러 메세지")
     private String message;
+    
+    @Schema(name = "에러 상태 코드")
     private int status;
+    
+    @Schema(name = "에러 모음")
     private List<FieldError> errors;
+    
+    @Schema(name = "에러 코드")
     private String code;
 
 

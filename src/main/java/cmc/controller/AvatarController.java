@@ -1,12 +1,17 @@
 package cmc.controller;
 
+import cmc.domain.World;
 import cmc.dto.request.SaveAvatarRequestDto;
 import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
+import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.service.AvatarService;
 import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
 import cmc.utils.S3Util;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +27,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "캐릭터 컨트롤러")
+@Tag(name = "avatar 컨트롤러")
 public class AvatarController {
     private final AvatarService avatarService;
     private final S3Util s3Util;
@@ -39,6 +44,26 @@ public class AvatarController {
         avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), file);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.AVATAR_SAVE_SUCCESS));
     }
+
+    @Operation(
+            summary = "세계관 저장",
+            description = "세계관을 저장합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 저장 성공"),
+            @ApiResponse(responseCode = "400", description = "이미지 업로드 실패")
+    })
+    @GetMapping("/api/v1/world/avatar/{avatarId}")
+    public ResponseEntity<ResponseDto<List<WorldHashtagsUserCountResponseDto>>> getWorldsByAvatar(@PathVariable("avatarId") Long avatarId) {
+
+        List<World> worldHashtags = avatarService.getWorldsByAvatar(avatarId);
+        List<WorldHashtagsUserCountResponseDto> worldHashtagsRespons = worldHashtags.stream()
+                .map(WorldHashtagsUserCountResponseDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_WITH_CHARACTER_FOUND_SUCCESS, worldHashtagsRespons));
+    }
+
 //
 //    // 캐릭터 수정 (사진) PUT /{characterId}/img
 //    @PutMapping("/{characterId}/img")

@@ -87,10 +87,6 @@ public class WorldService {
         worldHashtagRepository.saveAll(worldHashtagList);
     }
 
-    public List<World> getWorldsByAvatar(Long avatarId) {
-        return worldRepository.findWorldWithAvatar(avatarId);
-    }
-
     public List<World> getWorldsWithOrder(OrderType orderType) {
 
         if(orderType.equals("RECENT")) {

@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Getter
 public enum OrderType {
 
-    RECENT("recent"), ID("id");
+    RECENT("recent"), ID("id"), POPULAR("popular");
 
     private String orderTypeName;
 

@@ -20,16 +20,17 @@ public enum ErrorCode {
     SELF_BLOCK_OR_REPORT(400, "U004", "신고/차단하는 유저와 당하는 유저가 같습니다."),
     REPORT_TYPE_ERROR(400, "U005", "신고 타입이 잘못되었습니다."),
 
-    // world
-    ORDER_TYPE_ERROR(400, "W001" , "정렬 타입이 잘못되었습니다." ),
-    WORLD_NOT_FOUND(400, "W002", "존재하지 않는 세계관입니다."),
-
     // Jwt
     TOKEN_INVALID_EXCEPTION(401, "J001", "유효하지 않은 토큰입니다."),
 
     // s3
     FILE_SIZE_EXCEED(400, "S001" , "파일이 제한 크기를 초과하였습니다."),
-    FILE_UPLOAD_ERROR(400, "S002", "파일 업로드에 실패하였습니다.");
+    FILE_UPLOAD_ERROR(400, "S002", "파일 업로드에 실패하였습니다."),
+
+    // world
+    ORDER_TYPE_ERROR(400, "W001" , "정렬 타입이 잘못되었습니다." ),
+    WORLD_NOT_FOUND(400, "W002", "존재하지 않는 세계관입니다."),
+    WORLD_USER_LIMIT_ERROR(400, "W003", "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다.");
 
     private final String code;
     private final String message;

@@ -1,6 +1,5 @@
 package cmc.service;
 
-import cmc.domain.User;
 import cmc.domain.model.OrderType;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -137,6 +135,7 @@ public class WorldService {
         worldRepository.save( world.updateWorld(updateWorldInfo) );
     }
 
+    @Transactional
     public void updateWorldImg(Long userId, Long worldId, MultipartFile file) {
 
         World world = worldRepository.findById(worldId)
@@ -206,5 +205,19 @@ public class WorldService {
         // savedHashtags에 필요한 해시태그 모두 합치기
         savedHashtags.addAll(savedNewhashtags);
         return savedHashtags;
+    }
+
+    @Transactional
+    public void updateDeletedWorldHashtags(Long userId, Long worldId, List<String> worldhashtags) {
+
+        World world = worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
+        // 토큰의 유저가 방장이 아닐 경우 Unauthorized
+        if (!world.getWorldHostUserId().equals(userId)) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+        }
+
+        worldHashtagRepository.deleteWorldHashtagByWorldHashtagId(worldhashtags);
     }
 }

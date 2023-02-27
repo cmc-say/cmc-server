@@ -1,6 +1,7 @@
 package cmc.controller;
 
 import cmc.domain.model.OrderType;
+import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateWorldInfoRequestDto;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
@@ -229,11 +230,20 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_HASHTAG_CREATED));
     }
 
-//    // 세계관 해시태그 수정 - 해시태그 여러개 삭제 DELETE /world/{worldId}/hashtags
-//    @DeleteMapping("/{worldId}/hashtags")
-//    public ResponseEntity<ResponseDto> updateDeletedWorldHashtags() {
-//
-//    }
+    // 세계관 해시태그 수정 - 해시태그 여러개 삭제 DELETE /world/{worldId}/hashtags
+    @DeleteMapping("/{worldId}/hashtags")
+    public ResponseEntity<ResponseDto> updateDeletedWorldHashtags(
+            Principal principal,
+            @PathVariable("worldId") Long worldId,
+            @RequestBody UpdateDeletedWorldHashtagsRequestDto req
+    ) {
+
+        Long tokenUserId = Long.parseLong(principal.getName());
+
+        worldService.updateDeletedWorldHashtags(tokenUserId, worldId, req.getWorldHashtagIds());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_HASHTAG_DELETED));
+    }
 
 //
 //    // 세계관 인기 해시태그 조회

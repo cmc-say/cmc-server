@@ -78,7 +78,7 @@ public class World extends BaseEntity {
         this.worldHostUserId = worldHostUserId;
     }
 
-    public World updateWorldInfo(World world) {
+    public World updateWorld(World world) {
 
         this.setWorldName(world.getWorldName());
         this.setWorldUserLimit(world.getWorldUserLimit());

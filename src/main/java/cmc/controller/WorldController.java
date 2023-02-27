@@ -112,8 +112,7 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_DELETED));
     }
 
-    // 세계관 수정 (정보) for 방장
-    @PutMapping("/api/v1/world/{worldId}/info")
+    @PutMapping("/{worldId}/info")
     public ResponseEntity<ResponseDto> updateWorldInfo(
             @RequestBody UpdateWorldInfoRequestDto req,
             @PathVariable("worldId") Long worldId,
@@ -129,7 +128,6 @@ public class WorldController {
                 worldId,
                 req.getWorldName(),
                 req.getWorldUserLimit(),
-                req.getWorldImg(),
                 LocalDateTime.parse(req.getWorldStartDate(), formatter),
                 LocalDateTime.parse(req.getWorldEndDate(), formatter),
                 req.getWorldNotice(),
@@ -144,7 +142,7 @@ public class WorldController {
 //    public ResponseEntity<ApiResponse> updateWorldImg() {
 //
 //    }
-//
+
     @Operation(
             summary = "세계관 상세 조회",
             description = "세계관 상세 정보를 조회합니다."

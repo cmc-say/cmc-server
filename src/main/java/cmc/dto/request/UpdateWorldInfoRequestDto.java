@@ -6,7 +6,6 @@ import lombok.Getter;
 public class UpdateWorldInfoRequestDto {
     private String worldName;
     private Integer worldUserLimit;
-    private String worldImg;
     private String worldStartDate;
     private String worldEndDate;
     private String worldNotice;

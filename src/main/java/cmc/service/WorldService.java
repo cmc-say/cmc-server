@@ -118,7 +118,6 @@ public class WorldService {
             Long worldId,
             String worldName,
             Integer worldUserLimit,
-            String worldImg,
             LocalDateTime worldStartDate,
             LocalDateTime worldEndDate,
             String worldNotice,
@@ -141,7 +140,7 @@ public class WorldService {
         World updateWorldInfo = World.builder()
                 .worldName(worldName)
                 .worldUserLimit(worldUserLimit)
-                .worldImg(worldImg)
+                .worldImg(world.getWorldImg()) // 사진은 원래 그대로
                 .worldStartDate(worldStartDate)
                 .worldEndDate(worldEndDate)
                 .worldNotice(worldNotice)
@@ -149,6 +148,6 @@ public class WorldService {
                 .worldHostUserId(worldHostUserId)
                 .build();
 
-        worldRepository.save( world.updateWorldInfo(updateWorldInfo) );
+        worldRepository.save( world.updateWorld(updateWorldInfo) );
     }
 }

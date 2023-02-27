@@ -146,11 +146,19 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_INFO_UPDATED));
     }
 
-//    // 세계관 정보 (사진) for 방장
-//    @PostMapping("/api/v1/world/{worldId}/img")
-//    public ResponseEntity<ApiResponse> updateWorldImg() {
-//
-//    }
+    // 세계관 정보 (사진) for 방장
+    @PostMapping("/{worldId}/img")
+    public ResponseEntity<ResponseDto> updateWorldImg(
+            @PathVariable Long worldId,
+            @RequestParam(value = "file") MultipartFile file,
+            Principal principal
+    ) {
+        Long tokenUserId = Long.parseLong(principal.getName());
+
+        worldService.updateWorldImg(tokenUserId, worldId, file);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(ResponseCode.WORLD_IMG_UPDATED));
+    }
 
     @Operation(
             summary = "세계관 상세 조회",

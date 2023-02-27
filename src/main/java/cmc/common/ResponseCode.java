@@ -25,7 +25,8 @@ public enum ResponseCode {
     WORLD_FOUND_SUCCESS(HttpStatus.OK, "세계관 조회에 성공하였습니다."),
     WORLD_DELETED(HttpStatus.OK, "세계관 삭제에 성공하였습니다."),
     WORLD_SEARCH_SUCCESS(HttpStatus.OK, "세계관 검색에 성공하였습니다."),
-    WORLD_INFO_UPDATED(HttpStatus.OK, "세계관 정보 수정에 성공하였습니다.");
+    WORLD_INFO_UPDATED(HttpStatus.OK, "세계관 정보 수정에 성공하였습니다."),
+    WORLD_IMG_UPDATED(HttpStatus.CREATED, "세계관 이미지 수정에 성공하였습니다.");
 
     private final HttpStatus status;
     private final String message;

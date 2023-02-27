@@ -150,4 +150,30 @@ public class WorldService {
 
         worldRepository.save( world.updateWorld(updateWorldInfo) );
     }
+
+    public void updateWorldImg(Long userId, Long worldId, MultipartFile file) {
+
+        World world = worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
+        // 토큰의 유저가 방장이 아닐 경우 Unauthorized
+        if (!world.getWorldHostUserId().equals(userId)) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+        }
+
+        String newWorldImgUri = s3Util.upload(file, "world");
+
+        World updateWorldInfo = World.builder()
+                .worldName(world.getWorldName())
+                .worldUserLimit(world.getWorldUserLimit())
+                .worldImg(newWorldImgUri) // 사진만 변경
+                .worldStartDate(world.getWorldStartDate())
+                .worldEndDate(world.getWorldEndDate())
+                .worldNotice(world.getWorldNotice())
+                .worldPassword(world.getWorldPassword())
+                .worldHostUserId(world.getWorldHostUserId())
+                .build();
+
+        worldRepository.save(world.updateWorld(updateWorldInfo));
+    }
 }

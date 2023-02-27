@@ -1,13 +1,14 @@
 package cmc.controller;
 
+import cmc.domain.Hashtag;
 import cmc.domain.model.OrderType;
 import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateWorldInfoRequestDto;
+import cmc.dto.response.HashtagResponseDto;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
-import cmc.dto.response.IsMemberOfWorldResponseDto;
 import cmc.error.ErrorResponse;
 import cmc.service.WorldService;
 import cmc.common.ResponseDto;
@@ -21,9 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +31,6 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -71,7 +69,7 @@ public class WorldController {
                 req.getHashtags(),
                 req.getTodos());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(ResponseCode.WORLD_SAVE_SUCCESS));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORLD_SAVE_SUCCESS));
     }
 
     @Operation(
@@ -112,7 +110,7 @@ public class WorldController {
 
         worldService.deleteWorld(worldId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_DELETED));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_DELETED));
     }
 
     @Operation(
@@ -235,7 +233,7 @@ public class WorldController {
 
         worldService.updateNewWorldHashtags(tokenUserId, worldId, req.getHashtags());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_HASHTAG_CREATED));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_HASHTAG_CREATED));
     }
 
     @Operation(
@@ -251,7 +249,7 @@ public class WorldController {
     @DeleteMapping("/{worldId}/hashtags")
     public ResponseEntity<ResponseDto> updateDeletedWorldHashtags(
             Principal principal,
-            @PathVariable("worldId") Long worldId,
+            @Parameter(description = "수정할 세계관 id", required = true) @PathVariable("worldId") Long worldId,
             @RequestBody UpdateDeletedWorldHashtagsRequestDto req
     ) {
 
@@ -259,15 +257,22 @@ public class WorldController {
 
         worldService.updateDeletedWorldHashtags(tokenUserId, worldId, req.getWorldHashtagIds());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_HASHTAG_DELETED));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_HASHTAG_DELETED));
     }
 
-//
-//    // 세계관 인기 해시태그 조회
-//    @GetMapping("/api/v1/world/hashtag")
-//    public ResponseEntity<ApiResponse<dto>> getPopularHashtags() {
-//
-//    }
+
+    // 세계관 인기 해시태그 조회
+    @GetMapping("/hashtags")
+    public ResponseEntity<ResponseDto> getPopularHashtags(
+            @Parameter(description = "세계관 정렬 기준") @RequestParam(value = "order", defaultValue = "id") String order) {
+
+        OrderType orderType = OrderType.fromString(order);
+
+        List<Hashtag> popularHashtags = worldService.getPopularHashtags(orderType);
+        List<HashtagResponseDto> dtoList = popularHashtags.stream().map(HashtagResponseDto::fromEntity).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.HASHTAG_IN_ORDER_FOUND, dtoList));
+    }
 
 //    // 추천 세계관 목록 조회
 //    @GetMapping("/api/v1/world/{worldId}")

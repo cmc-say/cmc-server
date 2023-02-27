@@ -1,6 +1,7 @@
 package cmc.service;
 
 import cmc.domain.model.OrderType;
+import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.*;
@@ -219,5 +220,15 @@ public class WorldService {
         }
 
         worldHashtagRepository.deleteWorldHashtagByWorldHashtagId(worldhashtagIds);
+    }
+
+    public List<Hashtag> getPopularHashtags(OrderType orderType) {
+
+        if(orderType == OrderType.POPULAR) {
+            return hashtagRepository.getHashtagWithOrderPopular();
+        }
+
+        // recent가 아니라면 default로 id asc
+        return hashtagRepository.findAll();
     }
 }

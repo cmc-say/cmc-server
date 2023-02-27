@@ -1,6 +1,5 @@
 package cmc.dto.response;
 
-import cmc.domain.Hashtag;
 import cmc.domain.World;
 import cmc.domain.WorldAvatar;
 import cmc.domain.WorldHashtag;
@@ -33,7 +32,7 @@ public class WorldHashtagsUserCountResponseDto {
     private LocalDateTime worldEndDate;
 
     @Schema(description = "세계관에 해당되는 해시태그")
-    private List<HashtagResponseDto> hashtags;
+    private List<WorldHashtagResponseDto> hashtags;
 
     @Schema(description = "세계관 방장 유저 id")
     private Long worldHostUserId;
@@ -67,7 +66,7 @@ public class WorldHashtagsUserCountResponseDto {
         this.worldImg = worldImg;
         this.worldStartDate = worldStartDate;
         this.worldEndDate = worldEndDate;
-        this.hashtags = hashtags.stream().map(HashtagResponseDto::fromEntity).collect(Collectors.toList());
+        this.hashtags = hashtags.stream().map(WorldHashtagResponseDto::fromEntity).collect(Collectors.toList());
         this.worldHostUserId = worldHostUserId;
         this.worldNotice = worldNotice;
         this.worldPassword = worldPassword;

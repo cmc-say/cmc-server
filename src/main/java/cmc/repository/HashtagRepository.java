@@ -12,4 +12,11 @@ public interface HashtagRepository extends JpaRepository<Hashtag, Long> {
             "FROM Hashtag h " +
             "WHERE h.hashtagName IN :hashtagNames ")
     List<Hashtag> findHashtagByNameIn(@Param("hashtagNames") List<String> hashtagNames);
+
+    @Query(value = "SELECT h " +
+            "FROM WorldHashtag wh " +
+            "JOIN wh.hashtag h " +
+            "GROUP BY h.hashtagId " +
+            "ORDER BY COUNT(wh.worldHashtagId) DESC")
+    List<Hashtag> getHashtagWithOrderPopular();
 }

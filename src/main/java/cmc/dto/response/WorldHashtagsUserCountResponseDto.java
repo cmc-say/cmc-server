@@ -4,6 +4,7 @@ import cmc.domain.Hashtag;
 import cmc.domain.World;
 import cmc.domain.WorldAvatar;
 import cmc.domain.WorldHashtag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,16 +14,37 @@ import java.util.stream.Collectors;
 
 @Getter
 public class WorldHashtagsUserCountResponseDto {
+    @Schema(description = "세계관 id")
     private Long worldId;
+
+    @Schema(description = "세계관 이름")
     private String worldName;
+
+    @Schema(description = "세계관 제한 인원")
     private Integer worldUserLimit;
+
+    @Schema(description = "세계관 이미지 url")
     private String worldImg;
+
+    @Schema(description = "세계관 시작하는 datetime")
     private LocalDateTime worldStartDate;
+
+    @Schema(description = "세계관 끝나는 datetime")
     private LocalDateTime worldEndDate;
+
+    @Schema(description = "세계관에 해당되는 해시태그")
     private List<HashtagResponseDto> hashtags;
+
+    @Schema(description = "세계관 방장 유저 id")
     private Long worldHostUserId;
+
+    @Schema(description = "세계관 공지")
     private String worldNotice;
+
+    @Schema(description = "세계관 비밀번호")
     private String worldPassword;
+
+    @Schema(description = "세계관에 참여하는 캐릭터")
     private List<WorldAvatarResponseDto> worldAvatars;
 
     @Builder

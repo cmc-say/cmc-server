@@ -46,21 +46,7 @@ public class WorldService {
 
         String worldImgUri = s3Util.upload(file, "world");
 
-        // savedHashtags : 이미 저장되어 있는 해시태그
-        // newHashtags : 저장되어 있지 않은 새로운 해시태그
-        List<Hashtag> savedHashtags = hashtagRepository.findHashtagByNameIn(hashtagNames);
-        List<Hashtag> newHashtags = hashtagNames.stream()
-                .filter(hashtag -> savedHashtags.stream().noneMatch(h -> h.getHashtagName().equals(hashtag)))
-                .map(h -> Hashtag.builder()
-                                .hashtagName(h)
-                                .build())
-                .collect(Collectors.toList());
-
-        // 새로운 해시태그 이름이라면 모두 저장
-        List<Hashtag> savedNewhashtags = hashtagRepository.saveAll(newHashtags);
-
-        // savedHashtags에 필요한 해시태그 모두 합치기
-        savedHashtags.addAll(savedNewhashtags);
+        List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
 
         //TODO: todos 저장
         //Todo todo
@@ -78,7 +64,7 @@ public class WorldService {
 
         World savedWorld = worldRepository.save(world);
 
-        List<WorldHashtag> worldHashtagList = savedHashtags.stream().map(savedHashtag ->
+        List<WorldHashtag> worldHashtagList = hashtags.stream().map(savedHashtag ->
                 WorldHashtag.builder()
                         .world(savedWorld)
                         .hashtag(savedHashtag)
@@ -175,5 +161,50 @@ public class WorldService {
                 .build();
 
         worldRepository.save(world.updateWorld(updateWorldInfo));
+    }
+
+    @Transactional
+    public void updateNewWorldHashtags(Long userId, Long worldId, List<String> hashtagNames) {
+
+        World world = worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
+        // 토큰의 유저가 방장이 아닐 경우 Unauthorized
+        if (!world.getWorldHostUserId().equals(userId)) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+        }
+
+        List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
+
+        List<WorldHashtag> worldHashtagList = hashtags.stream().map(savedHashtag ->
+                        WorldHashtag.builder()
+                                .world(world)
+                                .hashtag(savedHashtag)
+                                .build())
+                .collect(Collectors.toList());
+
+        worldHashtagRepository.saveAll(worldHashtagList);
+    }
+
+    // 해시태그가 존재하지 않는다면 저장을 해주고
+    // 이미 저장되어 있는 해시태그와 합쳐서 반환
+    private List<Hashtag> saveHashtagsIfNotExistsByHashtagNames(List<String> hashtagNames) {
+
+        // savedHashtags : 이미 저장되어 있는 해시태그
+        // newHashtags : 저장되어 있지 않은 새로운 해시태그
+        List<Hashtag> savedHashtags = hashtagRepository.findHashtagByNameIn(hashtagNames);
+        List<Hashtag> newHashtags = hashtagNames.stream()
+                .filter(hashtag -> savedHashtags.stream().noneMatch(h -> h.getHashtagName().equals(hashtag)))
+                .map(h -> Hashtag.builder()
+                        .hashtagName(h)
+                        .build())
+                .collect(Collectors.toList());
+
+        // 새로운 해시태그 이름이라면 모두 저장
+        List<Hashtag> savedNewhashtags = hashtagRepository.saveAll(newHashtags);
+
+        // savedHashtags에 필요한 해시태그 모두 합치기
+        savedHashtags.addAll(savedNewhashtags);
+        return savedHashtags;
     }
 }

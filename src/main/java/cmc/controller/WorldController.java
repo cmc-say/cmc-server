@@ -1,6 +1,7 @@
 package cmc.controller;
 
 import cmc.domain.model.OrderType;
+import cmc.dto.request.UpdateWorldInfoRequestDto;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +36,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/world")
 @Slf4j
-@Tag(name = "world 컨트롤러")
+@Tag(name = "세계관 컨트롤러")
 public class WorldController {
 
     private final WorldService worldService;
@@ -108,13 +111,34 @@ public class WorldController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_DELETED));
     }
-//
-//    // 세계관 수정 (정보) for 방장
-//    @PutMapping("/api/v1/world/{worldId}/info")
-//    public ResponseEntity<ApiResponse> updateWorldInfo() {
-//
-//    }
-//
+
+    // 세계관 수정 (정보) for 방장
+    @PutMapping("/api/v1/world/{worldId}/info")
+    public ResponseEntity<ResponseDto> updateWorldInfo(
+            @RequestBody UpdateWorldInfoRequestDto req,
+            @PathVariable("worldId") Long worldId,
+            Principal principal
+    ) {
+
+        Long tokenUserId = Long.parseLong(principal.getName());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        worldService.updateWorldInfo(
+                tokenUserId,
+                worldId,
+                req.getWorldName(),
+                req.getWorldUserLimit(),
+                req.getWorldImg(),
+                LocalDateTime.parse(req.getWorldStartDate(), formatter),
+                LocalDateTime.parse(req.getWorldEndDate(), formatter),
+                req.getWorldNotice(),
+                req.getWorldPassword(),
+                req.getWorldHostUserId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_INFO_UPDATED));
+    }
+
 //    // 세계관 정보 (사진) for 방장
 //    @PostMapping("/api/v1/world/{worldId}/img")
 //    public ResponseEntity<ApiResponse> updateWorldImg() {

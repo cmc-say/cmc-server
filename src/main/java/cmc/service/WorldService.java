@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,5 +110,45 @@ public class WorldService {
 
     public List<World> searchWorldByKeyword(String keyword) {
         return worldRepository.searchWorldByWorldNameAndHashtagName(keyword);
+    }
+
+    @Transactional
+    public void updateWorldInfo(
+            Long userId,
+            Long worldId,
+            String worldName,
+            Integer worldUserLimit,
+            String worldImg,
+            LocalDateTime worldStartDate,
+            LocalDateTime worldEndDate,
+            String worldNotice,
+            String worldPassword,
+            Long worldHostUserId) {
+
+        World world = worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
+        // 토큰의 유저가 방장이 아닐 경우 Unauthorized
+        if (!world.getWorldHostUserId().equals(userId)) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+        }
+
+        // 설정하려는 user limit가 현재의 세계관 유저 count보다 작을 경우 Bad Request
+        if (worldUserLimit < world.getWorldAvatars().size()){
+            throw new BusinessException(ErrorCode.WORLD_USER_LIMIT_ERROR);
+        }
+
+        World updateWorldInfo = World.builder()
+                .worldName(worldName)
+                .worldUserLimit(worldUserLimit)
+                .worldImg(worldImg)
+                .worldStartDate(worldStartDate)
+                .worldEndDate(worldEndDate)
+                .worldNotice(worldNotice)
+                .worldPassword(worldPassword)
+                .worldHostUserId(worldHostUserId)
+                .build();
+
+        worldRepository.save( world.updateWorldInfo(updateWorldInfo) );
     }
 }

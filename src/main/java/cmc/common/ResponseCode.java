@@ -24,7 +24,8 @@ public enum ResponseCode {
     USER_IS_MEMBER_OF_WORLD_FOUND(HttpStatus.OK, "유저 세계관 참여 여부 조회에 성공하였습니다." ),
     WORLD_FOUND_SUCCESS(HttpStatus.OK, "세계관 조회에 성공하였습니다."),
     WORLD_DELETED(HttpStatus.OK, "세계관 삭제에 성공하였습니다."),
-    WORLD_SEARCH_SUCCESS(HttpStatus.OK, "세계관 검색에 성공하였습니다.");
+    WORLD_SEARCH_SUCCESS(HttpStatus.OK, "세계관 검색에 성공하였습니다."),
+    WORLD_INFO_UPDATED(HttpStatus.OK, "세계관 정보 수정에 성공하였습니다.");
 
     private final HttpStatus status;
     private final String message;

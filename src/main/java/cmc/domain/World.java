@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,5 +76,19 @@ public class World extends BaseEntity {
         this.worldNotice = worldNotice;
         this.worldPassword = worldPassword;
         this.worldHostUserId = worldHostUserId;
+    }
+
+    public World updateWorldInfo(World world) {
+
+        this.setWorldName(world.getWorldName());
+        this.setWorldUserLimit(world.getWorldUserLimit());
+        this.setWorldImg(world.getWorldImg());
+        this.setWorldStartDate(world.getWorldStartDate());
+        this.setWorldEndDate(world.getWorldEndDate());
+        this.setWorldNotice(world.getWorldNotice());
+        this.setWorldPassword(world.getWorldPassword());
+        this.setWorldHostUserId(world.getWorldHostUserId());
+
+        return this;
     }
 }

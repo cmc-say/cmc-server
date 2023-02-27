@@ -112,10 +112,19 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_DELETED));
     }
 
+    @Operation(
+            summary = "세계관 정보 수정",
+            description = "세계관의 해시태그와 세계관 이미지를 제외한 정보를 수정합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 상세 정보 수정 성공"),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "400", description = "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PutMapping("/{worldId}/info")
     public ResponseEntity<ResponseDto> updateWorldInfo(
             @RequestBody UpdateWorldInfoRequestDto req,
-            @PathVariable("worldId") Long worldId,
+            @Parameter(description = "수정하려는 세계관 id", required = true) @PathVariable("worldId") Long worldId,
             Principal principal
     ) {
 

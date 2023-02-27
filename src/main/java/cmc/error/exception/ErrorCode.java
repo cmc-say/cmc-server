@@ -30,7 +30,7 @@ public enum ErrorCode {
     // world
     ORDER_TYPE_ERROR(400, "W001" , "정렬 타입이 잘못되었습니다." ),
     WORLD_NOT_FOUND(400, "W002", "존재하지 않는 세계관입니다."),
-    WORLD_USER_LIMIT_ERROR(400, "S003", "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다.");
+    WORLD_USER_LIMIT_ERROR(400, "W003", "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다.");
 
     private final String code;
     private final String message;

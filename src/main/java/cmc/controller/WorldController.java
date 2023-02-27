@@ -75,6 +75,7 @@ public class WorldController {
     @Operation(
             summary = "세계관 최신순 조회",
             description = "세계관을 최신순으로 조회합니다." +
+                    "\t\n 만료된 세계관은 조회에서 제외됩니다." +
                     "\t\n`order=recent` 인 경우 최신순을 반환하며 없는 경우에는 id asc 로 반환합니다."
     )
     @ApiResponses({
@@ -270,7 +271,8 @@ public class WorldController {
     @GetMapping("/hashtags")
     public ResponseEntity<ResponseDto<List<HashtagResponseDto>>> getPopularHashtags(
             @Parameter(description = "해시태그 정렬 기준" +
-                    "\t\n`order=popular` 인 경우 인기순을 반환하며 없는 경우에는 id asc 로 반환합니다."
+                    "\t\n`order=popular` 인 경우 인기순을 반환하며 없는 경우에는 id asc 로 반환합니다." +
+                    "\t\n 인기순의 경우 만료된 세계관도 카운팅에 포함됩니다."
             ) @RequestParam(value = "order", defaultValue = "id") String order) {
 
         OrderType orderType = OrderType.fromString(order);

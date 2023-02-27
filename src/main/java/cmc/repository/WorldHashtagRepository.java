@@ -13,5 +13,5 @@ public interface WorldHashtagRepository extends JpaRepository<WorldHashtag, Long
     @Modifying
     @Query(value = "DELETE FROM WorldHashtag wh " +
             "WHERE wh.worldHashtagId IN :worldHashtags")
-    void deleteWorldHashtagByWorldHashtagId(@Param("worldHashtags") List<String> worldHashtags);
+    void deleteWorldHashtagByWorldHashtagId(@Param("worldHashtags") List<Long> worldHashtags);
 }

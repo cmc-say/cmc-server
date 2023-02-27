@@ -215,11 +215,19 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_SEARCH_SUCCESS, dtoList));
     }
 
-    // 세계관 해시태그 수정 - 해시태그 여러개 추가 POST /world/{worldId}/hashtags
+    @Operation(
+            summary = "세계관 해시태그 수정 (추가)",
+            description = "세계관 수정 화면에서 새로 추가되는 해시태그들에 대한 api입니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 해시태그 수정 (추가) 에 성공하였습니다."),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PostMapping("/{worldId}/hashtags")
     public ResponseEntity<ResponseDto> updateNewWorldHashtags(
             Principal principal,
-            @PathVariable("worldId") Long worldId,
+            @Parameter(description = "수정할 세계관 id", required = true) @PathVariable("worldId") Long worldId,
             @RequestBody UpdateNewWorldHashtagsRequestDto req
             ) {
 
@@ -230,7 +238,16 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_HASHTAG_CREATED));
     }
 
-    // 세계관 해시태그 수정 - 해시태그 여러개 삭제 DELETE /world/{worldId}/hashtags
+    @Operation(
+            summary = "세계관 해시태그 수정 (삭제)",
+            description = "세계관 수정 화면에서 삭제될 해시태그들에 대한 api입니다. " +
+                    "삭제될 해시태그의 세계관-해시태그 매핑 id (worldHashtagId) 를 list 로 보내주세요."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 해시태그 수정 (삭제) 에 성공하였습니다."),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @DeleteMapping("/{worldId}/hashtags")
     public ResponseEntity<ResponseDto> updateDeletedWorldHashtags(
             Principal principal,

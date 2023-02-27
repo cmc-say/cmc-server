@@ -208,7 +208,7 @@ public class WorldService {
     }
 
     @Transactional
-    public void updateDeletedWorldHashtags(Long userId, Long worldId, List<String> worldhashtags) {
+    public void updateDeletedWorldHashtags(Long userId, Long worldId, List<Long> worldhashtagIds) {
 
         World world = worldRepository.findById(worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
@@ -218,6 +218,6 @@ public class WorldService {
             throw new BusinessException(ErrorCode.ACCESS_DENIED);
         }
 
-        worldHashtagRepository.deleteWorldHashtagByWorldHashtagId(worldhashtags);
+        worldHashtagRepository.deleteWorldHashtagByWorldHashtagId(worldhashtagIds);
     }
 }

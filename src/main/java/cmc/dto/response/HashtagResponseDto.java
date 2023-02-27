@@ -15,7 +15,7 @@ public class HashtagResponseDto {
     @Schema(description = "해시태그 이름")
     private String hashtagName;
 
-    HashtagResponseDto(Long hashtagId, Long worldHashtagId, String hashtagName) {
+    HashtagResponseDto(Long worldHashtagId, Long hashtagId, String hashtagName) {
         this.worldHashtagId = worldHashtagId;
         this.hashtagId = hashtagId;
         this.hashtagName = hashtagName;

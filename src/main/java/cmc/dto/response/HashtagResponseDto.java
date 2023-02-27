@@ -1,12 +1,15 @@
 package cmc.dto.response;
 
 import cmc.domain.Hashtag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class HashtagResponseDto {
+    @Schema(description = "해시태그 id")
     private Long hashtagId;
+    @Schema(description = "해시태그 이름")
     private String hashtagName;
 
     @Builder

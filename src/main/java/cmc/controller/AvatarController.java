@@ -10,6 +10,7 @@ import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
 import cmc.utils.S3Util;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,18 +28,25 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "avatar 컨트롤러")
+@RequestMapping("/api/v1/avatar")
+@Tag(name = "Avatar 컨트롤러")
 public class AvatarController {
     private final AvatarService avatarService;
     private final S3Util s3Util;
 
 
-
-    // 캐릭터 저장 (사진, 정보)
-    @PostMapping("/api/v1/avatar")
+    @Operation(
+            summary = "캐릭터 저장",
+            description = "캐릭터를 저장합니다. 이미지 크기 제한은 5MB 입니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터 저장 성공"),
+            @ApiResponse(responseCode = "400", description = "이미지 업로드 실패")
+    })
+    @PostMapping
     public ResponseEntity<ResponseDto> saveAvatar(
             @RequestPart(value = "data") SaveAvatarRequestDto req,
-            @RequestPart(value = "file") MultipartFile file,
+            @Parameter(description = "이미지 사진", required = true) @RequestPart(value = "file") MultipartFile file,
             Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), file);

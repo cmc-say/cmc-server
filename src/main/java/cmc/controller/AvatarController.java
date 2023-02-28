@@ -5,12 +5,15 @@ import cmc.dto.request.SaveAvatarRequestDto;
 import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
+import cmc.error.ErrorResponse;
 import cmc.service.AvatarService;
 import cmc.common.ResponseDto;
 import cmc.common.ResponseCode;
 import cmc.utils.S3Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -74,11 +77,18 @@ public class AvatarController {
     }
 
 
-    // 캐릭터 수정 (사진) PUT /{characterId}/img
+    @Operation(
+            summary = "캐릭터 이미지 수정",
+            description = "캐릭터의 이미지를 수정합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터 이미지가 업데이트 되었습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터가 존재하지 않습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PostMapping("/{avatarId}/img")
     public ResponseEntity<ResponseDto> updateCharacterImg(
-            @PathVariable("avatarId") Long avatarId,
-            @RequestPart(value = "file") MultipartFile file
+            @Parameter(description = "수정하는 캐릭터 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "수정하는 캐릭터 이미지", required = true) @RequestPart(value = "file") MultipartFile file
     ) {
 
         avatarService.updateAvatarImg(avatarId, file);

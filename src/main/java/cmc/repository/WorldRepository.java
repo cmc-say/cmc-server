@@ -18,15 +18,32 @@ public interface WorldRepository extends JpaRepository<World, Long> {
 
     @Query(value = "SELECT w " +
             "FROM World w " +
-            "ORDER BY w.createdAt desc ")
-    List<World> getWorldsWithOrderRecent();
+            "WHERE w.worldEndDate >= CURRENT_DATE ")
+    List<World> getWorldsWithoutExpiredWorld();
 
     @Query(value = "SELECT w " +
+            "FROM World w " +
+            "WHERE w.worldEndDate >= CURRENT_DATE " +
+            "ORDER BY w.createdAt desc ")
+    List<World> getWorldsWithOrderRecentWithoutExpiredWorld();
+
+    @Query(value = "SELECT distinct w " +
             "FROM WorldHashtag wh " +
             "JOIN wh.world w " +
             "JOIN wh.hashtag h " +
-            "WHERE w.worldName LIKE CONCAT('%', :keyword, '%') " +
-            "OR h.hashtagName LIKE :keyword " +
+            "WHERE (w.worldName LIKE CONCAT('%', :keyword, '%') " +
+            "OR h.hashtagName LIKE :keyword) " +
+            "AND w.worldEndDate >= CURRENT_DATE " +
             "ORDER BY w.createdAt desc ")
-    List<World> searchWorldByWorldNameAndHashtagName(@Param("keyword") String keyword);
+    List<World> searchWorldByWorldNameAndHashtagNameWithOrderRecentWithoutExpiredWorld(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT distinct w " +
+            "FROM WorldHashtag wh " +
+            "JOIN wh.world w " +
+            "JOIN wh.hashtag h " +
+            "WHERE (w.worldName LIKE CONCAT('%', :keyword, '%') " +
+            "OR h.hashtagName LIKE :keyword) " +
+            "AND w.worldEndDate >= CURRENT_DATE ")
+    List<World> searchWorldByWorldNameAndHashtagNameWithoutExpiredWorld(@Param("keyword") String keyword);
+
 }

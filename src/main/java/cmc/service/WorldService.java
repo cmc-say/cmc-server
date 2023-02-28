@@ -236,4 +236,11 @@ public class WorldService {
         // recent가 아니라면 default로 id asc
         return hashtagRepository.findAll();
     }
+
+    public List<Todo> getWorldTodoToday(Long worldId) {
+
+        List<Todo> worldTodoTodayByWorldId = todoRepository.getWorldTodoByWorldId(worldId); //이미 모든 날짜의 avatar_todo가 todo에 매핑되어있으므로 다 가져와서 service에서 필터링 거치기
+
+        
+    }
 }

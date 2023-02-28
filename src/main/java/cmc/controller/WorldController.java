@@ -73,13 +73,13 @@ public class WorldController {
     }
 
     @Operation(
-            summary = "세계관 최신순 조회",
-            description = "세계관을 최신순으로 조회합니다." +
+            summary = "세계관 전체 조회",
+            description = "세계관을 전체 조회합니다." +
                     "\t\n 만료된 세계관은 조회에서 제외됩니다." +
                     "\t\n`order=recent` 인 경우 최신순을 반환하며 없는 경우에는 id asc 로 반환합니다."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "세계관 최신순 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "세계관 전체 조회 성공"),
             @ApiResponse(responseCode = "400", description = "정렬 타입이 잘못되었습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
@@ -196,7 +196,8 @@ public class WorldController {
     @Operation(
             summary = "세계관 검색",
             description = "키워드로 `해시태그`와 `제목`을 기준으로 세계관 검색합니다." +
-                    "\t\n해시태그의 경우 완전 일치, 제목의 경우 단어가 포함되어 있으면 검색 결과에 포함됩니다."
+                    "\t\n해시태그의 경우 완전 일치, 제목의 경우 단어가 포함되어 있으면 검색 결과에 포함됩니다." +
+                    "\t\n`order=recent` 인 경우 최신순을 반환하며 없는 경우에는 id asc 로 반환합니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 상세 정보 조회 성공"),
@@ -204,9 +205,12 @@ public class WorldController {
     })
     @GetMapping("/search")
     public ResponseEntity<ResponseDto<List<WorldHashtagsUserCountResponseDto>>> searchWorld(
-            @Parameter(description = "검색 키워드") @RequestParam("keyword") String keyword) {
+            @Parameter(description = "검색 키워드") @RequestParam("keyword") String keyword,
+            @Parameter(description = "세계관 정렬 기준") @RequestParam(value = "order", defaultValue = "id") String order
+    ) {
+        OrderType orderType = OrderType.fromString(order);
 
-        List<World> worlds= worldService.searchWorldByKeyword(keyword);
+        List<World> worlds= worldService.searchWorldByKeyword(keyword, orderType);
         List<WorldHashtagsUserCountResponseDto> dtoList = worlds.stream()
                 .map(WorldHashtagsUserCountResponseDto::fromEntity)
                 .collect(Collectors.toList());

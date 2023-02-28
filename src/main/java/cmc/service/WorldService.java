@@ -76,11 +76,11 @@ public class WorldService {
     public List<World> getWorldsWithOrder(OrderType orderType) {
 
         if(orderType == OrderType.RECENT) {
-            return worldRepository.getWorldsWithOrderRecent();
+            return worldRepository.getWorldsWithOrderRecentWithoutExpiredWorld();
         }
 
         // recent가 아니라면 default로 id asc
-        return worldRepository.findAll();
+        return worldRepository.getWorldsWithoutExpiredWorld();
     }
 
     @Transactional
@@ -93,8 +93,13 @@ public class WorldService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
     }
 
-    public List<World> searchWorldByKeyword(String keyword) {
-        return worldRepository.searchWorldByWorldNameAndHashtagName(keyword);
+    public List<World> searchWorldByKeyword(String keyword, OrderType orderType) {
+
+        if(orderType == OrderType.RECENT) {
+            return worldRepository.searchWorldByWorldNameAndHashtagNameWithOrderRecentWithoutExpiredWorld(keyword);
+        }
+
+        return worldRepository.searchWorldByWorldNameAndHashtagNameWithoutExpiredWorld(keyword);
     }
 
     @Transactional

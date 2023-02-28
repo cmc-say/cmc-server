@@ -1,20 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0;
-DROP TABLE IF EXISTS `user` CASCADE ;
-DROP TABLE IF EXISTS `avatar` CASCADE;
-DROP TABLE IF EXISTS `todo` CASCADE;
-DROP TABLE IF EXISTS `world_avatar` CASCADE;
-DROP TABLE IF EXISTS `hashtag` CASCADE;
-DROP TABLE IF EXISTS `world_hashtag` CASCADE;
-DROP TABLE IF EXISTS `world` CASCADE;
-DROP TABLE IF EXISTS `report` CASCADE;
-DROP TABLE IF EXISTS `avatar_todo` CASCADE;
-DROP TABLE IF EXISTS `recommended_alarm` CASCADE;
-DROP TABLE IF EXISTS `recommended_world` CASCADE;
-DROP TABLE IF EXISTS `recommended_todo` CASCADE;
-DROP TABLE IF EXISTS wordtoday CASCADE;
-DROP TABLE IF EXISTS `block` CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
-
 create table avatar
 (
     avatar_id      bigint auto_increment
@@ -29,18 +12,6 @@ create table avatar
         unique (avatar_id)
 );
 
-create table avatar_todo
-(
-    avatar_todo_id bigint auto_increment
-        primary key,
-    todo_id        bigint      not null,
-    avatar_id      bigint      not null,
-    created_at     varchar(30) null,
-    modified_at    varchar(30) null,
-    constraint avatar_todo_id
-        unique (avatar_todo_id)
-);
-
 create table block
 (
     block_id         bigint auto_increment
@@ -51,6 +22,18 @@ create table block
     modified_at      varchar(30) null,
     constraint block_id
         unique (block_id)
+);
+
+create table checked_todo
+(
+    checked_todo_id bigint auto_increment
+        primary key,
+    todo_id         bigint      not null,
+    world_avatar_id bigint      not null,
+    created_at      varchar(30) null,
+    modified_at     varchar(30) null,
+    constraint avatar_todo_id
+        unique (checked_todo_id)
 );
 
 create table hashtag
@@ -110,7 +93,9 @@ create table report
     created_at        varchar(30) null,
     modified_at       varchar(30) null,
     constraint report_id
-        unique (report_id)
+        unique (report_id),
+    constraint reporting_user_id_reported_user_id_constraint
+        unique (reported_user_id, reporting_user_id)
 );
 
 create table todo
@@ -139,7 +124,7 @@ create table user
         unique (user_id)
 );
 
-create table word_today
+create table wordtoday
 (
     word_today_id      bigint auto_increment
         primary key,

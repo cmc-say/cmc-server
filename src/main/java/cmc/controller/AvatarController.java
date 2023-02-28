@@ -2,6 +2,7 @@ package cmc.controller;
 
 import cmc.domain.World;
 import cmc.dto.request.SaveAvatarRequestDto;
+import cmc.dto.request.UpdateAvatarRequestDto;
 import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
@@ -96,11 +97,17 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_IMG_UPDATED));
     }
 
-//    // 캐릭터 수정 (정보) PUT /{characterId}/info
-//    @PutMapping("/{characterId}/info")
-//    public ResponseEntity<ApiResponse> updateCharacterInfo() {
-//
-//    }
+    
+    @PutMapping("/{avatarId}/info")
+    public ResponseEntity<ResponseDto> updateCharacterInfo(
+            @PathVariable("avatarId") Long avatarId,
+            @RequestBody UpdateAvatarRequestDto req
+            ) {
+
+        avatarService.updateAvatarInfo(avatarId, req.getAvatarName(), req.getAvatarMessage());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_INFO_UPDATED));
+    }
 //
 //    // 캐릭터 정보 조회 GET /{characterId}
 //    @GetMapping("/{characterId}")

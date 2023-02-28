@@ -60,4 +60,15 @@ public class AvatarService {
 
         avatarRepository.save(avatar);
     }
+
+    public void updateAvatarInfo(Long avatarId, String avatarName, String avatarMessage) {
+
+        Avatar avatar = avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
+
+        avatar.setAvatarName(avatarName);
+        avatar.setAvatarMessage(avatarMessage);
+
+        avatarRepository.save(avatar);
+    }
 }

@@ -5,6 +5,7 @@ import cmc.domain.model.OrderType;
 import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateWorldInfoRequestDto;
+import cmc.dto.response.CountCheckedTodoResponse;
 import cmc.dto.response.HashtagResponseDto;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.dto.request.SaveWorldRequestDto;
@@ -285,6 +286,22 @@ public class WorldController {
         List<HashtagResponseDto> dtoList = popularHashtags.stream().map(HashtagResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.HASHTAG_IN_ORDER_FOUND, dtoList));
+    }
+
+    @Operation(
+            summary = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회",
+            description = "오늘 날짜의 세계관 캐릭터 전체의 체크리스트 달성 현황을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회")
+    })
+    @GetMapping("/{worldId}/todo/today")
+    public ResponseEntity<ResponseDto<List<CountCheckedTodoResponse>>> getWorldTodoToday(
+            @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
+    ) {
+
+        List<CountCheckedTodoResponse> todos = worldService.getWorldTodoToday(worldId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, todos));
     }
 
 //    // 추천 세계관 목록 조회

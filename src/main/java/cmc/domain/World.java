@@ -55,6 +55,9 @@ public class World extends BaseEntity {
     @OneToMany(targetEntity = WorldAvatar.class, fetch = FetchType.LAZY, mappedBy = "world", cascade = CascadeType.ALL)
     private List<WorldAvatar> worldAvatars = new ArrayList<>();
 
+    @OneToMany(targetEntity = Todo.class, fetch = FetchType.LAZY, mappedBy = "world", cascade = CascadeType.ALL)
+    private List<Todo> todos = new ArrayList<>();
+
     @Builder
     public World(
             Long worldId,

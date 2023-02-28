@@ -19,6 +19,7 @@ public class Todo extends BaseEntity {
     private World world;
 
     @Setter
+    @Column(length = 50)
     private String todoContent;
 
     @Builder

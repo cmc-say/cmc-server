@@ -71,4 +71,9 @@ public class AvatarService {
 
         avatarRepository.save(avatar);
     }
+
+    public Avatar getAvatarByAvatarId(Long avatarId) {
+        return avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
+    }
 }

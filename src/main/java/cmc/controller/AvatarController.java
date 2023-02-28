@@ -115,12 +115,18 @@ public class AvatarController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_INFO_UPDATED));
     }
-//
-//    // 캐릭터 정보 조회 GET /{characterId}
-//    @GetMapping("/{characterId}")
-//    public ResponseEntity<ApiResponse<dto>> getCharacter() {
-//
-//    }
+
+    // 캐릭터 정보 조회 GET /{characterId}
+    @GetMapping("/{avatarId}")
+    public ResponseEntity<ResponseDto<AvatarResponseDto>> getAvatarByAvatarId(
+            @PathVariable("avatarId") Long avatarId
+    ) {
+
+        Avatar avatar = avatarService.getAvatarByAvatarId(avatarId);
+        AvatarResponseDto dto = AvatarResponseDto.fromEntity(avatar);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_FOUND, dto));
+    }
 //
 //    // 캐릭터 한달 달성 프로그래스바 조회 GET /{characterId}/progress
 //    @GetMapping("/{characterId}/progress")

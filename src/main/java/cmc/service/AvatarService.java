@@ -30,7 +30,7 @@ public class AvatarService {
     @Transactional
     public void saveAvatar(Long userId, String avatarName, String avatarMessage, MultipartFile file) {
 
-        String imgUrl = s3Util.upload(file, "character");
+        String imgUrl = s3Util.upload(file, "avatar");
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -47,5 +47,17 @@ public class AvatarService {
 
     public List<World> getWorldsByAvatar(Long avatarId) {
         return worldRepository.findWorldWithAvatar(avatarId);
+    }
+
+    public void updateAvatarImg(Long avatarId, MultipartFile file) {
+
+        String imgUrl = s3Util.upload(file, "avatar");
+
+        Avatar avatar = avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
+
+        avatar.setAvatarImg(imgUrl);
+
+        avatarRepository.save(avatar);
     }
 }

@@ -73,14 +73,19 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_WITH_CHARACTER_FOUND_SUCCESS, worldHashtagsResponse));
     }
 
-//
-//    // 캐릭터 수정 (사진) PUT /{characterId}/img
-//    @PutMapping("/{characterId}/img")
-//    public ResponseEntity<ApiResponse> updateCharacterImg(@RequestPart(value = "file") MultipartFile file) {
-//        // delete 원래 파일
-//        // upload 현재 파일
-//    }
-//
+
+    // 캐릭터 수정 (사진) PUT /{characterId}/img
+    @PostMapping("/{avatarId}/img")
+    public ResponseEntity<ResponseDto> updateCharacterImg(
+            @PathVariable("avatarId") Long avatarId,
+            @RequestPart(value = "file") MultipartFile file
+    ) {
+
+        avatarService.updateAvatarImg(avatarId, file);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_IMG_UPDATED));
+    }
+
 //    // 캐릭터 수정 (정보) PUT /{characterId}/info
 //    @PutMapping("/{characterId}/info")
 //    public ResponseEntity<ApiResponse> updateCharacterInfo() {

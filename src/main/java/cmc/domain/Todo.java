@@ -4,6 +4,8 @@ import cmc.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Table(name = "todo")
@@ -21,6 +23,9 @@ public class Todo extends BaseEntity {
     @Setter
     @Column(length = 50)
     private String todoContent;
+
+    @OneToMany(targetEntity = AvatarTodo.class, fetch = FetchType.LAZY, mappedBy = "todo", cascade = CascadeType.ALL)
+    private List<AvatarTodo> avatarTodos = new ArrayList<>();
 
     @Builder
     public Todo(

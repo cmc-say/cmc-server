@@ -97,10 +97,17 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_IMG_UPDATED));
     }
 
-    
+    @Operation(
+            summary = "캐릭터 정보 수정",
+            description = "캐릭터의 이미지를 제외한 모든 정보를 수정합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터 정보가 업데이트 되었습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터가 존재하지 않습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PutMapping("/{avatarId}/info")
     public ResponseEntity<ResponseDto> updateCharacterInfo(
-            @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "수정하려는 캐릭터 id", required = true) @PathVariable("avatarId") Long avatarId,
             @RequestBody UpdateAvatarRequestDto req
             ) {
 

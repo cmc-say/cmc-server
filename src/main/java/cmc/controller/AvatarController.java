@@ -50,26 +50,27 @@ public class AvatarController {
             Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
         avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), file);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.AVATAR_SAVE_SUCCESS));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_SAVE_SUCCESS));
     }
 
     @Operation(
-            summary = "세계관 저장",
-            description = "세계관을 저장합니다."
+            summary = "캐릭터가 갖고있는 세계관 리스트 조회",
+            description = "캐릭터가 갖고있는 세계관 리스트 조회를 합니다."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "세계관 저장 성공"),
-            @ApiResponse(responseCode = "400", description = "이미지 업로드 실패")
+            @ApiResponse(responseCode = "200", description = "캐릭터가 가지고 있는 세계관 조회에 성공하였습니다.")
     })
-    @GetMapping("/api/v1/world/avatar/{avatarId}")
-    public ResponseEntity<ResponseDto<List<WorldHashtagsUserCountResponseDto>>> getWorldsByAvatar(@PathVariable("avatarId") Long avatarId) {
+    @GetMapping("/{avatarId}/worlds")
+    public ResponseEntity<ResponseDto<List<WorldHashtagsUserCountResponseDto>>> getWorldsByAvatar(
+            @Parameter(description = "조회하는 아바타 id", required = true) @PathVariable("avatarId") Long avatarId
+    ) {
 
         List<World> worldHashtags = avatarService.getWorldsByAvatar(avatarId);
-        List<WorldHashtagsUserCountResponseDto> worldHashtagsRespons = worldHashtags.stream()
+        List<WorldHashtagsUserCountResponseDto> worldHashtagsResponse = worldHashtags.stream()
                 .map(WorldHashtagsUserCountResponseDto::fromEntity)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.WORLD_WITH_CHARACTER_FOUND_SUCCESS, worldHashtagsRespons));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_WITH_CHARACTER_FOUND_SUCCESS, worldHashtagsResponse));
     }
 
 //

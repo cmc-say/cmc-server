@@ -288,10 +288,16 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.HASHTAG_IN_ORDER_FOUND, dtoList));
     }
 
-    // 세계관 캐릭터 전체의 체크리스트 달성 현황 조회
+    @Operation(
+            summary = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회",
+            description = "오늘 날짜의 세계관 캐릭터 전체의 체크리스트 달성 현황을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회")
+    })
     @GetMapping("/{worldId}/todo/today")
     public ResponseEntity<ResponseDto<List<CountCheckedTodoResponse>>> getWorldTodoToday(
-            @PathVariable("worldId") Long worldId) {
+            @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
+    ) {
 
         List<CountCheckedTodoResponse> todos = worldService.getWorldTodoToday(worldId);
 

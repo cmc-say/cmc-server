@@ -24,9 +24,6 @@ public class Todo extends BaseEntity {
     @Column(length = 50)
     private String todoContent;
 
-    @OneToMany(targetEntity = CheckedTodo.class, fetch = FetchType.LAZY, mappedBy = "todo", cascade = CascadeType.ALL)
-    private List<CheckedTodo> checkedTodos = new ArrayList<>();
-
     @Builder
     public Todo(
             Long todoId,

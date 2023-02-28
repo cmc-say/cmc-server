@@ -1,6 +1,6 @@
 package cmc.dto.response;
 
-import cmc.domain.AvatarTodo;
+import cmc.domain.CheckedTodo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,11 +17,11 @@ public class AvatarTodoResponseDto {
         this.avatarId = avatarId;
     }
 
-    public static AvatarTodoResponseDto fromEntity(AvatarTodo avatarTodo) {
+    public static AvatarTodoResponseDto fromEntity(CheckedTodo checkedTodo) {
         return AvatarTodoResponseDto.builder()
-                .avatarTodoId(avatarTodo.getAvatarTodoId())
-                .todoId(avatarTodo.getTodo().getTodoId())
-                .avatarId(avatarTodo.getAvatar().getAvatarId())
+                .avatarTodoId(checkedTodo.getAvatarTodoId())
+                .todoId(checkedTodo.getTodo().getTodoId())
+                .avatarId(checkedTodo.getAvatar().getAvatarId())
                 .build();
     }
 }

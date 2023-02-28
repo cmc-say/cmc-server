@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "avatar_todo")
+@Table(name = "checked_todo")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class AvatarTodo extends BaseEntity {
+public class CheckedTodo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,18 +23,18 @@ public class AvatarTodo extends BaseEntity {
     private Todo todo;
 
     @ManyToOne
-    @JoinColumn(name = "avatarId")
-    private Avatar avatar;
+    @JoinColumn(name = "worldAvatarId")
+    private WorldAvatar worldAvatar;
 
     @Builder
-    public AvatarTodo(
+    public CheckedTodo(
             Long avatarTodoId,
             Todo todo,
-            Avatar avatar) {
+            WorldAvatar worldAvatar) {
 
         this.avatarTodoId = avatarTodoId;
         this.todo = todo;
-        this.avatar = avatar;
+        this.worldAvatar = worldAvatar;
     }
 
 }

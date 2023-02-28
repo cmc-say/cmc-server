@@ -1,7 +1,7 @@
 package cmc.controller;
 
+import cmc.domain.CheckedTodo;
 import cmc.domain.Hashtag;
-import cmc.domain.Todo;
 import cmc.domain.model.OrderType;
 import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
@@ -294,7 +294,7 @@ public class WorldController {
     public ResponseEntity<ResponseDto<List<TodoTodayResponseDto>>> getWorldTodoToday(
             @PathVariable("worldId") Long worldId) {
 
-        List<Todo> todos = worldService.getWorldTodoToday(worldId);
+        List<CheckedTodo> todos = worldService.getWorldTodoToday(worldId);
         List<TodoTodayResponseDto> dtoList = todos.stream().map(TodoTodayResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, dtoList));

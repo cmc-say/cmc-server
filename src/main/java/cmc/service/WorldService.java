@@ -1,14 +1,10 @@
 package cmc.service;
 
-import cmc.domain.Todo;
+import cmc.domain.*;
 import cmc.domain.model.OrderType;
-import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.*;
-import cmc.domain.Hashtag;
-import cmc.domain.World;
-import cmc.domain.WorldHashtag;
 import cmc.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +24,7 @@ public class WorldService {
     private final HashtagRepository hashtagRepository;
     private final WorldHashtagRepository worldHashtagRepository;
     private final TodoRepository todoRepository;
+    private final CheckedTodoRepository checkedTodoRepository;
     private final RecommendedWorldRepository recommendedWorldRepository;
     private final S3Util s3Util;
 
@@ -237,10 +234,10 @@ public class WorldService {
         return hashtagRepository.findAll();
     }
 
-    public List<Todo> getWorldTodoToday(Long worldId) {
+    public List<CheckedTodo> getWorldTodoToday(Long worldId) {
 
-        List<Todo> worldTodoTodayByWorldId = todoRepository.getWorldTodoByWorldId(worldId); //이미 모든 날짜의 avatar_todo가 todo에 매핑되어있으므로 다 가져와서 service에서 필터링 거치기
-
-        
+//        List<Todo> worldTodoTodayByWorldId = todoRepository.getWorldTodoByWorldId(worldId); //이미 모든 날짜의 avatar_todo가 todo에 매핑되어있으므로 다 가져와서 service에서 필터링 거치기
+        List<CheckedTodo> checkedTodos = checkedTodoRepository.getAvatarTodoTodayByWorldId(worldId);
+        return checkedTodos;
     }
 }

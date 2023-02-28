@@ -2,6 +2,7 @@ package cmc.service;
 
 import cmc.domain.*;
 import cmc.domain.model.OrderType;
+import cmc.dto.response.CountCheckedTodoResponse;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.*;
@@ -234,10 +235,9 @@ public class WorldService {
         return hashtagRepository.findAll();
     }
 
-    public List<CheckedTodo> getWorldTodoToday(Long worldId) {
+    public List<CountCheckedTodoResponse> getWorldTodoToday(Long worldId) {
 
-//        List<Todo> worldTodoTodayByWorldId = todoRepository.getWorldTodoByWorldId(worldId); //이미 모든 날짜의 avatar_todo가 todo에 매핑되어있으므로 다 가져와서 service에서 필터링 거치기
-        List<CheckedTodo> checkedTodos = checkedTodoRepository.getAvatarTodoTodayByWorldId(worldId);
+        List<CountCheckedTodoResponse> checkedTodos = checkedTodoRepository.getCheckedTodoTodayByWorldId(worldId);
         return checkedTodos;
     }
 }

@@ -16,7 +16,7 @@ public class CheckedTodo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long avatarTodoId;
+    private Long checkedTodoId;
 
     @ManyToOne
     @JoinColumn(name = "todoId")
@@ -28,11 +28,11 @@ public class CheckedTodo extends BaseEntity {
 
     @Builder
     public CheckedTodo(
-            Long avatarTodoId,
+            Long checkedTodoId,
             Todo todo,
             WorldAvatar worldAvatar) {
 
-        this.avatarTodoId = avatarTodoId;
+        this.checkedTodoId = checkedTodoId;
         this.todo = todo;
         this.worldAvatar = worldAvatar;
     }

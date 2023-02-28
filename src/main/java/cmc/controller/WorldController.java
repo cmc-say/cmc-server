@@ -1,13 +1,12 @@
 package cmc.controller;
 
-import cmc.domain.CheckedTodo;
 import cmc.domain.Hashtag;
 import cmc.domain.model.OrderType;
 import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateWorldInfoRequestDto;
+import cmc.dto.response.CountCheckedTodoResponse;
 import cmc.dto.response.HashtagResponseDto;
-import cmc.dto.response.TodoTodayResponseDto;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
@@ -291,13 +290,12 @@ public class WorldController {
 
     // 세계관 캐릭터 전체의 체크리스트 달성 현황 조회
     @GetMapping("/{worldId}/todo/today")
-    public ResponseEntity<ResponseDto<List<TodoTodayResponseDto>>> getWorldTodoToday(
+    public ResponseEntity<ResponseDto<List<CountCheckedTodoResponse>>> getWorldTodoToday(
             @PathVariable("worldId") Long worldId) {
 
-        List<CheckedTodo> todos = worldService.getWorldTodoToday(worldId);
-        List<TodoTodayResponseDto> dtoList = todos.stream().map(TodoTodayResponseDto::fromEntity).collect(Collectors.toList());
+        List<CountCheckedTodoResponse> todos = worldService.getWorldTodoToday(worldId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, dtoList));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, todos));
     }
 
 //    // 추천 세계관 목록 조회

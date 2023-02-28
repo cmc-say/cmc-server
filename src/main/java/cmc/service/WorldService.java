@@ -1,5 +1,6 @@
 package cmc.service;
 
+import cmc.domain.Todo;
 import cmc.domain.model.OrderType;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.error.exception.BusinessException;
@@ -23,12 +24,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class WorldService {
-    private final UserRepository userRepository;
     private final WorldRepository worldRepository;
     private final HashtagRepository hashtagRepository;
     private final WorldHashtagRepository worldHashtagRepository;
+    private final TodoRepository todoRepository;
     private final RecommendedWorldRepository recommendedWorldRepository;
-    private final WorldAvatarRepository worldAvatarRepository;
     private final S3Util s3Util;
 
     // 세계관 등록
@@ -46,9 +46,6 @@ public class WorldService {
         String worldImgUri = s3Util.upload(file, "world");
 
         List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
-
-        //TODO: todos 저장
-        //Todo todo
 
         World world = World.builder()
                 .worldName(worldName)
@@ -71,6 +68,9 @@ public class WorldService {
                 .collect(Collectors.toList());
 
         worldHashtagRepository.saveAll(worldHashtagList);
+
+        List<Todo> todos = todoContents.stream().map(todoContent -> Todo.builder().todoContent(todoContent).world(savedWorld).build()).collect(Collectors.toList());
+        todoRepository.saveAll(todos);
     }
 
     public List<World> getWorldsWithOrder(OrderType orderType) {

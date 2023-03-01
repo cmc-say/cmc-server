@@ -130,6 +130,11 @@ public class AvatarService {
         WorldAvatar worldAvatar = worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_AVATAR_NOT_FOUND));
 
+        // 중복 체크 확인
+        if(checkedTodoRepository.findByTodoIdAndWorldAvatarId(todo.getTodoId(), worldAvatar.getWorldAvatarId()).isPresent()) {
+            throw new BusinessException(ErrorCode.DUPLICATED_TODO_CHECK);
+        }
+
         CheckedTodo checkedTodo = CheckedTodo.builder()
                 .todo(todo)
                 .worldAvatar(worldAvatar)

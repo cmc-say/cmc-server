@@ -150,6 +150,10 @@ public class AvatarService {
 
     @Transactional
     public void createWordtoday(Long avatarId, Long worldId, String wordtodayContent) {
+        // 오늘 날짜의 오늘의 한마디가 이미 존재한다면 에러
+        if(wordtodayRepository.findWordtodayByAvatarIdAndWorldId(avatarId, worldId).isPresent()) {
+            throw new BusinessException(ErrorCode.WORDTODAY_DUPLICATED);
+        }
 
         WorldAvatar worldAvatar = getWorldAvatarByAvatarIdAndWorldId(avatarId, worldId);
 

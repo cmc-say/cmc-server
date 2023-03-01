@@ -41,7 +41,8 @@ public enum ResponseCode {
     AVATAR_QUIT_WORLD(HttpStatus.OK, "아바타가 세계관 탈퇴에 성공하였습니다."),
 
     // todo
-    TODO_CHECKED(HttpStatus.CREATED, "todo 체크에 성공했습니다.");
+    TODO_CHECKED(HttpStatus.CREATED, "todo 체크에 성공했습니다."),
+    TODO_UNCHECKED(HttpStatus.OK, "todo 체크 해제에 성공했습니다.");
 
     private final HttpStatus status;
     private final String message;

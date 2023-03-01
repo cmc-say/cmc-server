@@ -238,4 +238,15 @@ public class AvatarController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.TODO_CHECKED));
     }
+
+    @DeleteMapping("/{avatarId}/world/{worldId}/todo/{todoId}/uncheck")
+    public ResponseEntity<ResponseDto> uncheckTodo(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId,
+            @PathVariable("todoId") Long todoId
+    ) {
+        avatarService.uncheckTodo(avatarId, worldId, todoId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.TODO_UNCHECKED));
+    }
 }

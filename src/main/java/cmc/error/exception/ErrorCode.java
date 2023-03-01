@@ -38,7 +38,8 @@ public enum ErrorCode {
     DUPLICATED_AVATAR_WORLD_ENTER(400, "A003", "해당 캐릭터는 이미 세계관에 참여하고 있습니다."),
 
     // todo
-    TODO_NOT_FOUND(400, "T001", "해당 todo가 존재하지 않습니다.");
+    TODO_NOT_FOUND(400, "T001", "해당 todo 가 존재하지 않습니다."),
+    TODO_CHECKED_NOT_FOUND(400, "T002", "체크되어 있지 않은 todo 입니다.");
 
     private final String code;
     private final String message;

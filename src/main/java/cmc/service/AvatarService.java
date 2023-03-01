@@ -138,6 +138,26 @@ public class AvatarService {
         checkedTodoRepository.save(checkedTodo);
     }
 
+    @Transactional
+    public void uncheckTodo(Long avatarId, Long worldId, Long todoId) {
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.TODO_NOT_FOUND));
+
+        Avatar avatar = avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
+
+        World world = worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
+        WorldAvatar worldAvatar = worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_AVATAR_NOT_FOUND));
+
+        CheckedTodo checkedTodo = checkedTodoRepository.findByTodoIdAndWorldAvatarId(todo.getTodoId(), worldAvatar.getWorldAvatarId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.TODO_CHECKED_NOT_FOUND));
+
+        checkedTodoRepository.delete(checkedTodo);
+    }
+
 
 //    public void getTodosOfAvatarToday(Long avatarId, Long worldId) {
 //        return

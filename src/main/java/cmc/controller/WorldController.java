@@ -123,8 +123,7 @@ public class WorldController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 상세 정보 수정 성공"),
-            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "400", description = "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다., 방장 유저가 아닌 유저는 접근 권한이 없습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/{worldId}/info")
     public ResponseEntity<ResponseDto> updateWorldInfo(
@@ -159,9 +158,9 @@ public class WorldController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "세계관 이미지 수정 성공"),
-            @ApiResponse(responseCode = "400", description = "파일이 제한 크기를 초과하였습니다. <br>" +
-                    "파일 업로드에 실패하였습니다. ", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "400", description = "파일이 제한 크기를 초과하였습니다." +
+                    "\t\n파일 업로드에 실패하였습니다. " +
+                    "\t\n방장 유저가 아닌 유저는 접근 권한이 없습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{worldId}/img")
     public ResponseEntity<ResponseDto> updateWorldImg(
@@ -225,8 +224,8 @@ public class WorldController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 해시태그 수정 (추가) 에 성공하였습니다."),
-            @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다" +
+                    "\t\n방장 유저가 아닌 유저는 접근 권한이 없습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/{worldId}/hashtags")
     public ResponseEntity<ResponseDto> updateNewWorldHashtags(
@@ -249,8 +248,8 @@ public class WorldController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 해시태그 수정 (삭제) 에 성공하였습니다."),
-            @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "403", description = "Access Denied", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다" +
+                    "\t\n 방장 유저가 아닌 유저는 접근 권한이 없습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{worldId}/hashtags")
     public ResponseEntity<ResponseDto> updateDeletedWorldHashtags(

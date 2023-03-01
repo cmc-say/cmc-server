@@ -31,6 +31,7 @@ public enum ErrorCode {
     ORDER_TYPE_ERROR(400, "W001" , "정렬 타입이 잘못되었습니다." ),
     WORLD_NOT_FOUND(400, "W002", "존재하지 않는 세계관입니다."),
     WORLD_USER_LIMIT_ERROR(400, "W003", "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다."),
+    WORLD_NOT_HOST_ERROR(400, "W004", "방장 유저가 아닌 유저는 접근 권한이 없습니다"),
 
     // avatar
     AVATAR_NOT_FOUND(400, "A001", "해당 아이디의 캐릭터가 존재하지 않습니다." ),

@@ -109,4 +109,11 @@ public class AvatarService {
 
         worldAvatarRepository.save(worldAvatar);
     }
+
+    public void quitWorld(Long avatarId, Long worldId) {
+        WorldAvatar worldAvatar = worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_AVATAR_NOT_FOUND));
+
+        worldAvatarRepository.delete(worldAvatar);
+    }
 }

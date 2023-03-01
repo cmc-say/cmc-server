@@ -160,7 +160,17 @@ public class AvatarController {
 
         avatarService.enterWorld(avatarId, worldId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_ENTER_WORLD))
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_ENTER_WORLD));
+    }
+
+    @DeleteMapping("/{avatarId}/world/{worldId}")
+    public ResponseEntity<ResponseDto> quitWorld(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId
+    ) {
+        avatarService.quitWorld(avatarId, worldId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_QUIT_WORLD));
     }
 
 //

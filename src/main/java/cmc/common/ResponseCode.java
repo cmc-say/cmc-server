@@ -42,7 +42,8 @@ public enum ResponseCode {
 
     // todo
     TODO_CHECKED(HttpStatus.CREATED, "todo 체크에 성공했습니다."),
-    TODO_UNCHECKED(HttpStatus.OK, "todo 체크 해제에 성공했습니다.");
+    TODO_UNCHECKED(HttpStatus.OK, "todo 체크 해제에 성공했습니다."),
+    WORDTODAY_CREATED(HttpStatus.CREATED, "오늘의 한마디 생성에 성공하였습니다.");
 
     private final HttpStatus status;
     private final String message;

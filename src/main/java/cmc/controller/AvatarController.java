@@ -2,6 +2,7 @@ package cmc.controller;
 
 import cmc.domain.World;
 import cmc.dto.request.SaveAvatarRequestDto;
+import cmc.dto.request.SaveWordtodayRequestDto;
 import cmc.dto.request.UpdateAvatarRequestDto;
 import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
@@ -256,5 +257,17 @@ public class AvatarController {
         avatarService.uncheckTodo(avatarId, worldId, todoId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.TODO_UNCHECKED));
+    }
+
+    @PostMapping("/{avatarId}/world/{worldId}/wordtoday")
+    public ResponseEntity<ResponseDto> createWordtoday(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId,
+            @RequestBody SaveWordtodayRequestDto req
+            ) {
+
+        avatarService.createWordtoday(avatarId, worldId, req.getWordtodayContent());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORDTODAY_CREATED));
     }
 }

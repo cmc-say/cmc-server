@@ -9,10 +9,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> {
-    @Query(value = "select count(ct.world_avatar_id) as count, t.todo_id as todoId, t.todo_content as todoContent from checked_todo ct\n" +
-            "left join todo t on ct.todo_id = t.todo_id\n" +
-            "where t.world_id = :worldId and date(ct.created_at) = current_date\n" +
-            "group by ct.todo_id;", nativeQuery = true)
+    // 세계관 todo 당 몇명이 했는지 반환 (count, todoId, todoContent) - checked todo 기준 groupby
+    @Query(value = "select t.todo_id as todoId, t.todo_content as todoContent, count(ct.checked_todo_id) as count from todo t\n" +
+            "left join checked_todo ct on t.todo_id = ct.todo_id\n" +
+            "where t.world_id = :worldId\n" +
+            "and (date(ct.created_at) = current_date or ct.created_at is null)\n" +
+            "group by t.todo_id;", nativeQuery = true)
     List<CountCheckedTodoResponse> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
 
 }

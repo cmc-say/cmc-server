@@ -126,14 +126,14 @@ create table user
 
 create table wordtoday
 (
-    word_today_id      bigint auto_increment
+    wordtoday_id      bigint auto_increment
         primary key,
     world_avatar_id    bigint       not null,
-    word_today_content varchar(300) null,
+    wordtoday_content varchar(300) null,
     created_at         varchar(30)  null,
     modified_at        varchar(30)  null,
-    constraint word_today_id
-        unique (word_today_id)
+    constraint wordtoday_id
+        unique (wordtoday_id)
 );
 
 create table world

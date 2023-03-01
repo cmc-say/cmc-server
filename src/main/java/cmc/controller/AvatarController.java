@@ -219,10 +219,42 @@ public class AvatarController {
 //    }
 //
 //
-//    // 체크리스트 체크하기 /{characterId}/todo/{todoId}
-//    @PostMapping("{characterId}/todo/{todoId}")
-//    public ResponseEntity<ApiResponse<dto>> checkTodo() {
-//
-//    }
 
+    @Operation(
+            summary = "todo 체크",
+            description = "todo를 체크합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "todo 체크에 성공했습니다."),
+            @ApiResponse(responseCode = "400", description = "이미 체크되어 있는 todo 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/{avatarId}/world/{worldId}/todo/{todoId}/check")
+    public ResponseEntity<ResponseDto> checkTodo(
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId,
+            @Parameter(description = "todo id", required = true) @PathVariable("todoId") Long todoId
+    ) {
+        avatarService.checkTodo(avatarId, worldId, todoId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.TODO_CHECKED));
+    }
+
+    @Operation(
+            summary = "todo 체크 해제",
+            description = "todo를 체크 해제합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "todo 체크 해제에 성공했습니다."),
+            @ApiResponse(responseCode = "400", description = "체크되어 있지 않은 todo 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @DeleteMapping("/{avatarId}/world/{worldId}/todo/{todoId}/uncheck")
+    public ResponseEntity<ResponseDto> uncheckTodo(
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId,
+            @Parameter(description = "todo id", required = true) @PathVariable("todoId") Long todoId
+    ) {
+        avatarService.uncheckTodo(avatarId, worldId, todoId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.TODO_UNCHECKED));
+    }
 }

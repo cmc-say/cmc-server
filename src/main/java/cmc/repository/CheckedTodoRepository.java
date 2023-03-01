@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> {
     // 세계관 todo 당 몇명이 했는지 반환 (count, todoId, todoContent) - checked todo 기준 groupby
@@ -17,4 +18,8 @@ public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> 
             "group by t.todo_id;", nativeQuery = true)
     List<CountCheckedTodoResponse> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
 
+    @Query(value = "SELECT ct FROM CheckedTodo ct " +
+            "WHERE ct.todo.todoId = :todoId " +
+            "AND ct.worldAvatar.worldAvatarId = :worldAvatarId ")
+    Optional<CheckedTodo> findByTodoIdAndWorldAvatarId(@Param("todoId") Long todoId, @Param("worldAvatarId") Long worldAvatarId);
 }

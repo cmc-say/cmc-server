@@ -239,11 +239,19 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.TODO_CHECKED));
     }
 
+    @Operation(
+            summary = "todo 체크 해제",
+            description = "todo를 체크 해제합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "todo 체크 해제에 성공했습니다."),
+            @ApiResponse(responseCode = "400", description = "체크되어 있지 않은 todo 입니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @DeleteMapping("/{avatarId}/world/{worldId}/todo/{todoId}/uncheck")
     public ResponseEntity<ResponseDto> uncheckTodo(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId,
-            @PathVariable("todoId") Long todoId
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId,
+            @Parameter(description = "todo id", required = true) @PathVariable("todoId") Long todoId
     ) {
         avatarService.uncheckTodo(avatarId, worldId, todoId);
 

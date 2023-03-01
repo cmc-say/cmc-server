@@ -152,6 +152,17 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_DELETED));
     }
 
+    @PostMapping("/{avatarId}/world/{worldId}")
+    public ResponseEntity<ResponseDto> enterWorld(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId
+    ) {
+
+        avatarService.enterWorld(avatarId, worldId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_ENTER_WORLD))
+    }
+
 //
 //    // 캐릭터 한달 달성 프로그래스바 조회 GET /{characterId}/progress
 //    @GetMapping("/{characterId}/progress")

@@ -34,7 +34,8 @@ public enum ResponseCode {
     AVATAR_IMG_UPDATED(HttpStatus.CREATED, "캐릭터 이미지가 업데이트 되었습니다."),
     AVATAR_INFO_UPDATED(HttpStatus.OK, "캐릭터 정보가 업데이트 되었습니다."),
     AVATAR_FOUND(HttpStatus.OK, "아바타 조회에 성공하였습니다."),
-    AVATAR_DELETED(HttpStatus.OK, "아바타가 삭제되었습니다.");
+    AVATAR_DELETED(HttpStatus.OK, "아바타가 삭제되었습니다."),
+    AVATAR_ENTER_WORLD(HttpStatus.CREATED, "아바타가 세계관에 참여했습니다.");
 
     private final HttpStatus status;
     private final String message;

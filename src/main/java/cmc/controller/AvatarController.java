@@ -220,11 +220,19 @@ public class AvatarController {
 //
 //
 
+    @Operation(
+            summary = "todo 체크",
+            description = "todo를 체크합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "todo 체크에 성공했습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터는 세계관에 참여하고 있지 않습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PostMapping("/{avatarId}/world/{worldId}/todo/{todoId}/check")
     public ResponseEntity<ResponseDto> checkTodo(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId,
-            @PathVariable("todoId") Long todoId
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId,
+            @Parameter(description = "todo id", required = true) @PathVariable("todoId") Long todoId
     ) {
         avatarService.checkTodo(avatarId, worldId, todoId);
 

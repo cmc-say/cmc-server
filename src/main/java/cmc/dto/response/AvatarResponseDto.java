@@ -14,7 +14,7 @@ public class AvatarResponseDto {
 
     private String avatarName;
 
-    @Schema(description = "아바타 이름", example = "이미지 url")
+    @Schema(description = "아바타 이미지", example = "이미지 url")
     private String avatarImg;
 
     @Schema(description = "아바타 상태 메세지", example = "배고파요")

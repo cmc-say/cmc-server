@@ -8,11 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface WorldRepository extends JpaRepository<World, Long> {
-    @Query(value = "SELECT w " +
+    @Query(value = "SELECT distinct w " +
             "FROM WorldAvatar wa " +
             "JOIN wa.world w " +
-            "JOIN w.worldHashtags wh " +
-            "JOIN wh.hashtag " +
             "WHERE wa.avatar.avatarId = :avatarId")
     List<World> findWorldWithAvatar(@Param("avatarId") Long avatarId);
 

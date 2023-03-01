@@ -1,11 +1,13 @@
 package cmc.controller;
 
+import cmc.domain.Wordtoday;
 import cmc.domain.World;
 import cmc.dto.request.SaveAvatarRequestDto;
 import cmc.dto.request.SaveWordtodayRequestDto;
 import cmc.dto.request.UpdateAvatarRequestDto;
 import cmc.dto.response.AvatarResponseDto;
 import cmc.domain.Avatar;
+import cmc.dto.response.WordtodayResponseDto;
 import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.error.ErrorResponse;
 import cmc.service.AvatarService;
@@ -276,5 +278,24 @@ public class AvatarController {
         avatarService.createWordtoday(avatarId, worldId, req.getWordtodayContent());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORDTODAY_CREATED));
+    }
+
+    @Operation(
+            summary = "오늘의 한마디 조회",
+            description = "오늘의 한마디를 조회합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "오늘의 한마디 조회에 성공했습니다.")
+    })
+    @GetMapping("/{avatarId}/world/{worldId}/wordtoday/{wordtodayId}")
+    public ResponseEntity<ResponseDto<WordtodayResponseDto>> getWordtoday(
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId
+    ) {
+
+        Wordtoday wordtoday = avatarService.getWordtoday(avatarId, worldId);
+        WordtodayResponseDto dto = WordtodayResponseDto.fromEntity(wordtoday);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORDTODAY_CREATED, dto));
     }
 }

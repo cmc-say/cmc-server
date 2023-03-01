@@ -116,4 +116,8 @@ public class AvatarService {
 
         worldAvatarRepository.delete(worldAvatar);
     }
+
+//    public void getTodosOfAvatarToday(Long avatarId, Long worldId) {
+//        return
+//    }
 }

@@ -189,6 +189,15 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_QUIT_WORLD));
     }
 
+//    @GetMapping("/{avatarId}/world/{worldId}/todos")
+//    public ResponseEntity<ResponseDto> getTodosOfAvatarToday(
+//            @PathVariable("avatarId") Long avatarId,
+//            @PathVariable("worldId") Long worldId
+//    ) {
+//        avatarService.getTodosOfAvatarToday(avatarId, worldId);
+//    }
+
+
 //
 //    // 캐릭터 한달 달성 프로그래스바 조회 GET /{characterId}/progress
 //    @GetMapping("/{characterId}/progress")
@@ -209,11 +218,6 @@ public class AvatarController {
 //
 //    }
 //
-//    // 캐릭터의 세계관 체크리스트 및 체크 여부 조회 /{characterId}/todos?worldId=
-//    @GetMapping("/{characterId}/todos")
-//    public ResponseEntity<ApiResponse<dto>> getTodosOfCharacterToday() {
-//
-//    }
 //
 //    // 체크리스트 체크하기 /{characterId}/todo/{todoId}
 //    @PostMapping("{characterId}/todo/{todoId}")

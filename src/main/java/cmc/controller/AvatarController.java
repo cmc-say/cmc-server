@@ -116,10 +116,17 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_INFO_UPDATED));
     }
 
-    // 캐릭터 정보 조회 GET /{characterId}
+    @Operation(
+            summary = "캐릭터 정보 조회",
+            description = "캐릭터의 정보를 조회합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터 정보 조회에 성공하였습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터가 존재하지 않습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @GetMapping("/{avatarId}")
     public ResponseEntity<ResponseDto<AvatarResponseDto>> getAvatarByAvatarId(
-            @PathVariable("avatarId") Long avatarId
+            @Parameter(description = "조회할 캐릭터 id", required = true) @PathVariable("avatarId") Long avatarId
     ) {
 
         Avatar avatar = avatarService.getAvatarByAvatarId(avatarId);
@@ -127,6 +134,16 @@ public class AvatarController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_FOUND, dto));
     }
+
+    @DeleteMapping("/{avatarId}")
+    public ResponseEntity<ResponseDto> deleteAvatarById(
+            @PathVariable("avatarId") Long avatarId
+    ) {
+        avatarService.deleteAvatarById(avatarId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_DELETED));
+    }
+
 //
 //    // 캐릭터 한달 달성 프로그래스바 조회 GET /{characterId}/progress
 //    @GetMapping("/{characterId}/progress")

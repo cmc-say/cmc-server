@@ -76,4 +76,10 @@ public class AvatarService {
         return avatarRepository.findById(avatarId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
     }
+
+    public void deleteAvatarById(Long avatarId) {
+        Avatar avatar = avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
+        avatarRepository.delete(avatar);
+    }
 }

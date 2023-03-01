@@ -117,7 +117,7 @@ public class WorldService {
 
         // 토큰의 유저가 방장이 아닐 경우 Unauthorized
         if (!world.getWorldHostUserId().equals(userId)) {
-            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+            throw new BusinessException(ErrorCode.WORLD_NOT_HOST_ERROR);
         }
 
         // 설정하려는 user limit가 현재의 세계관 유저 count보다 작을 경우 Bad Request
@@ -147,7 +147,7 @@ public class WorldService {
 
         // 토큰의 유저가 방장이 아닐 경우 Unauthorized
         if (!world.getWorldHostUserId().equals(userId)) {
-            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+            throw new BusinessException(ErrorCode.WORLD_NOT_HOST_ERROR);
         }
 
         String newWorldImgUri = s3Util.upload(file, "world");
@@ -174,7 +174,7 @@ public class WorldService {
 
         // 토큰의 유저가 방장이 아닐 경우 Unauthorized
         if (!world.getWorldHostUserId().equals(userId)) {
-            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+            throw new BusinessException(ErrorCode.WORLD_NOT_HOST_ERROR);
         }
 
         List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
@@ -219,7 +219,7 @@ public class WorldService {
 
         // 토큰의 유저가 방장이 아닐 경우 Unauthorized
         if (!world.getWorldHostUserId().equals(userId)) {
-            throw new BusinessException(ErrorCode.ACCESS_DENIED);
+            throw new BusinessException(ErrorCode.WORLD_NOT_HOST_ERROR);
         }
 
         worldHashtagRepository.deleteWorldHashtagByWorldHashtagId(worldhashtagIds);

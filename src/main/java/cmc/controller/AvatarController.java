@@ -282,7 +282,7 @@ public class AvatarController {
 
     @Operation(
             summary = "오늘의 한마디 조회",
-            description = "오늘의 한마디를 조회합니다."
+            description = "현재 날짜의 오늘의 한마디를 조회합니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "오늘의 한마디 조회에 성공했습니다.")

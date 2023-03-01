@@ -85,6 +85,7 @@ public class AvatarService {
         avatarRepository.delete(avatar);
     }
 
+    @Transactional
     public void enterWorld(Long avatarId, Long worldId) {
 
         // 중복된 캐릭터 세계관 참여가 존재하는지 확인
@@ -106,6 +107,7 @@ public class AvatarService {
         worldAvatarRepository.save(worldAvatar);
     }
 
+    @Transactional
     public void quitWorld(Long avatarId, Long worldId) {
         WorldAvatar worldAvatar = worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_AVATAR_NOT_FOUND));
@@ -113,6 +115,7 @@ public class AvatarService {
         worldAvatarRepository.delete(worldAvatar);
     }
 
+    @Transactional
     public void checkTodo(Long avatarId, Long worldId, Long todoId) {
 
         Todo todo = todoRepository.findById(todoId)

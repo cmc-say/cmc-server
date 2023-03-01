@@ -165,6 +165,12 @@ public class AvatarService {
         wordtodayRepository.save(wordtoday);
     }
 
+    public Wordtoday getWordtoday(Long avatarId, Long worldId) {
+
+        return wordtodayRepository.findWordtodayByAvatarIdAndWorldId(avatarId, worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORDTODAY_NOT_FOUND));
+    }
+
     private Avatar getAvatarById(Long avatarId) {
         return avatarRepository.findById(avatarId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
@@ -190,9 +196,4 @@ public class AvatarService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.TODO_CHECKED_NOT_FOUND));
     }
 
-    public Wordtoday getWordtoday(Long avatarId, Long worldId) {
-
-        return wordtodayRepository.findWordtodayByAvatarIdAndWorldId(avatarId, worldId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.WORDTODAY_NOT_FOUND));
-    }
 }

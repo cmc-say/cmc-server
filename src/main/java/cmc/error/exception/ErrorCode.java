@@ -44,7 +44,8 @@ public enum ErrorCode {
     DUPLICATED_TODO_CHECK(400, "T003", "이미 체크되어 있는 todo 입니다."),
 
     // wordtoday
-    WORDTODAY_NOT_FOUND(400, "WT001", "존재하지 않는 오늘의 한마디입니다." );
+    WORDTODAY_NOT_FOUND(400, "WT001", "존재하지 않는 오늘의 한마디입니다." ),
+    WORDTODAY_DUPLICATED(400, "WT002", "오늘 날짜의 오늘의 한마디가 이미 존재합니다.");
 
     private final String code;
     private final String message;

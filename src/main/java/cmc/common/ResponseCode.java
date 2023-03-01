@@ -31,12 +31,17 @@ public enum ResponseCode {
     WORLD_HASHTAG_DELETED(HttpStatus.OK, "세계관 해시태그 수정 (삭제) 에 성공하였습니다."),
     HASHTAG_IN_ORDER_FOUND(HttpStatus.OK, "해시태그 정렬로 조회에 성공하였습니다."),
     WORLD_TODO_TODAY_FOUND(HttpStatus.OK, "세계관 캐릭터 전체의 체크리스트 달성 현황 조회"),
+
+    // avatar
     AVATAR_IMG_UPDATED(HttpStatus.CREATED, "캐릭터 이미지가 업데이트 되었습니다."),
     AVATAR_INFO_UPDATED(HttpStatus.OK, "캐릭터 정보가 업데이트 되었습니다."),
     AVATAR_FOUND(HttpStatus.OK, "아바타 조회에 성공하였습니다."),
     AVATAR_DELETED(HttpStatus.OK, "아바타가 삭제되었습니다."),
     AVATAR_ENTER_WORLD(HttpStatus.CREATED, "아바타가 세계관에 참여했습니다."),
-    AVATAR_QUIT_WORLD(HttpStatus.OK, "아바타가 세계관 탈퇴에 성공하였습니다.");
+    AVATAR_QUIT_WORLD(HttpStatus.OK, "아바타가 세계관 탈퇴에 성공하였습니다."),
+
+    // todo
+    TODO_CHECKED(HttpStatus.CREATED, "todo 체크에 성공했습니다.");
 
     private final HttpStatus status;
     private final String message;

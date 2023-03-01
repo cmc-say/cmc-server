@@ -219,10 +219,15 @@ public class AvatarController {
 //    }
 //
 //
-//    // 체크리스트 체크하기 /{characterId}/todo/{todoId}
-//    @PostMapping("{characterId}/todo/{todoId}")
-//    public ResponseEntity<ApiResponse<dto>> checkTodo() {
-//
-//    }
 
+    @PostMapping("/{avatarId}/world/{worldId}/todo/{todoId}/check")
+    public ResponseEntity<ResponseDto> checkTodo(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId,
+            @PathVariable("todoId") Long todoId
+    ) {
+        avatarService.checkTodo(avatarId, worldId, todoId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.TODO_CHECKED));
+    }
 }

@@ -1,16 +1,10 @@
 package cmc.service;
 
 
-import cmc.domain.Avatar;
-import cmc.domain.World;
-import cmc.domain.WorldAvatar;
+import cmc.domain.*;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
-import cmc.repository.AvatarRepository;
-import cmc.domain.User;
-import cmc.repository.UserRepository;
-import cmc.repository.WorldAvatarRepository;
-import cmc.repository.WorldRepository;
+import cmc.repository.*;
 import cmc.utils.S3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +18,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AvatarService {
+    private final TodoRepository todoRepository;
+    private final CheckedTodoRepository checkedTodoRepository;
     private final UserRepository userRepository;
     private final AvatarRepository avatarRepository;
     private final WorldRepository worldRepository;
@@ -116,6 +112,29 @@ public class AvatarService {
 
         worldAvatarRepository.delete(worldAvatar);
     }
+
+    public void checkTodo(Long avatarId, Long worldId, Long todoId) {
+
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.TODO_NOT_FOUND));
+
+        Avatar avatar = avatarRepository.findById(avatarId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.AVATAR_NOT_FOUND));
+
+        World world = worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
+        WorldAvatar worldAvatar = worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_AVATAR_NOT_FOUND));
+
+        CheckedTodo checkedTodo = CheckedTodo.builder()
+                .todo(todo)
+                .worldAvatar(worldAvatar)
+                .build();
+
+        checkedTodoRepository.save(checkedTodo);
+    }
+
 
 //    public void getTodosOfAvatarToday(Long avatarId, Long worldId) {
 //        return

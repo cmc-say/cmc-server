@@ -152,10 +152,18 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_DELETED));
     }
 
+    @Operation(
+            summary = "캐릭터가 세계관에 참여",
+            description = "캐릭터가 세계관에 참여합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "캐릭터가 세계관에 참여하였습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터는 이미 세계관에 참여하고 있습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PostMapping("/{avatarId}/world/{worldId}")
     public ResponseEntity<ResponseDto> enterWorld(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId
+            @Parameter(description = "세계관에 참여하려는 캐릭터 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "참여하려는 세계관 id", required = true) @PathVariable("worldId") Long worldId
     ) {
 
         avatarService.enterWorld(avatarId, worldId);
@@ -163,10 +171,18 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.AVATAR_ENTER_WORLD));
     }
 
+    @Operation(
+            summary = "캐릭터가 세계관에서 탈퇴",
+            description = "캐릭터가 세계관에서 탈퇴합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터가 세계관에서 탈퇴하였습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터는 세계관에 참여하고 있지 않습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @DeleteMapping("/{avatarId}/world/{worldId}")
     public ResponseEntity<ResponseDto> quitWorld(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId
+            @Parameter(description = "세계관에 참여하려는 캐릭터 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "참여하려는 세계관 id", required = true) @PathVariable("worldId") Long worldId
     ) {
         avatarService.quitWorld(avatarId, worldId);
 

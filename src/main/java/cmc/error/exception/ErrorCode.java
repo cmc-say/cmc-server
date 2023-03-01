@@ -41,7 +41,10 @@ public enum ErrorCode {
     // todo
     TODO_NOT_FOUND(400, "T001", "해당 todo 가 존재하지 않습니다."),
     TODO_CHECKED_NOT_FOUND(400, "T002", "체크되어 있지 않은 todo 입니다."),
-    DUPLICATED_TODO_CHECK(400, "T003", "이미 체크되어 있는 todo 입니다.");
+    DUPLICATED_TODO_CHECK(400, "T003", "이미 체크되어 있는 todo 입니다."),
+
+    // wordtoday
+    WORDTODAY_NOT_FOUND(400, "WT001", "존재하지 않는 오늘의 한마디입니다." );
 
     private final String code;
     private final String message;

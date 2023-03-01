@@ -91,6 +91,11 @@ public class AvatarService {
 
     public void enterWorld(Long avatarId, Long worldId) {
 
+        // 중복된 캐릭터 세계관 참여가 존재하는지 확인
+        if(worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId).isPresent()) {
+            throw new BusinessException(ErrorCode.DUPLICATED_AVATAR_WORLD_ENTER);
+        }
+
         World world = worldRepository.findById(worldId)
                         .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
 

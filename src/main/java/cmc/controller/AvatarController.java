@@ -259,10 +259,17 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.TODO_UNCHECKED));
     }
 
+    @Operation(
+            summary = "오늘의 한마디 작성",
+            description = "오늘의 한마디를 작성합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "오늘의 한마디 작서에 성공했습니다.")
+    })
     @PostMapping("/{avatarId}/world/{worldId}/wordtoday")
     public ResponseEntity<ResponseDto> createWordtoday(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId,
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId,
             @RequestBody SaveWordtodayRequestDto req
             ) {
 

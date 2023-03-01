@@ -135,9 +135,17 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_FOUND, dto));
     }
 
+    @Operation(
+            summary = "캐릭터 삭제",
+            description = "캐릭터를 삭제합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터 삭제에 성공하였습니다."),
+            @ApiResponse(responseCode = "400", description = "해당 캐릭터가 존재하지 않습니다.", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @DeleteMapping("/{avatarId}")
     public ResponseEntity<ResponseDto> deleteAvatarById(
-            @PathVariable("avatarId") Long avatarId
+            @Parameter(description = "삭제할 캐릭터 id", required = true) @PathVariable("avatarId") Long avatarId
     ) {
         avatarService.deleteAvatarById(avatarId);
 

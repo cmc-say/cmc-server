@@ -33,7 +33,9 @@ public enum ErrorCode {
     WORLD_USER_LIMIT_ERROR(400, "W003", "설정하려는 user limit 가 현재의 세계관 인원보다 작습니다."),
 
     // avatar
-    AVATAR_NOT_FOUND(400, "A001", "해당 아이디의 캐릭터가 존재하지 않습니다." );
+    AVATAR_NOT_FOUND(400, "A001", "해당 아이디의 캐릭터가 존재하지 않습니다." ),
+    WORLD_AVATAR_NOT_FOUND(400, "A002", "해당 캐릭터는 해당 세계관에 참여하고 있지 않습니다."),
+    DUPLICATED_AVATAR_WORLD_ENTER(400, "A003", "해당 캐릭터는 이미 세계관에 참여하고 있습니다.");
 
     private final String code;
     private final String message;

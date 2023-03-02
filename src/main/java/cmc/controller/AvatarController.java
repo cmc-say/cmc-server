@@ -1,14 +1,13 @@
 package cmc.controller;
 
+import cmc.domain.CheckedTodo;
 import cmc.domain.Wordtoday;
 import cmc.domain.World;
 import cmc.dto.request.SaveAvatarRequestDto;
 import cmc.dto.request.SaveWordtodayRequestDto;
 import cmc.dto.request.UpdateAvatarRequestDto;
-import cmc.dto.response.AvatarResponseDto;
+import cmc.dto.response.*;
 import cmc.domain.Avatar;
-import cmc.dto.response.WordtodayResponseDto;
-import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.error.ErrorResponse;
 import cmc.service.AvatarService;
 import cmc.common.ResponseDto;
@@ -297,5 +296,17 @@ public class AvatarController {
         WordtodayResponseDto dto = WordtodayResponseDto.fromEntity(wordtoday);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORDTODAY_CREATED, dto));
+    }
+
+//    GET /avatar/{avatarId}/world/{worldId}/todos
+    @GetMapping("/{avatarId}/world/{worldId}/todos")
+    public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId
+    ) {
+        List<CheckedTodo> checkedTodos = avatarService.getCheckedTodoOfAvatar(avatarId, worldId);
+        List<CheckedTodoResponseDto> dtoList = checkedTodos.stream().map(CheckedTodoResponseDto::fromEntity).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_TODAY_FOUND, dtoList));
     }
 }

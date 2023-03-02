@@ -121,7 +121,7 @@ public class AvatarService {
         WorldAvatar worldAvatar = getWorldAvatarByAvatarIdAndWorldId(avatarId, worldId);
 
         // 중복 체크 확인
-        if(checkedTodoRepository.findByTodoIdAndWorldAvatarId(todo.getTodoId(), worldAvatar.getWorldAvatarId()).isPresent()) {
+        if(checkedTodoRepository.findByTodoIdAndWorldAvatarIdToday(todo.getTodoId(), worldAvatar.getWorldAvatarId()).isPresent()) {
             throw new BusinessException(ErrorCode.DUPLICATED_TODO_CHECK);
         }
 
@@ -192,8 +192,11 @@ public class AvatarService {
     }
 
     private CheckedTodo getCheckedTodoByTodoAndWorldAvatar(Todo todo, WorldAvatar worldAvatar) {
-        return checkedTodoRepository.findByTodoIdAndWorldAvatarId(todo.getTodoId(), worldAvatar.getWorldAvatarId())
+        return checkedTodoRepository.findByTodoIdAndWorldAvatarIdToday(todo.getTodoId(), worldAvatar.getWorldAvatarId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.TODO_CHECKED_NOT_FOUND));
     }
 
+    public List<CheckedTodo> getCheckedTodoOfAvatar(Long avatarId, Long worldId) {
+        return checkedTodoRepository.getCheckedTodoTodayByWorldIdAndAvatarId(avatarId, worldId);
+    }
 }

@@ -1,14 +1,13 @@
 package cmc.controller;
 
+import cmc.domain.CheckedTodo;
 import cmc.domain.Wordtoday;
 import cmc.domain.World;
 import cmc.dto.request.SaveAvatarRequestDto;
 import cmc.dto.request.SaveWordtodayRequestDto;
 import cmc.dto.request.UpdateAvatarRequestDto;
-import cmc.dto.response.AvatarResponseDto;
+import cmc.dto.response.*;
 import cmc.domain.Avatar;
-import cmc.dto.response.WordtodayResponseDto;
-import cmc.dto.response.WorldHashtagsUserCountResponseDto;
 import cmc.error.ErrorResponse;
 import cmc.service.AvatarService;
 import cmc.common.ResponseDto;
@@ -297,5 +296,24 @@ public class AvatarController {
         WordtodayResponseDto dto = WordtodayResponseDto.fromEntity(wordtoday);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORDTODAY_CREATED, dto));
+    }
+
+    @Operation(
+            summary = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회",
+            description = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회합니다." +
+                    "\t\n 체크한 데이터만 반환합니다. 즉 아무 것도 체크안했으면 반환되는 값이 없습니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회에 성공했습니다.")
+    })
+    @GetMapping("/{avatarId}/world/{worldId}/todos")
+    public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
+            @PathVariable("avatarId") Long avatarId,
+            @PathVariable("worldId") Long worldId
+    ) {
+        List<CheckedTodo> checkedTodos = avatarService.getCheckedTodoOfAvatar(avatarId, worldId);
+        List<CheckedTodoResponseDto> dtoList = checkedTodos.stream().map(CheckedTodoResponseDto::fromEntity).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_TODAY_FOUND, dtoList));
     }
 }

@@ -20,6 +20,12 @@ public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> 
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
             "WHERE ct.todo.todoId = :todoId " +
-            "AND ct.worldAvatar.worldAvatarId = :worldAvatarId ")
-    Optional<CheckedTodo> findByTodoIdAndWorldAvatarId(@Param("todoId") Long todoId, @Param("worldAvatarId") Long worldAvatarId);
+            "AND ct.worldAvatar.worldAvatarId = :worldAvatarId " +
+            "AND date(ct.createdAt) = current_date ")
+    Optional<CheckedTodo> findByTodoIdAndWorldAvatarIdToday(@Param("todoId") Long todoId, @Param("worldAvatarId") Long worldAvatarId);
+
+    @Query(value = "SELECT ct FROM CheckedTodo ct " +
+            "WHERE ct.todo.world.worldId = :worldId " +
+            "AND ct.worldAvatar.avatar.avatarId = :avatarId ")
+    List<CheckedTodo> getCheckedTodoTodayByWorldIdAndAvatarId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
 }

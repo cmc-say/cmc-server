@@ -308,12 +308,19 @@ public class AvatarController {
     })
     @GetMapping("/{avatarId}/world/{worldId}/todos")
     public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId
     ) {
         List<CheckedTodo> checkedTodos = avatarService.getCheckedTodoOfAvatar(avatarId, worldId);
         List<CheckedTodoResponseDto> dtoList = checkedTodos.stream().map(CheckedTodoResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_TODAY_FOUND, dtoList));
+    }
+
+    @GetMapping("/{avatarId}/todo/month")
+    public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatarForMonth(
+            @PathVariable()
+    ) {
+
     }
 }

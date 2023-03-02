@@ -298,7 +298,14 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORDTODAY_CREATED, dto));
     }
 
-//    GET /avatar/{avatarId}/world/{worldId}/todos
+    @Operation(
+            summary = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회",
+            description = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회합니다." +
+                    "\t\n 체크한 데이터만 반환합니다. 즉 아무 것도 체크안했으면 반환되는 값이 없습니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회에 성공했습니다.")
+    })
     @GetMapping("/{avatarId}/world/{worldId}/todos")
     public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
             @PathVariable("avatarId") Long avatarId,

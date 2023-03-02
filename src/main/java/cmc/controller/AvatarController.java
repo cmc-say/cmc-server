@@ -308,12 +308,30 @@ public class AvatarController {
     })
     @GetMapping("/{avatarId}/world/{worldId}/todos")
     public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
-            @PathVariable("avatarId") Long avatarId,
-            @PathVariable("worldId") Long worldId
+            @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
+            @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId
     ) {
         List<CheckedTodo> checkedTodos = avatarService.getCheckedTodoOfAvatar(avatarId, worldId);
         List<CheckedTodoResponseDto> dtoList = checkedTodos.stream().map(CheckedTodoResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_TODAY_FOUND, dtoList));
+    }
+
+    @Operation(
+            summary = "캐릭터가 갖고 있는 세계관들의 한달동안 체크된 todo 리스트 조회",
+            description = "캐릭터가 갖고 있는 세계관들의 한달동안 체크된 todo 리스트 조회합니다." +
+                    "\t\n 체크한 데이터만 반환합니다. 즉 아무 것도 체크안했으면 반환되는 값이 없습니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "캐릭터가 갖고 있는 세계관들의 한달동안 체크된 todo 리스트 조회")
+    })
+    @GetMapping("/{avatarId}/todo/month")
+    public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatarForMonth(
+            @PathVariable("avatarId") Long avatarId
+    ) {
+        List<CheckedTodo> checkedTodos = avatarService.getAllCheckedTodoOfAvatarForMonth(avatarId);
+        List<CheckedTodoResponseDto> dtoList = checkedTodos.stream().map(CheckedTodoResponseDto::fromEntity).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_FOR_MONTH_FOUND, dtoList));
     }
 }

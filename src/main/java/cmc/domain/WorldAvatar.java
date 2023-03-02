@@ -29,6 +29,9 @@ public class WorldAvatar extends BaseEntity {
     @OneToMany(targetEntity = Wordtoday.class, fetch = FetchType.LAZY, mappedBy = "worldAvatar", cascade = CascadeType.ALL)
     private List<Wordtoday> wordtodays;
 
+    @OneToMany(targetEntity = CheckedTodo.class, fetch = FetchType.LAZY, mappedBy = "worldAvatar", cascade = CascadeType.ALL)
+    private List<CheckedTodo> checkedTodos;
+
     @Builder
     public WorldAvatar(Long worldAvatarId, World world, Avatar avatar) {
         this.worldAvatarId = worldAvatarId;

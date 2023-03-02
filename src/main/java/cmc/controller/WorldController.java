@@ -288,8 +288,9 @@ public class WorldController {
     }
 
     @Operation(
-            summary = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회",
-            description = "오늘 날짜의 세계관 캐릭터 전체의 체크리스트 달성 현황을 조회합니다.")
+            summary = "세계관 todo 당 오늘의 체크 개수 조회",
+            description = "세계관에 속해있는 모든 캐릭터들에 한해 todo 당 오늘의 체크 개수를 조회합니다. " +
+                    "\t\n 체크를 아무도 안했다면 데이터가 보내지지 않습니다. 즉, count가 0인 데이터는 보내지지 않습니다. ")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회")
     })

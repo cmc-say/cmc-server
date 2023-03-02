@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Table(name = "world_avatar", indexes = {@Index(columnList = "worldId"), @Index(columnList = "avatarId")})
@@ -24,6 +25,12 @@ public class WorldAvatar extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "avatarId")
     private Avatar avatar;
+
+    @OneToMany(targetEntity = Wordtoday.class, fetch = FetchType.LAZY, mappedBy = "worldAvatar", cascade = CascadeType.ALL)
+    private List<Wordtoday> wordtodays;
+
+    @OneToMany(targetEntity = CheckedTodo.class, fetch = FetchType.LAZY, mappedBy = "worldAvatar", cascade = CascadeType.ALL)
+    private List<CheckedTodo> checkedTodos;
 
     @Builder
     public WorldAvatar(Long worldAvatarId, World world, Avatar avatar) {

@@ -1,5 +1,6 @@
 package cmc.dto.response;
 
+import cmc.domain.Todo;
 import cmc.domain.World;
 import cmc.domain.WorldAvatar;
 import cmc.domain.WorldHashtag;
@@ -46,6 +47,9 @@ public class WorldHashtagsUserCountResponseDto {
     @Schema(description = "세계관에 참여하는 캐릭터")
     private List<WorldAvatarResponseDto> worldAvatars;
 
+    @Schema(description = "세계관에 해당되는 todo")
+    private List<TodoResponseDto> todos;
+
     @Builder
     public WorldHashtagsUserCountResponseDto(
             Long worldId,
@@ -58,7 +62,8 @@ public class WorldHashtagsUserCountResponseDto {
             Long worldHostUserId,
             String worldNotice,
             String worldPassword,
-            List<WorldAvatar> worldAvatars
+            List<WorldAvatar> worldAvatars,
+            List<Todo> todos
             ) {
         this.worldId = worldId;
         this.worldName = worldName;
@@ -71,6 +76,7 @@ public class WorldHashtagsUserCountResponseDto {
         this.worldNotice = worldNotice;
         this.worldPassword = worldPassword;
         this.worldAvatars = worldAvatars.stream().map(WorldAvatarResponseDto::fromEntity).collect(Collectors.toList());
+        this.todos = todos.stream().map(TodoResponseDto::fromEntity).collect(Collectors.toList());
     }
 
     public static WorldHashtagsUserCountResponseDto fromEntity(World world) {
@@ -86,6 +92,7 @@ public class WorldHashtagsUserCountResponseDto {
                 .worldPassword(world.getWorldPassword())
                 .hashtags(world.getWorldHashtags())
                 .worldAvatars(world.getWorldAvatars())
+                .todos(world.getTodos())
                 .build();
     }
 }

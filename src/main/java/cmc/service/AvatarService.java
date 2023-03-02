@@ -199,4 +199,8 @@ public class AvatarService {
     public List<CheckedTodo> getCheckedTodoOfAvatar(Long avatarId, Long worldId) {
         return checkedTodoRepository.getCheckedTodoTodayByWorldIdAndAvatarId(avatarId, worldId);
     }
+
+    public List<CheckedTodo> getAllCheckedTodoOfAvatarForMonth(Long avatarId) {
+        return checkedTodoRepository.getAllCheckedTodoOfAvatarForMonth(avatarId);
+    }
 }

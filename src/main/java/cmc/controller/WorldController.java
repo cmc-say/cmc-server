@@ -2,14 +2,12 @@ package cmc.controller;
 
 import cmc.domain.Avatar;
 import cmc.domain.Hashtag;
+import cmc.domain.Wordtoday;
 import cmc.domain.model.OrderType;
 import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateWorldInfoRequestDto;
-import cmc.dto.response.AvatarResponseDto;
-import cmc.dto.response.CountCheckedTodoResponse;
-import cmc.dto.response.HashtagResponseDto;
-import cmc.dto.response.WorldHashtagsUserCountResponseDto;
+import cmc.dto.response.*;
 import cmc.dto.request.SaveWorldRequestDto;
 import cmc.domain.World;
 import cmc.error.ErrorResponse;
@@ -323,5 +321,21 @@ public class WorldController {
         List<AvatarResponseDto> dtoList = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, dtoList));
+    }
+
+    @Operation(
+            summary = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회",
+            description = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회합니다. " )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회")
+    })
+    @GetMapping("/{worldId}/avatars/wordtoday")
+    public ResponseEntity<ResponseDto<List<WordtodayResponseDto>>> getWordtodayOfWorld(
+            @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
+    ) {
+        List<Wordtoday> wordtodays = worldService.getWordtodayOfWorld(worldId);
+        List<WordtodayResponseDto> dtoList = wordtodays.stream().map(WordtodayResponseDto::fromEntity).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_WORD_TODAY_FOUND, dtoList));
     }
 }

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class WorldService {
+    private final AvatarRepository avatarRepository;
     private final WorldRepository worldRepository;
     private final HashtagRepository hashtagRepository;
     private final WorldHashtagRepository worldHashtagRepository;
@@ -239,5 +240,9 @@ public class WorldService {
 
         List<CountCheckedTodoResponse> checkedTodos = checkedTodoRepository.getCheckedTodoTodayByWorldId(worldId);
         return checkedTodos;
+    }
+
+    public List<Avatar> getAvatarsByWorldIdWithoutBlockedUser(Long userId, Long worldId) {
+        return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
     }
 }

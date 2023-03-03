@@ -306,10 +306,16 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, todos));
     }
 
+    @Operation(
+            summary = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회",
+            description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회를 조회합니다. " )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회")
+    })
     @GetMapping("/{worldId}/avatars")
     public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatarsByWorldIdWithoutBlockedUser(
             Principal principal,
-            @PathVariable("worldId") Long worldId
+            @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
     ) {
         Long tokenUserId = Long.parseLong(principal.getName());
 

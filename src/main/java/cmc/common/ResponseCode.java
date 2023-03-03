@@ -45,7 +45,8 @@ public enum ResponseCode {
     TODO_UNCHECKED(HttpStatus.OK, "todo 체크 해제에 성공했습니다."),
     WORDTODAY_CREATED(HttpStatus.CREATED, "오늘의 한마디 생성에 성공하였습니다."),
     AVATAR_CHECKED_TODO_TODAY_FOUND(HttpStatus.OK, "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회에 성공했습니다."),
-    AVATAR_CHECKED_TODO_FOR_MONTH_FOUND(HttpStatus.OK, "캐릭터가 갖고 있는 세계관들의 한달동안 체크된 todo 리스트 조회에 성공했습니다.");
+    AVATAR_CHECKED_TODO_FOR_MONTH_FOUND(HttpStatus.OK, "캐릭터가 갖고 있는 세계관들의 한달동안 체크된 todo 리스트 조회에 성공했습니다."),
+    AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND(HttpStatus.OK, "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회에 성공했습니다.");
 
     private final HttpStatus status;
     private final String message;

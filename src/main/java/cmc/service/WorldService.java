@@ -243,6 +243,10 @@ public class WorldService {
     }
 
     public List<Avatar> getAvatarsByWorldIdWithoutBlockedUser(Long userId, Long worldId) {
+
+        worldRepository.findById(worldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
+
         return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
     }
 }

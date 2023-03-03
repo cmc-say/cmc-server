@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class WorldService {
+    private final WordtodayRepository wordtodayRepository;
     private final AvatarRepository avatarRepository;
     private final WorldRepository worldRepository;
     private final HashtagRepository hashtagRepository;
@@ -248,5 +249,9 @@ public class WorldService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
 
         return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
+    }
+
+    public List<Wordtoday> getWordtodayOfWorld(Long worldId) {
+        return wordtodayRepository.getWordtodayOfWorld(worldId);
     }
 }

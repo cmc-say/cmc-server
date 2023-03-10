@@ -16,8 +16,6 @@ create table recommended_alarm
     recommended_alarm_id      bigint auto_increment
         primary key,
     recommended_alarm_content varchar(20) null,
-    created_at                varchar(30) null,
-    modified_at               varchar(30) null,
     constraint recommended_alarm_id
         unique (recommended_alarm_id)
 );
@@ -27,8 +25,6 @@ create table recommended_world
     recommended_world_id   bigint auto_increment
         primary key,
     recommended_world_name varchar(30) null,
-    created_at             varchar(30) null,
-    modified_at            varchar(30) null,
     constraint recommended_world_id
         unique (recommended_world_id)
 );
@@ -39,8 +35,6 @@ create table recommended_todo
         primary key,
     recommended_world_id     bigint      not null,
     recommended_todo_content varchar(50) null,
-    created_at               varchar(30) null,
-    modified_at              varchar(30) null,
     constraint recommended_todo_id
         unique (recommended_todo_id),
     constraint FK_Recommended_World_TO_Recommended_Todo_1

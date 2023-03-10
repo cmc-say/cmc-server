@@ -191,37 +191,6 @@ public class AvatarController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_QUIT_WORLD));
     }
 
-//    @GetMapping("/{avatarId}/world/{worldId}/todos")
-//    public ResponseEntity<ResponseDto> getTodosOfAvatarToday(
-//            @PathVariable("avatarId") Long avatarId,
-//            @PathVariable("worldId") Long worldId
-//    ) {
-//        avatarService.getTodosOfAvatarToday(avatarId, worldId);
-//    }
-
-
-//
-//    // 캐릭터 한달 달성 프로그래스바 조회 GET /{characterId}/progress
-//    @GetMapping("/{characterId}/progress")
-//    public ResponseEntity<ApiResponse<dto>> getCharacterProgress() {
-//
-//    }
-//
-//
-//    // 오늘의 한마디 쓰기 POST /{characterId}/wordToday?worldId=
-//    @PostMapping("/{characterId}/wordToday")
-//    public ResponseEntity<ApiResponse> saveWordToday() {
-//
-//    }
-//
-//    // 오늘의 한마디 조회 GET /{characterId}/wordToday?worldId=
-//    @GetMapping("/{characterId}/wordToday")
-//    public ResponseEntity<ApiResponse<dto>> getWordToday() {
-//
-//    }
-//
-//
-
     @Operation(
             summary = "todo 체크",
             description = "todo를 체크합니다."

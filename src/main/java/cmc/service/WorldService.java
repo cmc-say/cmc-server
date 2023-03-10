@@ -30,6 +30,7 @@ public class WorldService {
     private final TodoRepository todoRepository;
     private final CheckedTodoRepository checkedTodoRepository;
     private final RecommendedWorldRepository recommendedWorldRepository;
+    private final RecommendedTodoRepository recommendedTodoRepository;
     private final S3Util s3Util;
 
     // 세계관 등록
@@ -250,5 +251,13 @@ public class WorldService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
 
         return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
+    }
+
+    public List<RecommendedWorld> getRecommendedWorld() {
+        return recommendedWorldRepository.findAll();
+    }
+
+    public List<RecommendedTodo> getRecommendedTodo(Long recommendedWorldId) {
+        return recommendedTodoRepository.findAllByRecommendedWorldId(recommendedWorldId);
     }
 }

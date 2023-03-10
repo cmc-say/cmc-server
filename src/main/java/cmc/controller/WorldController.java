@@ -1,15 +1,12 @@
 package cmc.controller;
 
-import cmc.domain.Avatar;
-import cmc.domain.Hashtag;
-import cmc.domain.Wordtoday;
+import cmc.domain.*;
 import cmc.domain.model.OrderType;
 import cmc.dto.request.UpdateDeletedWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateNewWorldHashtagsRequestDto;
 import cmc.dto.request.UpdateWorldInfoRequestDto;
 import cmc.dto.response.*;
 import cmc.dto.request.SaveWorldRequestDto;
-import cmc.domain.World;
 import cmc.error.ErrorResponse;
 import cmc.service.WorldService;
 import cmc.common.ResponseDto;
@@ -321,5 +318,33 @@ public class WorldController {
         List<AvatarsInWorldResponseDto> avatars = worldService.getAvatarsByWorldIdWithoutBlockedUser(tokenUserId, worldId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, avatars));
+    }
+
+    @Operation(
+            summary = "추천 세계관 조회"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "추천 세계관 조회")
+    })
+    @GetMapping("/recommended")
+    public ResponseEntity<ResponseDto<List<RecommendedWorld>>> getRecommendedWorld() {
+        List<RecommendedWorld> recommendedWorld = worldService.getRecommendedWorld();
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.RECOMMENDED_WORLD_FOUND, recommendedWorld));
+    }
+
+    @Operation(
+            summary = "추천 todo 조회"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "추천 todo 조회")
+    })
+    @GetMapping("/{recommendedWorldId}/todo/recommended")
+    public ResponseEntity<ResponseDto<List<RecommendedTodo>>> getRecommendedTodo(
+            @PathVariable("recommendedWorldId") Long recommendedWorldId
+    ) {
+        List<RecommendedTodo> recommendedTodos = worldService.getRecommendedTodo(recommendedWorldId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.RECOMMENDED_TODO_FOUND, recommendedTodos));
     }
 }

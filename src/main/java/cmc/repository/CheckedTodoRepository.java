@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> {
     // 세계관 todo 당 몇명이 했는지 반환 (count, todoId, todoContent) - checked todo 기준 groupby
-    @Query(value = "SELECT ct.todo.todoId as todoId, ct.todo.todoContent as todoContent, count(ct.checkedTodoId) as count FROM CheckedTodo ct " +
-            "JOIN ct.worldAvatar wa " +
-            "WHERE wa.world.worldId = :worldId " +
-            "AND date(ct.createdAt) = current_date " +
-            "GROUP BY ct.todo.todoId ")
+    @Query(value = "SELECT t.todoId as todoId, t.todoContent as todoContent, count(ct.checkedTodoId) as count " +
+            "FROM Todo t " +
+            "LEFT JOIN t.checkedTodos ct ON date(ct.createdAt) = current_date " +
+            "WHERE t.world.worldId = :worldId " +
+            "GROUP BY t.todoId ")
     List<CountCheckedTodoResponse> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +

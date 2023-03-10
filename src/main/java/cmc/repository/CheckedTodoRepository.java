@@ -1,7 +1,8 @@
 package cmc.repository;
 
 import cmc.domain.CheckedTodo;
-import cmc.dto.response.CountCheckedTodoResponse;
+import cmc.dto.response.AvatarCheckedTodoResponseDto;
+import cmc.dto.response.CountCheckedTodoResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,12 +12,12 @@ import java.util.Optional;
 
 public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> {
     // 세계관 todo 당 몇명이 했는지 반환 (count, todoId, todoContent) - checked todo 기준 groupby
-    @Query(value = "SELECT ct.todo.todoId as todoId, ct.todo.todoContent as todoContent, count(ct.checkedTodoId) as count FROM CheckedTodo ct " +
-            "JOIN ct.worldAvatar wa " +
-            "WHERE wa.world.worldId = :worldId " +
-            "AND date(ct.createdAt) = current_date " +
-            "GROUP BY ct.todo.todoId ")
-    List<CountCheckedTodoResponse> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
+    @Query(value = "SELECT t.todoId as todoId, t.todoContent as todoContent, count(ct.checkedTodoId) as count " +
+            "FROM Todo t " +
+            "LEFT JOIN t.checkedTodos ct ON date(ct.createdAt) = current_date " +
+            "WHERE t.world.worldId = :worldId " +
+            "GROUP BY t.todoId ")
+    List<CountCheckedTodoResponseDto> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
             "WHERE ct.todo.todoId = :todoId " +
@@ -24,10 +25,10 @@ public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> 
             "AND date(ct.createdAt) = current_date ")
     Optional<CheckedTodo> findByTodoIdAndWorldAvatarIdToday(@Param("todoId") Long todoId, @Param("worldAvatarId") Long worldAvatarId);
 
-    @Query(value = "SELECT ct FROM CheckedTodo ct " +
-            "WHERE ct.todo.world.worldId = :worldId " +
-            "AND ct.worldAvatar.avatar.avatarId = :avatarId ")
-    List<CheckedTodo> getCheckedTodoTodayByWorldIdAndAvatarId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
+    @Query(value = "SELECT t.todoId as todoId, t.todoContent as todoContent, ct.checkedTodoId as checkedTodoId FROM Todo t " +
+            "LEFT JOIN t.checkedTodos ct ON (date(ct.createdAt) = current_date AND ct.worldAvatar.avatar.avatarId = :avatarId)" +
+            "WHERE t.world.worldId = :worldId ")
+    List<AvatarCheckedTodoResponseDto> getCheckedTodoTodayByWorldIdAndAvatarId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
             "WHERE ct.worldAvatar.avatar.avatarId = :avatarId " +

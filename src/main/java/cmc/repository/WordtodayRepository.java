@@ -15,10 +15,4 @@ public interface WordtodayRepository extends JpaRepository<Wordtoday, Long> {
             "AND wa.avatar.avatarId = :avatarId " +
             "AND date(wt.createdAt) = current_date ")
     Optional<Wordtoday> findWordtodayByAvatarIdAndWorldId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
-
-    @Query(value = "SELECT wt FROM Wordtoday wt " +
-            "JOIN wt.worldAvatar wa " +
-            "WHERE wa.world.worldId = :worldId " +
-            "AND date(wt.createdAt) = current_date ")
-    List<Wordtoday> getWordtodayOfWorld(@Param("worldId") Long worldId);
 }

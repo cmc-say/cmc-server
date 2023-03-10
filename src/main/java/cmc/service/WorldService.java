@@ -2,7 +2,8 @@ package cmc.service;
 
 import cmc.domain.*;
 import cmc.domain.model.OrderType;
-import cmc.dto.response.CountCheckedTodoResponse;
+import cmc.dto.response.AvatarsInWorldResponseDto;
+import cmc.dto.response.CountCheckedTodoResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.*;
@@ -237,21 +238,17 @@ public class WorldService {
         return hashtagRepository.findAll();
     }
 
-    public List<CountCheckedTodoResponse> getWorldTodoToday(Long worldId) {
+    public List<CountCheckedTodoResponseDto> getWorldTodoToday(Long worldId) {
 
-        List<CountCheckedTodoResponse> checkedTodos = checkedTodoRepository.getCheckedTodoTodayByWorldId(worldId);
+        List<CountCheckedTodoResponseDto> checkedTodos = checkedTodoRepository.getCheckedTodoTodayByWorldId(worldId);
         return checkedTodos;
     }
 
-    public List<Avatar> getAvatarsByWorldIdWithoutBlockedUser(Long userId, Long worldId) {
+    public List<AvatarsInWorldResponseDto> getAvatarsByWorldIdWithoutBlockedUser(Long userId, Long worldId) {
 
         worldRepository.findById(worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
 
         return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
-    }
-
-    public List<Wordtoday> getWordtodayOfWorld(Long worldId) {
-        return wordtodayRepository.getWordtodayOfWorld(worldId);
     }
 }

@@ -301,20 +301,19 @@ public class AvatarController {
     @Operation(
             summary = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회",
             description = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회합니다." +
-                    "\t\n 체크한 데이터만 반환합니다. 즉 아무 것도 체크안했으면 반환되는 값이 없습니다."
+                    "\t\n 체크하지 않았다면 checkedTodoId 가 null 입니다."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "캐릭터가 속해있는 특정 세계관에서 오늘 체크한 todo 리스트 조회에 성공했습니다.")
     })
     @GetMapping("/{avatarId}/world/{worldId}/todos")
-    public ResponseEntity<ResponseDto<List<CheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
+    public ResponseEntity<ResponseDto<List<AvatarCheckedTodoResponseDto>>> getCheckedTodoOfAvatar(
             @Parameter(description = "아바타 id", required = true) @PathVariable("avatarId") Long avatarId,
             @Parameter(description = "세계관 id", required = true) @PathVariable("worldId") Long worldId
     ) {
-        List<CheckedTodo> checkedTodos = avatarService.getCheckedTodoOfAvatar(avatarId, worldId);
-        List<CheckedTodoResponseDto> dtoList = checkedTodos.stream().map(CheckedTodoResponseDto::fromEntity).collect(Collectors.toList());
+        List<AvatarCheckedTodoResponseDto> checkedTodos = avatarService.getCheckedTodoOfAvatar(avatarId, worldId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_TODAY_FOUND, dtoList));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_CHECKED_TODO_TODAY_FOUND, checkedTodos));
     }
 
     @Operation(

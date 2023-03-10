@@ -290,52 +290,36 @@ public class WorldController {
     @Operation(
             summary = "세계관 todo 당 오늘의 체크 개수 조회",
             description = "세계관에 속해있는 모든 캐릭터들에 한해 todo 당 오늘의 체크 개수를 조회합니다. " +
-                    "\t\n 체크를 아무도 안했다면 데이터가 보내지지 않습니다. 즉, count가 0인 데이터는 보내지지 않습니다. ")
+                    "\t\n 체크를 아무도 안했다면 count 는 0 으로 보내집니다 ")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회")
     })
     @GetMapping("/{worldId}/todo/today")
-    public ResponseEntity<ResponseDto<List<CountCheckedTodoResponse>>> getWorldTodoToday(
+    public ResponseEntity<ResponseDto<List<CountCheckedTodoResponseDto>>> getWorldTodoToday(
             @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
     ) {
 
-        List<CountCheckedTodoResponse> todos = worldService.getWorldTodoToday(worldId);
+        List<CountCheckedTodoResponseDto> todos = worldService.getWorldTodoToday(worldId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, todos));
     }
 
     @Operation(
             summary = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회",
-            description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회를 조회합니다. " )
+            description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회를 조회합니다. " +
+                    "\t\n 오늘의 한마디 존재 여부도 같이 반환합니다. " )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회")
     })
     @GetMapping("/{worldId}/avatars")
-    public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatarsByWorldIdWithoutBlockedUser(
+    public ResponseEntity<ResponseDto<List<AvatarsInWorldResponseDto>>> getAvatarsByWorldIdWithoutBlockedUser(
             Principal principal,
             @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
     ) {
         Long tokenUserId = Long.parseLong(principal.getName());
 
-        List<Avatar> avatars = worldService.getAvatarsByWorldIdWithoutBlockedUser(tokenUserId, worldId);
-        List<AvatarResponseDto> dtoList = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
+        List<AvatarsInWorldResponseDto> avatars = worldService.getAvatarsByWorldIdWithoutBlockedUser(tokenUserId, worldId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, dtoList));
-    }
-
-    @Operation(
-            summary = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회",
-            description = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회합니다. " )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회")
-    })
-    @GetMapping("/{worldId}/avatars/wordtoday")
-    public ResponseEntity<ResponseDto<List<WordtodayResponseDto>>> getWordtodayOfWorld(
-            @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
-    ) {
-        List<Wordtoday> wordtodays = worldService.getWordtodayOfWorld(worldId);
-        List<WordtodayResponseDto> dtoList = wordtodays.stream().map(WordtodayResponseDto::fromEntity).collect(Collectors.toList());
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_WORD_TODAY_FOUND, dtoList));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, avatars));
     }
 }

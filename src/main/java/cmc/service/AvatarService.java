@@ -2,6 +2,7 @@ package cmc.service;
 
 
 import cmc.domain.*;
+import cmc.dto.response.AvatarCheckedTodoResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.*;
@@ -196,7 +197,7 @@ public class AvatarService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.TODO_CHECKED_NOT_FOUND));
     }
 
-    public List<CheckedTodo> getCheckedTodoOfAvatar(Long avatarId, Long worldId) {
+    public List<AvatarCheckedTodoResponseDto> getCheckedTodoOfAvatar(Long avatarId, Long worldId) {
         return checkedTodoRepository.getCheckedTodoTodayByWorldIdAndAvatarId(avatarId, worldId);
     }
 

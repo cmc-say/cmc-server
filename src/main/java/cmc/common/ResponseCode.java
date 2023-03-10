@@ -49,7 +49,8 @@ public enum ResponseCode {
     AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND(HttpStatus.OK, "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회에 성공했습니다."),
     WORLD_WORD_TODAY_FOUND(HttpStatus.OK, "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회에 성공했습니다."),
     // 추천 목록
-    RECOMMENDED_WORLD_FOUND(HttpStatus.OK, "세계관 추천 목록 조회에 성공하였습니다.");
+    RECOMMENDED_WORLD_FOUND(HttpStatus.OK, "세계관 추천 목록 조회에 성공하였습니다."),
+    RECOMMENDED_TODO_FOUND(HttpStatus.OK, "todo 추천 목록 조회에 성공하였습니다.");
 
     private final HttpStatus status;
     private final String message;

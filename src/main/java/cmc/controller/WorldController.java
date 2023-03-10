@@ -326,4 +326,13 @@ public class WorldController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.RECOMMENDED_WORLD_FOUND, recommendedWorld));
     }
+
+    @GetMapping("/{recommendedWorldId}/todo/recommended")
+    public ResponseEntity<ResponseDto<List<RecommendedTodo>>> getRecommendedTodo(
+            @PathVariable("recommendedWorldId") Long recommendedWorldId
+    ) {
+        List<RecommendedTodo> recommendedTodos = worldService.getRecommendedTodo(recommendedWorldId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.RECOMMENDED_TODO_FOUND, recommendedTodos));
+    }
 }

@@ -1,7 +1,8 @@
 package cmc.repository;
 
 import cmc.domain.CheckedTodo;
-import cmc.dto.response.CountCheckedTodoResponse;
+import cmc.dto.response.AvatarCheckedTodoResponseDto;
+import cmc.dto.response.CountCheckedTodoResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +17,7 @@ public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> 
             "LEFT JOIN t.checkedTodos ct ON date(ct.createdAt) = current_date " +
             "WHERE t.world.worldId = :worldId " +
             "GROUP BY t.todoId ")
-    List<CountCheckedTodoResponse> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
+    List<CountCheckedTodoResponseDto> getCheckedTodoTodayByWorldId(@Param("worldId") Long worldId);
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
             "WHERE ct.todo.todoId = :todoId " +
@@ -24,10 +25,11 @@ public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> 
             "AND date(ct.createdAt) = current_date ")
     Optional<CheckedTodo> findByTodoIdAndWorldAvatarIdToday(@Param("todoId") Long todoId, @Param("worldAvatarId") Long worldAvatarId);
 
-    @Query(value = "SELECT ct FROM CheckedTodo ct " +
+    @Query(value = "SELECT t.todoId as todoId, t.todoContent as todoContent, ct.checkedTodoId as checkedTodoId FROM Todo t " +
+            "LEFT JOIN t.checkedTodos ct ON date(ct.createdAt) = current_date " +
             "WHERE ct.todo.world.worldId = :worldId " +
             "AND ct.worldAvatar.avatar.avatarId = :avatarId ")
-    List<CheckedTodo> getCheckedTodoTodayByWorldIdAndAvatarId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
+    List<AvatarCheckedTodoResponseDto> getCheckedTodoTodayByWorldIdAndAvatarId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
             "WHERE ct.worldAvatar.avatar.avatarId = :avatarId " +

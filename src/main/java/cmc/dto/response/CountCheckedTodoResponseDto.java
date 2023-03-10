@@ -1,6 +1,6 @@
 package cmc.dto.response;
 
-public interface CountCheckedTodoResponse {
+public interface CountCheckedTodoResponseDto {
     Long getCount();
     Long getTodoId();
     String getTodoContent();

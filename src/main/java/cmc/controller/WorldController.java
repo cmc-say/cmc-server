@@ -295,11 +295,11 @@ public class WorldController {
             @ApiResponse(responseCode = "200", description = "세계관 캐릭터 전체의 체크리스트 달성 현황 조회")
     })
     @GetMapping("/{worldId}/todo/today")
-    public ResponseEntity<ResponseDto<List<CountCheckedTodoResponse>>> getWorldTodoToday(
+    public ResponseEntity<ResponseDto<List<CountCheckedTodoResponseDto>>> getWorldTodoToday(
             @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
     ) {
 
-        List<CountCheckedTodoResponse> todos = worldService.getWorldTodoToday(worldId);
+        List<CountCheckedTodoResponseDto> todos = worldService.getWorldTodoToday(worldId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_TODO_TODAY_FOUND, todos));
     }

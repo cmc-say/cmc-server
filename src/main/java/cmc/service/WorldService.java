@@ -2,7 +2,7 @@ package cmc.service;
 
 import cmc.domain.*;
 import cmc.domain.model.OrderType;
-import cmc.dto.response.CountCheckedTodoResponse;
+import cmc.dto.response.CountCheckedTodoResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.repository.*;
@@ -237,9 +237,9 @@ public class WorldService {
         return hashtagRepository.findAll();
     }
 
-    public List<CountCheckedTodoResponse> getWorldTodoToday(Long worldId) {
+    public List<CountCheckedTodoResponseDto> getWorldTodoToday(Long worldId) {
 
-        List<CountCheckedTodoResponse> checkedTodos = checkedTodoRepository.getCheckedTodoTodayByWorldId(worldId);
+        List<CountCheckedTodoResponseDto> checkedTodos = checkedTodoRepository.getCheckedTodoTodayByWorldId(worldId);
         return checkedTodos;
     }
 

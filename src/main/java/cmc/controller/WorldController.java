@@ -322,20 +322,4 @@ public class WorldController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, avatars));
     }
-
-    @Operation(
-            summary = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회",
-            description = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회합니다. " )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "차단한 유저를 포함한 세계관 속 캐릭터들의 오늘 날짜의 오늘의 한마디 조회")
-    })
-    @GetMapping("/{worldId}/avatars/wordtoday")
-    public ResponseEntity<ResponseDto<List<WordtodayResponseDto>>> getWordtodayOfWorld(
-            @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
-    ) {
-        List<Wordtoday> wordtodays = worldService.getWordtodayOfWorld(worldId);
-        List<WordtodayResponseDto> dtoList = wordtodays.stream().map(WordtodayResponseDto::fromEntity).collect(Collectors.toList());
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.WORLD_WORD_TODAY_FOUND, dtoList));
-    }
 }

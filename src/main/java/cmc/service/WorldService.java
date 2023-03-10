@@ -251,8 +251,4 @@ public class WorldService {
 
         return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
     }
-
-    public List<Wordtoday> getWordtodayOfWorld(Long worldId) {
-        return wordtodayRepository.getWordtodayOfWorld(worldId);
-    }
 }

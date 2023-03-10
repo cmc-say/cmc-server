@@ -251,4 +251,8 @@ public class WorldService {
 
         return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
     }
+
+    public List<RecommendedWorld> getRecommendedWorld() {
+        return recommendedWorldRepository.findAll();
+    }
 }

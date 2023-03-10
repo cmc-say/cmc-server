@@ -306,7 +306,8 @@ public class WorldController {
 
     @Operation(
             summary = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회",
-            description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회를 조회합니다. " )
+            description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회를 조회합니다. " +
+                    "\t\n 오늘의 한마디 존재 여부도 같이 반환합니다. " )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회")
     })
@@ -318,7 +319,6 @@ public class WorldController {
         Long tokenUserId = Long.parseLong(principal.getName());
 
         List<AvatarsInWorldResponseDto> avatars = worldService.getAvatarsByWorldIdWithoutBlockedUser(tokenUserId, worldId);
-//        List<AvatarResponseDto> dtoList = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, avatars));
     }

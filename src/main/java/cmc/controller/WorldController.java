@@ -311,16 +311,16 @@ public class WorldController {
             @ApiResponse(responseCode = "200", description = "차단한 유저를 제외한 세계관 속 캐릭터 리스트 조회")
     })
     @GetMapping("/{worldId}/avatars")
-    public ResponseEntity<ResponseDto<List<AvatarResponseDto>>> getAvatarsByWorldIdWithoutBlockedUser(
+    public ResponseEntity<ResponseDto<List<AvatarsInWorldResponseDto>>> getAvatarsByWorldIdWithoutBlockedUser(
             Principal principal,
             @Parameter(description = "조회할 세계관 아이디", required = true) @PathVariable("worldId") Long worldId
     ) {
         Long tokenUserId = Long.parseLong(principal.getName());
 
-        List<Avatar> avatars = worldService.getAvatarsByWorldIdWithoutBlockedUser(tokenUserId, worldId);
-        List<AvatarResponseDto> dtoList = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
+        List<AvatarsInWorldResponseDto> avatars = worldService.getAvatarsByWorldIdWithoutBlockedUser(tokenUserId, worldId);
+//        List<AvatarResponseDto> dtoList = avatars.stream().map(AvatarResponseDto::fromEntity).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, dtoList));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, avatars));
     }
 
     @Operation(

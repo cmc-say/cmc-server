@@ -2,6 +2,7 @@ package cmc.service;
 
 import cmc.domain.*;
 import cmc.domain.model.OrderType;
+import cmc.dto.response.AvatarsInWorldResponseDto;
 import cmc.dto.response.CountCheckedTodoResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
@@ -243,7 +244,7 @@ public class WorldService {
         return checkedTodos;
     }
 
-    public List<Avatar> getAvatarsByWorldIdWithoutBlockedUser(Long userId, Long worldId) {
+    public List<AvatarsInWorldResponseDto> getAvatarsByWorldIdWithoutBlockedUser(Long userId, Long worldId) {
 
         worldRepository.findById(worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));

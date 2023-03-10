@@ -320,6 +320,12 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_IN_WORLD_WITHOUT_BLOCKED_USER_FOUND, avatars));
     }
 
+    @Operation(
+            summary = "추천 세계관 조회"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "추천 세계관 조회")
+    })
     @GetMapping("/recommended")
     public ResponseEntity<ResponseDto<List<RecommendedWorld>>> getRecommendedWorld() {
         List<RecommendedWorld> recommendedWorld = worldService.getRecommendedWorld();
@@ -327,6 +333,12 @@ public class WorldController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.RECOMMENDED_WORLD_FOUND, recommendedWorld));
     }
 
+    @Operation(
+            summary = "추천 todo 조회"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "추천 todo 조회")
+    })
     @GetMapping("/{recommendedWorldId}/todo/recommended")
     public ResponseEntity<ResponseDto<List<RecommendedTodo>>> getRecommendedTodo(
             @PathVariable("recommendedWorldId") Long recommendedWorldId

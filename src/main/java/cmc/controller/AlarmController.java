@@ -4,6 +4,9 @@ import cmc.common.ResponseCode;
 import cmc.common.ResponseDto;
 import cmc.domain.RecommendedAlarm;
 import cmc.service.AlarmService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +27,12 @@ public class AlarmController {
 
     private final AlarmService alarmService;
 
+    @Operation(
+            summary = "추천 알림 조회"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "추천 알림 조회")
+    })
     @GetMapping("/recommended")
     public ResponseEntity<ResponseDto<List<RecommendedAlarm>>> getRecommendedAlarm() {
 

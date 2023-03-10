@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AvatarRepository extends JpaRepository<Avatar, Long> {
-    @Query(value = "SELECT a FROM Avatar a LEFT JOIN User u on a.user.userId = u.userId WHERE u.userId = :userId")
+    @Query(value = "SELECT a FROM Avatar a JOIN User u WHERE u.userId = :userId")
     List<Avatar> findAvatarsByUserId(@Param("userId") Long userId);
 
     @Query(value = "SELECT a FROM WorldAvatar wa " +

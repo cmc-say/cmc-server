@@ -83,5 +83,7 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
 
-
-
+# kakao
+kakao:
+  client-id: tempory
+  redirect-uri: http://localhost:3000

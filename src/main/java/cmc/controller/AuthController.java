@@ -2,6 +2,8 @@ package cmc.controller;
 
 import cmc.common.ResponseCode;
 import cmc.common.ResponseDto;
+import cmc.domain.model.SocialType;
+import cmc.dto.request.LoginRequestDto;
 import cmc.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -34,7 +34,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteUser(Principal principal) {
 
         Long tokenUserId = Long.parseLong(principal.getName());
@@ -42,6 +42,15 @@ public class AuthController {
         authService.deleteUser(tokenUserId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_DELETE_SUCCESS));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto> loginUser(@RequestBody LoginRequestDto req) {
+
+        SocialType socialType = SocialType.fromString(req.getSocialType());
+        authService.loginUser(req.getDeviceToken(), req.getAuthorizationCode(), socialType);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_LOGIN_SUCCESS));
     }
 
 }

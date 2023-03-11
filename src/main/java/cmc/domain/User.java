@@ -24,7 +24,7 @@ public class User extends BaseEntity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Setter @Column(nullable = false, length = 50) private Long socialId;
+    @Setter @Column(nullable = false, length = 50) private String socialId;
     @Enumerated(EnumType.STRING) @Setter @Column(nullable = false, length = 10) private SocialType socialType;
     @Setter @Column(length = 100) private String refreshToken;
     @Setter @Column(length= 100) private String deviceToken;
@@ -36,7 +36,7 @@ public class User extends BaseEntity
     private List<Block> blockedUsers = new ArrayList<>();
 
     @Builder
-    public User(Long userId, Long socialId, SocialType socialType, String refreshToken, String deviceToken) {
+    public User(Long userId, String socialId, SocialType socialType, String refreshToken, String deviceToken) {
         this.userId = userId;
         this.socialId = socialId;
         this.socialType = socialType;

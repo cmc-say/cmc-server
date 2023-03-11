@@ -70,10 +70,6 @@ public class UserService {
 
     }
 
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
-    }
-
     public List<Avatar> getCharactersByUserId(Long userId) {
         return avatarRepository.findAvatarsByUserId(userId);
     }

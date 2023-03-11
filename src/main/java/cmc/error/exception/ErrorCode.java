@@ -45,7 +45,13 @@ public enum ErrorCode {
 
     // wordtoday
     WORDTODAY_NOT_FOUND(400, "WT001", "존재하지 않는 오늘의 한마디입니다." ),
-    WORDTODAY_DUPLICATED(400, "WT002", "오늘 날짜의 오늘의 한마디가 이미 존재합니다.");
+    WORDTODAY_DUPLICATED(400, "WT002", "오늘 날짜의 오늘의 한마디가 이미 존재합니다."),
+
+    // auth
+    SOCIAL_TYPE_ERROR(400, "A001", "존재하지 않는 social 로그인 타입입니다."),
+    SOCIAL_ACCESS_TOKEN_NOT_FOUND(400, "A002", "소셜 access token를 가져오는데 실패하였습니다."),
+    SOCIAL_ID_NOT_FOUND(400, "A003", "소셜 access token를 통해 소셜 id를 가져오는데 실패하였습니다."),
+    SOCIAL_AUTHORIZATTION_CODE_NOT_VALID(400, "A004", "유효하지 않은 소셜 로그인 인가코드 입니다.");
 
     private final String code;
     private final String message;

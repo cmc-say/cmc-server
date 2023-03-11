@@ -9,4 +9,9 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UserRepository userRepository;
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
 }

@@ -35,24 +35,6 @@ public class UserController {
     private final UserService userService;
 
     @Operation(
-            summary = "회원 탈퇴",
-            description = "토큰에 해당하는 회원을 탈퇴합니다."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공"),
-            @ApiResponse(responseCode = "404", description = "User not found")
-    })
-    @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteUser(Principal principal) {
-
-        Long tokenUserId = Long.parseLong(principal.getName());
-
-        userService.deleteUser(tokenUserId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_DELETE_SUCCESS));
-    }
-
-    @Operation(
             summary = "회원 신고",
             description = "param userId에 해당하는 회원을 신고합니다. \n" +
                     "회원 신고(닉네임 or 상태메세지)가 5번 누적됐을 경우 신고 당한 유저의 캐릭터들" +

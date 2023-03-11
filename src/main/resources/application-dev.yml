@@ -85,5 +85,5 @@ springdoc:
 
 # kakao
 kakao:
-  client-id: tempory
+  client-id: ENC(cA9sz9r0RidlWDIdD4shtbt9sdoSSjUX9hHifGkHbICWe7uPgq4Ydh45MFaubzds)
   redirect-uri: http://localhost:3000

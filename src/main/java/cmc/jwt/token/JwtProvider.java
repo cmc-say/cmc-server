@@ -3,6 +3,7 @@ package cmc.jwt.token;
 import cmc.error.exception.ErrorCode;
 import cmc.error.exception.BusinessException;
 import io.jsonwebtoken.io.Decoders;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -22,13 +23,14 @@ import java.util.List;
 @Slf4j
 @Component
 public class JwtProvider {
-    private final long accessTokenValidity;
-    private final long refreshTokenValidity;
+    private final Long accessTokenValidity;
+    @Getter
+    private final Long refreshTokenValidity;
     private final Key key;
 
     public JwtProvider(
-            @Value("${jwt.access-token-validity}") long accessTokenValidity,
-            @Value("${jwt.refresh-token-validity}") long refreshTokenValidity,
+            @Value("${jwt.access-token-validity}") Long accessTokenValidity,
+            @Value("${jwt.refresh-token-validity}") Long refreshTokenValidity,
             @Value("${jwt.secret}") String secret
     ) {
         this.accessTokenValidity = accessTokenValidity * 1000;
@@ -40,7 +42,7 @@ public class JwtProvider {
         return new JwtToken(id, accessTokenValidity, key);
     }
 
-    public JwtToken createRefreshToken(String id, Key key) {
+    public JwtToken createRefreshToken(String id) {
         return new JwtToken(id, refreshTokenValidity, key);
     }
 

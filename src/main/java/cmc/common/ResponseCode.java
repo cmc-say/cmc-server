@@ -51,7 +51,8 @@ public enum ResponseCode {
     // 추천 목록
     RECOMMENDED_WORLD_FOUND(HttpStatus.OK, "세계관 추천 목록 조회에 성공하였습니다."),
     RECOMMENDED_TODO_FOUND(HttpStatus.OK, "todo 추천 목록 조회에 성공하였습니다."),
-    RECOMMENDED_ALARM_FOUND(HttpStatus.OK, "알림 추천 목록 조회에 성공하였습니다.");
+    RECOMMENDED_ALARM_FOUND(HttpStatus.OK, "알림 추천 목록 조회에 성공하였습니다."),
+    ACCESS_TOKEN_REISSUED(HttpStatus.OK, "어세스 토큰 재발급에 성공하였습니다.");
 
     private final HttpStatus status;
     private final String message;

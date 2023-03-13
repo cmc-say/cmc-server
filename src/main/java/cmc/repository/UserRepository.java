@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findUserByUserIdAndWorldId(@Param("userId") Long userId, @Param("worldId") Long worldId);
 
     Optional<User> findBySocialId(String socialId);
+
+    Optional<User> findByRefreshToken(String refreshToken);
 }

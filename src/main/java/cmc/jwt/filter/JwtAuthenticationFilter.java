@@ -2,6 +2,7 @@ package cmc.jwt.filter;
 
 import cmc.jwt.token.JwtToken;
 import cmc.jwt.token.JwtProvider;
+import cmc.utils.HeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -25,17 +26,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain)  throws ServletException, IOException {
 
-        JwtToken jwtToken = tokenProvider.createAccessToken("1");
-        Authentication authentication = tokenProvider.getAuthentication(jwtToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String tokenStr = HeaderUtil.getAccessToken(request);
+        JwtToken token = tokenProvider.convertToJwtToken(tokenStr);
 
-//        String tokenStr = HeaderUtil.getAccessToken(request);
-//        JwtToken token = tokenProvider.convertToJwtToken(tokenStr);
-//
-//        if (token.validate()) {
-//            Authentication authentication = tokenProvider.getAuthentication(token);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        }
+        if (token.validate()) {
+            Authentication authentication = tokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
         filterChain.doFilter(request, response);
     }

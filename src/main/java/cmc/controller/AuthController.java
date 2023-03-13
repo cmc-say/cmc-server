@@ -42,7 +42,7 @@ public class AuthController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공"),
-            @ApiResponse(responseCode = "404", description = "User not found")
+            @ApiResponse(responseCode = "400", description = "User not found")
     })
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteUser(Principal principal) {
@@ -54,6 +54,18 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_DELETE_SUCCESS));
     }
 
+    @Operation(
+            summary = "로그인",
+            description = "socialType은 kakao or apple" +
+                    "\t\n refresh token은 쿠키에 Path=/; HttpOnly; Expires=(3개월 후) 로 저장됩니다.;"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "로그인 성공"),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 social 로그인 타입입니다." +
+                    "\t\n소셜 access token를 가져오는데 실패하였습니다." +
+                    "\t\n소셜 access token를 통해 소셜 id를 가져오는데 실패하였습니다." +
+                    "\t\n유효하지 않은 소셜 로그인 인가코드 입니다.")
+    })
     @PostMapping("/login")
     public ResponseEntity<ResponseDto<AccessTokenResponseDto>> loginUser(HttpServletResponse response, @RequestBody LoginRequestDto req) {
 
@@ -73,6 +85,17 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_LOGIN_SUCCESS, dto));
     }
 
+    @Operation(
+            summary = "토큰 재발급",
+            description = "쿠키의 리프래시 토큰을 db와 대조하여 어세스 토큰을 재발급합니다." +
+                    "\t\n access 토큰을 재발급하지만 리프래시 토큰은 갱신되지 않습니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "재발급 성공"),
+            @ApiResponse(responseCode = "400", description = "쿠기에 리프래시 토큰이 존재하지 않습니다." +
+                    "\t\n디비에 해당 리프래시 토큰이 존재하지 않습니다." +
+                    "\t\n리프래시 토큰이 만료되었습니다.")
+    })
     @PostMapping("/reissue")
     public ResponseEntity<ResponseDto<AccessTokenResponseDto>> reissueAccessToken(HttpServletRequest request) {
         Cookie refreshToken = CookieUtil.getCookie(request, "refreshToken")

@@ -3,7 +3,10 @@ package cmc.service;
 import cmc.domain.User;
 import cmc.domain.model.SocialType;
 import cmc.dto.TokenDto;
+import cmc.error.exception.BusinessException;
+import cmc.error.exception.ErrorCode;
 import cmc.jwt.token.JwtProvider;
+import cmc.jwt.token.JwtToken;
 import cmc.repository.UserRepository;
 import cmc.utils.KakaoUtil;
 import lombok.RequiredArgsConstructor;
@@ -81,4 +84,14 @@ public class AuthService {
         return tokenDto;
     }
 
+    public String reissueAccessToken(String refreshToken) {
+        // db의 refresh token과 일치하는지 확인
+        User user = userRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new BusinessException(ErrorCode.DB_REFRESH_TOKEN_NOT_FOUND));
+
+        JwtToken jwtRefreshToken = jwtProvider.convertToJwtToken(refreshToken);
+        // refresh token의 유효성 확인
+
+        // 유효성 확인이 성공한다면 어세스 토큰 발급
+    }
 }

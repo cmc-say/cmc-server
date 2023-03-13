@@ -5,6 +5,7 @@ import cmc.jwt.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,8 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] POST_PERMITTED_URLS = {
-            "**/auth/signup",
-            "**/auth/login"
+            "/**/auth/login",
+            "/**/auth/reissue"
+    };
+
+    private static final String[] DOCS_PERMITTED_URLS = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**"
     };
 
     private final JwtProvider jwtProvider;
@@ -55,8 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        // 정적 리소스 spring security 대상에서 제외
-        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        web.ignoring().antMatchers(DOCS_PERMITTED_URLS);
     }
 
 }

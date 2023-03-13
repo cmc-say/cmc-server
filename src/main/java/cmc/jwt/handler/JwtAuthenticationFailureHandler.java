@@ -28,8 +28,6 @@ public class JwtAuthenticationFailureHandler implements AuthenticationEntryPoint
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.sendError(401, "Unauthorized");
 
-//        ErrorCode errorCode = (ErrorCode) request.getAttribute("exception");
-//        objectMapper.writeValue(response.getWriter(), errorCode);
     }
 }
 

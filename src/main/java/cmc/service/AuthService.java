@@ -85,13 +85,21 @@ public class AuthService {
     }
 
     public String reissueAccessToken(String refreshToken) {
-        // db의 refresh token과 일치하는지 확인
-        User user = userRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(() -> new BusinessException(ErrorCode.DB_REFRESH_TOKEN_NOT_FOUND));
 
         JwtToken jwtRefreshToken = jwtProvider.convertToJwtToken(refreshToken);
-        // refresh token의 유효성 확인
+        String tokenUserId = jwtRefreshToken.getTokenClaims().getSubject();
 
-        // 유효성 확인이 성공한다면 어세스 토큰 발급
+        User user = userRepository.findById(Long.parseLong(tokenUserId))
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        // refresh token의 유효성 확인
+        if (user.getRefreshToken().equals(refreshToken) && jwtRefreshToken.validate()) {
+
+            String accessToken = jwtProvider.createAccessToken(user.getUserId().toString()).getToken();
+
+            return accessToken;
+        } else {
+            throw new BusinessException(ErrorCode.REFRESH_TOKEN_NOT_VALID);
+        }
     }
 }

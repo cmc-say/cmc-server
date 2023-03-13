@@ -53,7 +53,8 @@ public enum ErrorCode {
     SOCIAL_ID_NOT_FOUND(400, "A003", "소셜 access token를 통해 소셜 id를 가져오는데 실패하였습니다."),
     SOCIAL_AUTHORIZATTION_CODE_NOT_VALID(400, "A004", "유효하지 않은 소셜 로그인 인가코드 입니다."),
     COOKIE_REFRESH_TOKEN_NOT_FOUND(400, "A005", "쿠기에 리프래시 토큰이 존재하지 않습니다."),
-    DB_REFRESH_TOKEN_NOT_FOUND(400, "A006", "디비에 해당 리프래시 토큰이 존재하지 않습니다.");
+    DB_REFRESH_TOKEN_NOT_FOUND(400, "A006", "디비에 해당 리프래시 토큰이 존재하지 않습니다."),
+    REFRESH_TOKEN_NOT_VALID(400, "A007", "리프래시 토큰이 만료되었습니다.");
 
     private final String code;
     private final String message;

@@ -79,10 +79,11 @@ public class AuthController {
                 .orElseThrow(() -> new BusinessException(ErrorCode.COOKIE_REFRESH_TOKEN_NOT_FOUND));
 
         String accessToken =  authService.reissueAccessToken(refreshToken.getValue());
+
+        AccessTokenResponseDto dto = AccessTokenResponseDto.builder()
+                .accessToken(accessToken)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.ACCESS_TOKEN_REISSUED, dto));
     }
-//    1. 만료된 어세스 토큰을 확인한다.
-//    2. 웹에서 리프래시 토큰을 쿠키에 담아 보내준다
-//    3. 쿠키에서 꺼내서 일단 db와 일치하는지 확인한다
-//    4. 일치하면 토큰이 유효한지 확인한다
-//    5. 유효하면 재발급을 해준다. 아니면 redirect?
 }

@@ -40,3 +40,5 @@ src/resources/application-prod.properties
 src/main/resources/application-prod.properties
 
 src/main/resources/fcm-key.json
+
+src/test/java/cmc/JasyptTest.java

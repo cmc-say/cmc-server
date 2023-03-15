@@ -51,6 +51,7 @@ dependencies {
 
 	// fcm
 	implementation 'com.google.firebase:firebase-admin:9.1.1'
+	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 }
 
 tasks.named('test') {

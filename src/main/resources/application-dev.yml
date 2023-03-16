@@ -91,5 +91,6 @@ kakao:
 # fcm
 fcm:
   key:
-    path: src/main/resources/fcm-key.json
+    path: fcm-key.json
     scope: https://www.googleapis.com/auth/firebase.messageing
+    api-url: ENC(gC2m2ivuWUPr13CEbDwOL9IkarbqdAqF3ffB146fwdixYDGsM6+toHiIPKG/1E42SzMW1TWdln+TK0hq9mP1wQoIWuHHulqnIvFuXIXQO9w=)

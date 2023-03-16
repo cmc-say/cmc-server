@@ -45,7 +45,16 @@ public class AlarmController {
     }
 
     @Operation(
-            summary = "알림 보내기"
+            summary = "알림 보내기",
+            description = "인텐트 부가 정보" +
+                    "\t\n { data : " +
+                    "\t\n {" +
+                    "\t\n   \"recieverAvatarName\": \"수신 아바타 이름\"," +
+                    "\t\n   \"senderAvatarName\": \"송신 아바타 이름\"," +
+                    "\t\n   \"senderAvatarImg\": \"img url\"," +
+                    "\t\n   \"alarmMessage\": \"알림메세지 예시\" " +
+                    "\t\n }" +
+                    "\t\n }"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "알림 보내기")

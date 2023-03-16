@@ -47,8 +47,8 @@ create table user
         primary key,
     social_id     bigint       null,
     social_type   varchar(10)  null,
-    refresh_token varchar(100) null,
-    device_token  varchar(100) null,
+    refresh_token varchar(200) null,
+    device_token  varchar(200) null,
     created_at    varchar(30)  null,
     modified_at   varchar(30)  null,
     constraint user_id

@@ -64,7 +64,7 @@ public class AlarmController {
             @RequestBody SendAlarmRequestDto req
             ) {
 
-        alarmService.sendAlarm(req.getReceiverAvatarId(), req.getSenderAvatarId(), req.getMessage());
+        alarmService.sendAlarm(req.getReceiverAvatarId(), req.getSenderAvatarId(), req.getAlarmMessage());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.FCM_NOTIFICATION_SUCCESS));
     }

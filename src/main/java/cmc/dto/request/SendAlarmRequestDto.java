@@ -12,5 +12,5 @@ public class SendAlarmRequestDto {
     private Long receiverAvatarId;
 
     @Schema(description = "전송하는 메세지")
-    private String message;
+    private String alarmMessage;
 }

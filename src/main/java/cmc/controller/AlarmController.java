@@ -2,8 +2,14 @@ package cmc.controller;
 
 import cmc.common.ResponseCode;
 import cmc.common.ResponseDto;
+import cmc.domain.Avatar;
 import cmc.domain.RecommendedAlarm;
+import cmc.dto.request.SendAlarmRequestDto;
+import cmc.error.exception.BusinessException;
+import cmc.error.exception.ErrorCode;
+import cmc.repository.AvatarRepository;
 import cmc.service.AlarmService;
+import cmc.utils.FcmUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,9 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +28,6 @@ import java.util.List;
 @RequestMapping("/api/v1/alarm")
 @Tag(name = "Alarm 컨트롤러")
 public class AlarmController {
-
     private final AlarmService alarmService;
 
     @Operation(
@@ -39,5 +42,21 @@ public class AlarmController {
         List<RecommendedAlarm> recommendedAlarms = alarmService.getRecommendedAlarm();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.RECOMMENDED_ALARM_FOUND, recommendedAlarms));
+    }
+
+    @Operation(
+            summary = "알림 보내기"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "알림 보내기")
+    })
+    @PostMapping("/fcm")
+    public ResponseEntity<ResponseDto> sendAlarm(
+            @RequestBody SendAlarmRequestDto req
+            ) {
+
+        alarmService.sendAlarm(req.getReceiverAvatarId(), req.getSenderAvatarId(), req.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.FCM_NOTIFICATION_SUCCESS));
     }
 }

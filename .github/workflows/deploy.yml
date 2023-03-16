@@ -18,11 +18,11 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: make jasypt-encryptor-password.txt
+      - name: make fcm-key.json
         run: |
           echo "copy to test/resources"
-          touch ./src/test/resources/fcm-key.json
-          echo $FILE >> ./src/test/resources/fcm-key.json
+          touch ./src/main/resources/fcm-key.json
+          echo $FILE >> ./src/main/resources/fcm-key.json
           
           echo "confirm file in main"
           cd ./src/main/resources

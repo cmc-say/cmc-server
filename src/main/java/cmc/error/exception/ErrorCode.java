@@ -54,7 +54,12 @@ public enum ErrorCode {
     SOCIAL_AUTHORIZATTION_CODE_NOT_VALID(400, "A004", "유효하지 않은 소셜 로그인 인가코드 입니다."),
     COOKIE_REFRESH_TOKEN_NOT_FOUND(400, "A005", "쿠기에 리프래시 토큰이 존재하지 않습니다."),
     DB_REFRESH_TOKEN_NOT_FOUND(400, "A006", "디비에 해당 리프래시 토큰이 존재하지 않습니다."),
-    REFRESH_TOKEN_NOT_VALID(400, "A007", "리프래시 토큰이 만료되었습니다.");
+    REFRESH_TOKEN_NOT_VALID(400, "A007", "리프래시 토큰이 만료되었습니다."),
+    // fcm
+    FCM_ALARM_FAILED(400, "F001", "알림을 보내는데 실패하였습니다."),
+    MAKE_FCM_MESSAGE_FAILED(400, "F002", "FCM 전송 메세지를 만드는데 실패하였습니다."),
+    FCM_ACCESS_TOKEN_FAILED(400, "F003", "FCM access token 생성에 실패하였습니다."),
+    FCM_REQUEST_FAILED(400, "F004", "FCM request 과정에 오류가 발생하였습니다.");
 
     private final String code;
     private final String message;

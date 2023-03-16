@@ -87,3 +87,10 @@ springdoc:
 kakao:
   client-id: ENC(cA9sz9r0RidlWDIdD4shtbt9sdoSSjUX9hHifGkHbICWe7uPgq4Ydh45MFaubzds)
   redirect-uri: http://localhost:3000
+
+# fcm
+fcm:
+  key:
+    path: fcm-key.json
+    scope: https://www.googleapis.com/auth/firebase.messageing
+    api-url: ENC(gC2m2ivuWUPr13CEbDwOL9IkarbqdAqF3ffB146fwdixYDGsM6+toHiIPKG/1E42SzMW1TWdln+TK0hq9mP1wQoIWuHHulqnIvFuXIXQO9w=)

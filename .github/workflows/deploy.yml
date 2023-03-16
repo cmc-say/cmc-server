@@ -18,6 +18,21 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: make fcm-key.json
+        run: |
+          echo "copy to test/resources"
+          touch ./src/main/resources/fcm-key.json
+          echo $FILE >> ./src/main/resources/fcm-key.json
+          
+          echo "confirm file in main"
+          cd ./src/main/resources
+          pwd
+          ls -a
+
+        shell: bash
+        env:
+          FILE: ${{ secrets.FCM_KEY }}
+
       ## gradlew 권한
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew

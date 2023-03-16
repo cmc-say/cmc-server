@@ -38,7 +38,8 @@ public class UserController {
             summary = "회원 신고",
             description = "param userId에 해당하는 회원을 신고합니다. \n" +
                     "회원 신고(닉네임 or 상태메세지)가 5번 누적됐을 경우 신고 당한 유저의 캐릭터들" +
-                    "모두 캐릭터 닉네임과 캐릭터 상태메세지가 각각 `차단된 유저`와 `차단된 상태메세지` 로 변경됩니다.  "
+                    "모두 캐릭터 닉네임과 캐릭터 상태메세지가 각각 `차단된 유저`와 `차단된 상태메세지` 로 변경됩니다. " +
+                    "\t\n reportType : world, avatarName, avatar Message 중 하나 "
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원 신고 성공"),

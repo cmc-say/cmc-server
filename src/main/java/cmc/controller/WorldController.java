@@ -115,7 +115,8 @@ public class WorldController {
     @Operation(
             summary = "세계관 정보 수정",
             description = "세계관의 해시태그와 세계관 이미지를 제외한 정보를 수정합니다." +
-                    "\t\n방장이 아닌 경우 Unauthorized 됩니다. " +
+                    "\t\n 방장이 아닌 경우 400 에러 됩니다. " +
+                    "\t\n 해시태그가 중복되지 않도록 데이터를 보내야합니다." +
                     "\t\n*(세계관 방장 넘겨주기 기능은 후순위 기능이므로 그대로 픽스 해주세요)* "
     )
     @ApiResponses({
@@ -193,7 +194,7 @@ public class WorldController {
     @Operation(
             summary = "세계관 검색",
             description = "키워드로 `해시태그`와 `제목`을 기준으로 세계관 검색합니다." +
-                    "\t\n해시태그의 경우 완전 일치, 제목의 경우 단어가 포함되어 있으면 검색 결과에 포함됩니다." +
+                    "\t\n 해시태그의 경우 완전 일치, 제목의 경우 단어가 포함되어 있으면 검색 결과에 포함됩니다." +
                     "\t\n`order=recent` 인 경우 최신순을 반환하며 없는 경우에는 id asc 로 반환합니다."
     )
     @ApiResponses({

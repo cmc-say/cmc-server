@@ -46,7 +46,7 @@ public class AuthService {
                 User user = User.builder()
                         .socialId(socialId)
                         .socialType(socialType)
-                        .deviceToken("temporary device token")
+                        .deviceToken(deviceToken)
                         .build();
 
                 savedUser = userRepository.save(user);

@@ -70,7 +70,7 @@ public class AuthController {
     public ResponseEntity<ResponseDto<AccessTokenResponseDto>> loginUser(HttpServletResponse response, @RequestBody LoginRequestDto req) {
 
         SocialType socialType = SocialType.fromString(req.getSocialType());
-        TokenDto tokenDto = authService.loginUser(req.getDeviceToken(), req.getAuthorizationCode(), socialType);
+        TokenDto tokenDto = authService.loginUser(req.getDeviceToken(), req.getSocialId(), socialType);
 
         String accessToken = tokenDto.getAccessToken();
         String refreshToken = tokenDto.getRefreshToken();

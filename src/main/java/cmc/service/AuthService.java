@@ -30,12 +30,12 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenDto loginUser(String deviceToken, String authorizationCode, SocialType socialType) {
+    public TokenDto loginUser(String deviceToken, String socialId, SocialType socialType) {
 
         if(socialType == SocialType.KAKAO) {
 
-            String socialAccessToken = kakaoUtil.getAccessToken(authorizationCode);
-            String socialId = kakaoUtil.getSocialId(socialAccessToken);
+//            String socialAccessToken = kakaoUtil.getAccessToken(authorizationCode);
+//            String socialId = kakaoUtil.getSocialId(socialAccessToken);
 
             User savedUser = null;
 

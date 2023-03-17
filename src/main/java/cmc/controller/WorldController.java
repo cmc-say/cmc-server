@@ -249,7 +249,7 @@ public class WorldController {
             @ApiResponse(responseCode = "400", description = "존재하지 않는 세계관입니다" +
                     "\t\n 방장 유저가 아닌 유저는 접근 권한이 없습니다", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @DeleteMapping("/{worldId}/hashtags")
+    @PostMapping("/{worldId}/hashtags/delete")
     public ResponseEntity<ResponseDto> updateDeletedWorldHashtags(
             Principal principal,
             @Parameter(description = "수정할 세계관 id", required = true) @PathVariable("worldId") Long worldId,

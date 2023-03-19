@@ -21,7 +21,6 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final KakaoUtil kakaoUtil;
     private final JwtProvider jwtProvider;
 
     @Transactional
@@ -32,53 +31,40 @@ public class AuthService {
     @Transactional
     public TokenDto loginUser(String deviceToken, String socialId, SocialType socialType) {
 
-        if(socialType == SocialType.KAKAO) {
+        User savedUser = null;
 
-//            String socialAccessToken = kakaoUtil.getAccessToken(authorizationCode);
-//            String socialId = kakaoUtil.getSocialId(socialAccessToken);
+        Optional<User> isExist = userRepository.findBySocialId(socialId);
 
-            User savedUser = null;
-
-            Optional<User> isExist = userRepository.findBySocialId(socialId);
-
-            // 유저가 존재하지 않는다면 회원가입
-            if(isExist.isEmpty()) {
-                User user = User.builder()
-                        .socialId(socialId)
-                        .socialType(socialType)
-                        .deviceToken(deviceToken)
-                        .build();
-
-                savedUser = userRepository.save(user);
-
-            } else {
-                savedUser = isExist.get();
-            }
-
-            String userId = savedUser.getUserId().toString();
-
-            String accessToken = jwtProvider.createAccessToken(userId).getToken();
-            String refreshToken = jwtProvider.createRefreshToken(userId).getToken();
-
-            savedUser.setRefreshToken(refreshToken);
-
-            userRepository.save(savedUser);
-
-            TokenDto tokenDto = TokenDto.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken)
+        // 유저가 존재하지 않는다면 회원가입
+        if(isExist.isEmpty()) {
+            User user = User.builder()
+                    .socialId(socialId)
+                    .socialType(socialType)
+                    .deviceToken(deviceToken)
                     .build();
 
-            return tokenDto;
+            savedUser = userRepository.save(user);
+
+        } else {
+            savedUser = isExist.get();
+
+            // 다른 디바이스로 로그인한 경우를 위한 디바이스 토큰 업데이트
+            savedUser.setDeviceToken(deviceToken);
         }
 
-        else if (socialType.equals(SocialType.APPLE)) {
+        String userId = savedUser.getUserId().toString();
 
+        String accessToken = jwtProvider.createAccessToken(userId).getToken();
+        String refreshToken = jwtProvider.createRefreshToken(userId).getToken();
 
-        }
+        savedUser.setRefreshToken(refreshToken);
+
+        // 새로 발급된 리프레시 토큰과 업데이트된 디바이스 토큰 저장
+        userRepository.save(savedUser);
+
         TokenDto tokenDto = TokenDto.builder()
-                .accessToken("temp")
-                .refreshToken("temp")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
 
         return tokenDto;

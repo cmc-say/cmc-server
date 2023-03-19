@@ -50,8 +50,7 @@ public class WorldController {
     })
     @PostMapping
     public ResponseEntity<ResponseDto> saveWorld(
-            @Parameter(description = "세계관 정보", required = true) @RequestPart(value = "data") SaveWorldRequestDto req,
-            @Parameter(description = "세계관 이미지", required = true) @RequestParam(value = "file") MultipartFile file,
+            @ModelAttribute SaveWorldRequestDto req,
             Principal principal
             ) {
 
@@ -59,7 +58,7 @@ public class WorldController {
 
         worldService.saveWorld(
                 tokenUserId,
-                file,
+                req.getWorldImg(),
                 req.getWorldName(),
                 req.getWorldNotice(),
                 req.getWorldUserLimit(),

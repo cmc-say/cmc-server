@@ -3,10 +3,13 @@ package cmc.dto.request;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Getter
+@Setter
 public class SaveWorldRequestDto {
     @Schema(description = "세계관 이름", required = true, defaultValue = "해리포터 세계관", example = "해리포터 세계관")
     private String worldName;
@@ -25,4 +28,7 @@ public class SaveWorldRequestDto {
 
     @ArraySchema(schema = @Schema(description = "세계관의 todo", defaultValue = "삼시세끼 챙겨먹기", example =  "삼시세끼 챙겨먹기" ))
     private List<String> todos;
+
+    @Schema(description = "세계관 이미지")
+    private MultipartFile worldImg;
 }

@@ -38,8 +38,6 @@ import java.util.stream.Collectors;
 @Tag(name = "Avatar 컨트롤러")
 public class AvatarController {
     private final AvatarService avatarService;
-    private final S3Util s3Util;
-
 
     @Operation(
             summary = "캐릭터 저장",
@@ -51,11 +49,10 @@ public class AvatarController {
     })
     @PostMapping
     public ResponseEntity<ResponseDto> saveAvatar(
-            @RequestPart(value = "data") SaveAvatarRequestDto req,
-            @Parameter(description = "이미지 사진", required = true) @RequestPart(value = "file") MultipartFile file,
+            @ModelAttribute SaveAvatarRequestDto req,
             Principal principal) {
         Long tokenUserId = Long.parseLong(principal.getName());
-        avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), file);
+        avatarService.saveAvatar(tokenUserId, req.getAvatarName(), req.getAvatarMessage(), req.getAvatarImg());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto<>(ResponseCode.AVATAR_SAVE_SUCCESS));
     }
 

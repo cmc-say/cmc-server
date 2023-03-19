@@ -53,6 +53,10 @@ public class AuthService {
 
             } else {
                 savedUser = isExist.get();
+
+                // 다른 디바이스로 로그인한 경우를 위한 디바이스 토큰 업데이트
+                savedUser.setDeviceToken(deviceToken);
+                userRepository.save(savedUser);
             }
 
             String userId = savedUser.getUserId().toString();

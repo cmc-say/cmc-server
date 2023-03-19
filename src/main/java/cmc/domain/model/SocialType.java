@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 @Slf4j
 public enum SocialType {
-    KAKAO("kakao"), APPLE("apple");
+    KAKAO("kakao"), APPLE("apple"), GOOGLE("google");
 
     private final String socialTypeName;
 

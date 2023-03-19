@@ -1,6 +1,7 @@
 package cmc.config;
 
 import cmc.jwt.filter.JwtAuthenticationFilter;
+import cmc.jwt.handler.JwtAuthenticationFailureHandler;
 import cmc.jwt.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final JwtAuthenticationFailureHandler jwtAuthenticationFailureHandler;
 
     private static final String[] GET_PERMITTED_URLS = {
     };
@@ -62,7 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 new JwtAuthenticationFilter(jwtProvider),
                 UsernamePasswordAuthenticationFilter.class
         );
-        ;
+        http.exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationFailureHandler);
     }
 
     @Override

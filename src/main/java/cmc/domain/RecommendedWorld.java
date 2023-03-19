@@ -17,4 +17,7 @@ public class RecommendedWorld {
 
     @Column(length = 30)
     private String recommendedWorldName;
+
+    @Column(length = 200)
+    private String recommendedWorldImg;
 }

@@ -25,6 +25,7 @@ create table recommended_world
     recommended_world_id   bigint auto_increment
         primary key,
     recommended_world_name varchar(30) null,
+    recommended_world_img varchar(200) null,
     constraint recommended_world_id
         unique (recommended_world_id)
 );

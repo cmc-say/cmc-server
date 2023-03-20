@@ -10,12 +10,13 @@ import cmc.jwt.token.JwtToken;
 import cmc.repository.UserRepository;
 import cmc.utils.KakaoUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -30,6 +31,7 @@ public class AuthService {
 
     @Transactional
     public TokenDto loginUser(String deviceToken, String socialId, SocialType socialType) {
+        log.info("loginUser start");
 
         User savedUser = null;
 
@@ -37,21 +39,25 @@ public class AuthService {
 
         // 유저가 존재하지 않는다면 회원가입
         if(isExist.isEmpty()) {
+            log.info("is empty");
             User user = User.builder()
                     .socialId(socialId)
                     .socialType(socialType)
                     .deviceToken(deviceToken)
                     .build();
 
+            log.info("is empty save user");
             savedUser = userRepository.save(user);
 
         } else {
+            log.info("is not empty");
             savedUser = isExist.get();
 
             // 다른 디바이스로 로그인한 경우를 위한 디바이스 토큰 업데이트
             savedUser.setDeviceToken(deviceToken);
         }
 
+        log.info("분기 처리 밖");
         String userId = savedUser.getUserId().toString();
 
         String accessToken = jwtProvider.createAccessToken(userId).getToken();
@@ -60,12 +66,15 @@ public class AuthService {
         savedUser.setRefreshToken(refreshToken);
 
         // 새로 발급된 리프레시 토큰과 업데이트된 디바이스 토큰 저장
+        log.info("분기 처리 밖 save");
         userRepository.save(savedUser);
 
         TokenDto tokenDto = TokenDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+
+        log.info("loginUser end");
 
         return tokenDto;
     }

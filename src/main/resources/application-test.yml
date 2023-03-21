@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: test
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
@@ -12,7 +12,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#     local
+    # test
     url: jdbc:mysql://localhost:3306/cmc_database
     username: root
     password: ENC(PLZGRJ1K2iSYo3J+VAXbIdCavH38cfj0)

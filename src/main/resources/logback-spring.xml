@@ -17,7 +17,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="prod">
+    <springProfile name="production">
         <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>./log/info/info-${BY_DATE}.log</file>
             <filter class = "ch.qos.logback.classic.filter.LevelFilter">

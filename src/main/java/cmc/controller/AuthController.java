@@ -5,7 +5,7 @@ import cmc.common.ResponseDto;
 import cmc.domain.model.SocialType;
 import cmc.dto.request.LoginRequestDto;
 import cmc.dto.TokenDto;
-import cmc.dto.response.AccessTokenResponseDto;
+import cmc.dto.response.LoginResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
 import cmc.jwt.token.JwtProvider;
@@ -56,7 +56,7 @@ public class AuthController {
 
     @Operation(
             summary = "로그인",
-            description = "socialType은 kakao or apple" +
+            description = "socialType은 kakao, apple, google 중 하나이며 이미 가입한 회원의 경우 isSignuped = true" +
                     "\t\n refresh token은 쿠키에 Path=/; HttpOnly; Expires=(3개월 후) 로 저장됩니다.;"
     )
     @ApiResponses({
@@ -67,19 +67,21 @@ public class AuthController {
                     "\t\n유효하지 않은 소셜 로그인 인가코드 입니다.")
     })
     @PostMapping("/login")
-    public ResponseEntity<ResponseDto<AccessTokenResponseDto>> loginUser(HttpServletResponse response, @RequestBody LoginRequestDto req) {
+    public ResponseEntity<ResponseDto<LoginResponseDto>> loginUser(HttpServletResponse response, @RequestBody LoginRequestDto req) {
 
         SocialType socialType = SocialType.fromString(req.getSocialType());
         TokenDto tokenDto = authService.loginUser(req.getDeviceToken(), req.getSocialId(), socialType);
 
         String accessToken = tokenDto.getAccessToken();
         String refreshToken = tokenDto.getRefreshToken();
+        Boolean isSignuped = tokenDto.getIsSignuped();
 
         // jwtprovider 에는 ms로 저장되어 있기 때문에 s로 변환
         CookieUtil.addCookie(response, "refreshToken", refreshToken, (int) (jwtProvider.getRefreshTokenValidity()/1000));
 
-        AccessTokenResponseDto dto = AccessTokenResponseDto.builder()
+        LoginResponseDto dto = LoginResponseDto.builder()
                 .accessToken(accessToken)
+                .isSignuped(isSignuped)
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_LOGIN_SUCCESS, dto));
@@ -97,13 +99,13 @@ public class AuthController {
                     "\t\n리프래시 토큰이 만료되었습니다.")
     })
     @PostMapping("/reissue")
-    public ResponseEntity<ResponseDto<AccessTokenResponseDto>> reissueAccessToken(HttpServletRequest request) {
+    public ResponseEntity<ResponseDto<LoginResponseDto>> reissueAccessToken(HttpServletRequest request) {
         Cookie refreshToken = CookieUtil.getCookie(request, "refreshToken")
                 .orElseThrow(() -> new BusinessException(ErrorCode.COOKIE_REFRESH_TOKEN_NOT_FOUND));
 
         String accessToken =  authService.reissueAccessToken(refreshToken.getValue());
 
-        AccessTokenResponseDto dto = AccessTokenResponseDto.builder()
+        LoginResponseDto dto = LoginResponseDto.builder()
                 .accessToken(accessToken)
                 .build();
 

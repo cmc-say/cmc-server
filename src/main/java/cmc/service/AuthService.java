@@ -32,11 +32,15 @@ public class AuthService {
     public TokenDto loginUser(String deviceToken, String socialId, SocialType socialType) {
 
         User savedUser = null;
+        Boolean isSignuped = true;
 
         Optional<User> isExist = userRepository.findBySocialId(socialId);
 
         // 유저가 존재하지 않는다면 회원가입
         if(isExist.isEmpty()) {
+
+            isSignuped = false;
+
             User user = User.builder()
                     .socialId(socialId)
                     .socialType(socialType)
@@ -65,6 +69,7 @@ public class AuthService {
         TokenDto tokenDto = TokenDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .isSignuped(isSignuped)
                 .build();
 
         return tokenDto;

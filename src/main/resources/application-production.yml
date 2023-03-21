@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: production
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
@@ -12,18 +12,11 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#     local
-    url: jdbc:mysql://localhost:3306/cmc_database
-    username: root
-    password: ENC(PLZGRJ1K2iSYo3J+VAXbIdCavH38cfj0)
+    url: ENC(B1oVL5/rwK91Co5JhVNY9I81bOgmEBCoZA1gg4+J7e+kSWofqwHSAnP9UY4N8A2YjxfMeV0nHcBgX5C+mRBrjNgrgn8zieJsGMom9hWJYWRpHee5SGFN785ZdC4t5AXx)
+    username: ENC(mchGcb/C+wJDKp1ReAr5dg==)
+    password: ENC(gtIibKe2XgOBrubzB4rTI1nOpmVwyE+B)
     properties:
       hibernate:
         show-sql: true
         format_sql: true
         usr_sql_comments: true
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: debug

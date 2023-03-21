@@ -7,10 +7,12 @@ import lombok.Getter;
 public class TokenDto {
     private String accessToken;
     private String refreshToken;
+    private Boolean isSignuped;
 
     @Builder
-    TokenDto(String accessToken, String refreshToken) {
+    TokenDto(String accessToken, String refreshToken, Boolean isSignuped) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.isSignuped = isSignuped;
     }
 }

@@ -11,7 +11,7 @@ services:
       - 8080:8080
     volumes:
       - ${PWD}/log:/log
-#    env:
+#    environment:
 #      - JASYPT_SECRET_KEY= jasypt key 넣기
 
   nginx:

@@ -43,9 +43,16 @@ public class WorldService {
             Integer worldUserLimit,
             String worldPassword,
             List<String> hashtagNames,
-            List<String> todoContents) {
+            List<String> todoContents,
+            Long recommendedWorldId
+    ) {
 
-        String worldImgUri = s3Util.upload(file, "world");
+        String worldImgUri = null;
+        if(recommendedWorldId == null) {
+            worldImgUri = s3Util.upload(file, "world");
+        } else {
+            worldImgUri = findRecommendedWorldImg(recommendedWorldId).getRecommendedWorldImg();
+        }
 
         List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
 
@@ -259,5 +266,10 @@ public class WorldService {
 
     public List<RecommendedTodo> getRecommendedTodo(Long recommendedWorldId) {
         return recommendedTodoRepository.findAllByRecommendedWorldId(recommendedWorldId);
+    }
+
+    private RecommendedWorld findRecommendedWorldImg(Long recommendedWorldId) {
+        return recommendedWorldRepository.findById(recommendedWorldId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.RECOMMENDED_WORLD_NOT_FOUND));
     }
 }

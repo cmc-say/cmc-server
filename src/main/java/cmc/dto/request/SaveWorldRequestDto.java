@@ -31,4 +31,7 @@ public class SaveWorldRequestDto {
 
     @Schema(description = "세계관 이미지")
     private MultipartFile worldImg;
+
+    @Schema(description = "추천 세계관 id. 추천 세계관일 때만 요청에 보냄", nullable = true)
+    private Long recommendedWorldId;
 }

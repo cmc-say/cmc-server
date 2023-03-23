@@ -30,6 +30,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -53,8 +54,7 @@ public class WorldController {
     public ResponseEntity<ResponseDto> saveWorld(
             @ModelAttribute SaveWorldRequestDto req,
             Principal principal
-            ) {
-
+    ) {
         Long tokenUserId = Long.parseLong(principal.getName());
 
         worldService.saveWorld(
@@ -65,7 +65,9 @@ public class WorldController {
                 req.getWorldUserLimit(),
                 req.getWorldPassword(),
                 req.getHashtags(),
-                req.getTodos());
+                req.getTodos(),
+                req.getRecommendedWorldId()
+        );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORLD_SAVE_SUCCESS));
     }

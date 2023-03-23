@@ -59,7 +59,8 @@ public enum ErrorCode {
     FCM_ALARM_FAILED(400, "F001", "알림을 보내는데 실패하였습니다."),
     MAKE_FCM_MESSAGE_FAILED(400, "F002", "FCM 전송 메세지를 만드는데 실패하였습니다."),
     FCM_ACCESS_TOKEN_FAILED(400, "F003", "FCM access token 생성에 실패하였습니다."),
-    FCM_REQUEST_FAILED(400, "F004", "FCM request 과정에 오류가 발생하였습니다.");
+    FCM_REQUEST_FAILED(400, "F004", "FCM request 과정에 오류가 발생하였습니다."),
+    RECOMMENDED_WORLD_NOT_FOUND(400, "R001", "추천 세계관이 존재하지 않습니다.");
 
     private final String code;
     private final String message;

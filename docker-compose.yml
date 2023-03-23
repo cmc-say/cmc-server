@@ -11,13 +11,5 @@ services:
       - 8080:8080
     volumes:
       - ${PWD}/log:/log
-#    environment:
-#      - JASYPT_SECRET_KEY= jasypt key 넣기
-
-  nginx:
-    container_name: nginx
-    image: kyuwon0718/nginx
-    ports:
-      - 80:80
-    depends_on:
-      - web
+    # environment:
+    #   - JASYPT_SECRET_KEY= your secret key here

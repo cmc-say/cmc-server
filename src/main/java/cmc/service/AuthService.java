@@ -10,13 +10,12 @@ import cmc.jwt.token.JwtToken;
 import cmc.repository.UserRepository;
 import cmc.utils.KakaoUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -93,50 +92,5 @@ public class AuthService {
         } else {
             throw new BusinessException(ErrorCode.REFRESH_TOKEN_NOT_VALID);
         }
-    }
-
-    public TokenDto loginUserTemp(String deviceToken, String socialId, SocialType socialType) {
-
-        User savedUser = null;
-        Boolean isSignuped = true;
-
-        Optional<User> isExist = userRepository.findBySocialId(socialId);
-
-        log.info("isExist {}", isExist);
-
-        // 유저가 존재하지 않는다면 회원가입
-        if(isExist.isEmpty()) {
-
-            isSignuped = false;
-
-            User user = User.builder()
-                    .socialId(socialId)
-                    .socialType(socialType)
-                    .deviceToken(deviceToken)
-                    .build();
-
-            savedUser = userRepository.save(user);
-
-        } else {
-            throw new BusinessException(ErrorCode.USER_DUPLICATED);
-        }
-
-        String userId = savedUser.getUserId().toString();
-
-        String accessToken = jwtProvider.createAccessToken(userId).getToken();
-        String refreshToken = jwtProvider.createRefreshToken(userId).getToken();
-
-        savedUser.setRefreshToken(refreshToken);
-
-        // 새로 발급된 리프레시 토큰과 업데이트된 디바이스 토큰 저장
-        userRepository.save(savedUser);
-
-        TokenDto tokenDto = TokenDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .isSignuped(isSignuped)
-                .build();
-
-        return tokenDto;
     }
 }

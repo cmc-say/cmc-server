@@ -5,7 +5,6 @@ import cmc.common.ResponseDto;
 import cmc.domain.model.SocialType;
 import cmc.dto.request.LoginRequestDto;
 import cmc.dto.TokenDto;
-import cmc.dto.request.TempLoginRequestDto;
 import cmc.dto.response.LoginResponseDto;
 import cmc.error.exception.BusinessException;
 import cmc.error.exception.ErrorCode;
@@ -26,7 +25,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -112,41 +110,5 @@ public class AuthController {
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.ACCESS_TOKEN_REISSUED, dto));
-    }
-
-    @Operation(
-            summary = "cmc 데모용 막장 임시 로그인",
-            description = "socialType은 kakao, apple, google 중 하나이며 이미 가입한 회원의 경우 isSignuped = true" +
-                    "\t\n refresh token은 쿠키에 Path=/; HttpOnly; Expires=(3개월 후) 로 저장됩니다.;"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "로그인 성공"),
-            @ApiResponse(responseCode = "400", description = "존재하지 않는 social 로그인 타입입니다." +
-                    "\t\n소셜 access token를 가져오는데 실패하였습니다." +
-                    "\t\n소셜 access token를 통해 소셜 id를 가져오는데 실패하였습니다." +
-                    "\t\n유효하지 않은 소셜 로그인 인가코드 입니다.")
-    })
-    @PostMapping("/login/cmc")
-    public ResponseEntity<ResponseDto<LoginResponseDto>> loginUserTemp(
-            HttpServletResponse response,
-            @RequestBody TempLoginRequestDto requestDto
-    ) {
-
-        log.info("request dto test {}", requestDto.getSocialId());
-        TokenDto tokenDto = authService.loginUserTemp(UUID.randomUUID().toString(), requestDto.getSocialId(), SocialType.KAKAO);
-
-        String accessToken = tokenDto.getAccessToken();
-        String refreshToken = tokenDto.getRefreshToken();
-        Boolean isSignuped = tokenDto.getIsSignuped();
-
-        // jwtprovider 에는 ms로 저장되어 있기 때문에 s로 변환
-        CookieUtil.addCookie(response, "refreshToken", refreshToken, (int) (jwtProvider.getRefreshTokenValidity()/1000));
-
-        LoginResponseDto dto = LoginResponseDto.builder()
-                .accessToken(accessToken)
-                .isSignuped(isSignuped)
-                .build();
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(ResponseCode.USER_LOGIN_SUCCESS, dto));
     }
 }

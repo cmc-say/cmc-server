@@ -29,8 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] POST_PERMITTED_URLS = {
             "/**/auth/login",
-            "/**/auth/reissue",
-            "/**/auth/login/cmc"
+            "/**/auth/reissue"
     };
 
     private static final String[] DOCS_PERMITTED_URLS = {

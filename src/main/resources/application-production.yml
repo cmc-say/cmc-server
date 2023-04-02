@@ -1,4 +1,7 @@
 spring:
+  redis:
+    host: s0pterest
+    port: 6379
   config:
     activate:
       on-profile: production

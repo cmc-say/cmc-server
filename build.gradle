@@ -45,6 +45,7 @@ dependencies {
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'mysql:mysql-connector-java'
 
 	// swagger
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
@@ -52,6 +53,9 @@ dependencies {
 	// fcm
 	implementation 'com.google.firebase:firebase-admin:9.1.1'
 	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+	// redis
+	implementation 'org.redisson:redisson-spring-boot-starter:3.16.3'
 }
 
 tasks.named('test') {

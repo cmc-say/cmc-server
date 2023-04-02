@@ -24,6 +24,7 @@
 | Framework	| Spring Boot|
 | Database/ORM	| MySQL, Redis, AWS RDS, Spring Data JPA|
 | CI/CD	| AWS EC2, Nginx, Github Actions, Docker|
+| Third Party	| Firebase Cloud Message |
 
 ## 💻 System Architecture
 ![image](https://user-images.githubusercontent.com/80209277/229369168-b8329a75-7fb8-4393-883e-1b3ad7ce6aa0.png)

@@ -52,6 +52,9 @@ dependencies {
 	// fcm
 	implementation 'com.google.firebase:firebase-admin:9.1.1'
 	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+	// redis
+	implementation 'org.redisson:redisson-spring-boot-starter:3.17.7'
 }
 
 tasks.named('test') {

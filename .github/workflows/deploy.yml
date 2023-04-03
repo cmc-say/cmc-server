@@ -3,7 +3,7 @@ name: Java CI with Gradle
 on:
   push:
     branches:
-      - master
+      - Feat/#161
 
 jobs:
   build:

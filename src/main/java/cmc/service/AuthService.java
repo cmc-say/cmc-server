@@ -29,7 +29,7 @@ public class AuthService {
     }
 
     @Transactional
-    @DistributeLock(key = "#socialId")
+//    @DistributeLock(key = "#socialId")
     public TokenDto loginUser(String deviceToken, String socialId, SocialType socialType) {
 
         User savedUser = null;

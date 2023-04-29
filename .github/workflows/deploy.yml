@@ -57,5 +57,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker rm -f $( docker ps -qa)
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/nginx
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/cmc-server
             docker-compose up -d
             docker image prune -f

@@ -8,7 +8,7 @@ import cmc.error.exception.ErrorCode;
 import cmc.jwt.token.JwtProvider;
 import cmc.jwt.token.JwtToken;
 import cmc.repository.UserRepository;
-import cmc.utils.redisson.DistributeLock;
+//import cmc.utils.redisson.DistributeLock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

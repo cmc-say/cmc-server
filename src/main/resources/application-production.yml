@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: localhost
+    host: s0pterest.shop
     port: 6379
   config:
     activate:

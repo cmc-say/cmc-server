@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: s0pterest.shop
+    host: 3.36.175.96
     port: 6379
   config:
     activate:

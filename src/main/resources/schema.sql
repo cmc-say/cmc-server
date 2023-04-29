@@ -46,7 +46,7 @@ create table user
 (
     user_id       bigint auto_increment
         primary key,
-    social_id     bigint       null,
+    social_id     varchar(250)       null,
     social_type   varchar(10)  null,
     refresh_token varchar(200) null,
     device_token  varchar(200) null,

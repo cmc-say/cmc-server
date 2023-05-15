@@ -6,7 +6,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(s0pterest.shop)
+domains=(prota.run)
 rsa_key_size=4096
 data_path="./nginx/certbot"
 email="kyuwon0718@gmail.com" # Adding a valid address is strongly recommended

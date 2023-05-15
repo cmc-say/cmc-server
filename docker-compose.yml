@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/certbot/conf:/etc/letsencrypt
-      - ./nginx/certbot/www:/var/www/certbot
+      - /etc/letsencrypt:/etc/letsencrypt #letsencrypt폴더 위치
+      - /var/log/nginx:/var/log/nginx # log파일의 위치
     ports:
       - "80:80"
       - "443:443"
@@ -19,8 +19,8 @@ services:
     image: certbot/certbot
     restart: unless-stopped
     volumes:
-      - ./nginx/certbot/conf:/etc/letsencrypt
-      - ./nginx/certbot/www:/var/www/certbot
+      - /etc/letsencrypt:/etc/letsencrypt #letsencrypt폴더 위치
+      - /var/log/nginx:/var/log/nginx # log파일의 위치
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   spring:
@@ -36,15 +36,15 @@ services:
       - TZ=Asia/Seoul
       #   - JASYPT_SECRET_KEY= your secret key here
 
-  redis:
-    container_name: redis
-    image: redis:latest
-    ports:
-      - 6379:6379
-    volumes:
-      - ./redis/data:/data
-      - ./redis/conf/redis.conf:/usr/local/conf/redis.conf
-    restart: always
-    command: redis-server /usr/local/conf/redis.conf
-    environment:
-      - TZ=Asia/Seoul
+#  redis:
+#    container_name: redis
+#    image: redis:latest
+#    ports:
+#      - 6379:6379
+#    volumes:
+#      - ./redis/data:/data
+#      - ./redis/conf/redis.conf:/usr/local/conf/redis.conf
+#    restart: always
+#    command: redis-server /usr/local/conf/redis.conf
+#    environment:
+#      - TZ=Asia/Seoul

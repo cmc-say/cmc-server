@@ -2,6 +2,7 @@ package cmc.config;
 
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,7 @@ public class OpenApiConfig {
                 );
 
         return new OpenAPI()
+                .addServersItem(new Server().url("/"))
                 .components(components)
                 .info(info)
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));

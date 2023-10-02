@@ -21,17 +21,17 @@ public interface CheckedTodoRepository extends JpaRepository<CheckedTodo, Long> 
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
             "WHERE ct.todo.todoId = :todoId " +
-            "AND ct.worldAvatar.worldAvatarId = :worldAvatarId " +
+            "AND ct.avatar.avatarId = :avatarId " +
             "AND date(ct.createdAt) = current_date ")
-    Optional<CheckedTodo> findByTodoIdAndWorldAvatarIdToday(@Param("todoId") Long todoId, @Param("worldAvatarId") Long worldAvatarId);
+    Optional<CheckedTodo> findByTodoIdAndAvatarIdToday(@Param("todoId") Long todoId, @Param("avatarId") Long avatarId);
 
     @Query(value = "SELECT t.todoId as todoId, t.todoContent as todoContent, ct.checkedTodoId as checkedTodoId FROM Todo t " +
-            "LEFT JOIN t.checkedTodos ct ON (date(ct.createdAt) = current_date AND ct.worldAvatar.avatar.avatarId = :avatarId)" +
+            "LEFT JOIN t.checkedTodos ct ON (date(ct.createdAt) = current_date AND ct.avatar.avatarId = :avatarId)" +
             "WHERE t.world.worldId = :worldId ")
     List<AvatarCheckedTodoResponseDto> getCheckedTodoTodayByWorldIdAndAvatarId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
 
     @Query(value = "SELECT ct FROM CheckedTodo ct " +
-            "WHERE ct.worldAvatar.avatar.avatarId = :avatarId " +
+            "WHERE ct.avatar.avatarId = :avatarId " +
             "AND month(ct.createdAt) = month(current_date) ")
     List<CheckedTodo> getAllCheckedTodoOfAvatarForMonth(@Param("avatarId") Long avatarId);
 }

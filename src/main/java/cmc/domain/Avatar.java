@@ -11,6 +11,7 @@ import java.util.List;
 @Table(name = "avatar", indexes = {@Index(columnList = "userId")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@ToString
 public class Avatar extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,12 @@ public class Avatar extends BaseEntity {
 
     @OneToMany(targetEntity = WorldAvatar.class, fetch = FetchType.LAZY, mappedBy = "avatar", cascade = CascadeType.ALL)
     private List<WorldAvatar> worldAvatars = new ArrayList<>();
+
+    @OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
+    private List<CheckedTodo> checkedTodos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "avatar")
+    private List<Wordtoday> wordtodays = new ArrayList<>();
 
     @Builder
     public Avatar(Long avatarId, String avatarName, String avatarMessage, String avatarImg, User user) {

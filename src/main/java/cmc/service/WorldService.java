@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class WorldService {
+    private final WorldAvatarRepository worldAvatarRepository;
     private final WordtodayRepository wordtodayRepository;
     private final AvatarRepository avatarRepository;
     private final WorldRepository worldRepository;
@@ -48,11 +50,11 @@ public class WorldService {
     ) {
 
         String worldImgUri = null;
-        if(recommendedWorldId == null) {
-            worldImgUri = s3Util.upload(file, "world");
-        } else {
-            worldImgUri = findRecommendedWorldImg(recommendedWorldId).getRecommendedWorldImg();
-        }
+//        if(recommendedWorldId == null) {
+//            worldImgUri = s3Util.upload(file, "world");
+//        } else {
+//            worldImgUri = findRecommendedWorldImg(recommendedWorldId).getRecommendedWorldImg();
+//        }
 
         List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
 
@@ -65,21 +67,75 @@ public class WorldService {
                 .worldImg(worldImgUri)
                 .worldStartDate(LocalDateTime.now())
                 .worldEndDate(LocalDateTime.now().plusMonths(1L))
+                .worldHashtags(new ArrayList<>())
                 .build();
 
-        World savedWorld = worldRepository.save(world);
 
         List<WorldHashtag> worldHashtagList = hashtags.stream().map(savedHashtag ->
                 WorldHashtag.builder()
-                        .world(savedWorld)
+                        .world(world)
                         .hashtag(savedHashtag)
                         .build())
                 .collect(Collectors.toList());
-
+        world.getWorldHashtags().addAll(worldHashtagList);
         worldHashtagRepository.saveAll(worldHashtagList);
+        worldRepository.save(world);
 
-        List<Todo> todos = todoContents.stream().map(todoContent -> Todo.builder().todoContent(todoContent).world(savedWorld).build()).collect(Collectors.toList());
+
+        List<Todo> todos = todoContents.stream().map(todoContent -> Todo.builder().todoContent(todoContent).world(world).build()).collect(Collectors.toList());
         todoRepository.saveAll(todos);
+    }
+
+    @Transactional
+    public void refactor_saveWorld(
+            Long tokenUserId,
+            MultipartFile file,
+            String worldName,
+            String worldNotice,
+            Integer worldUserLimit,
+            String worldPassword,
+            List<String> hashtagNames,
+            List<String> todoContents,
+            Long recommendedWorldId
+    ) {
+
+        String worldImgUri = null;
+//        if(recommendedWorldId == null) {
+//            worldImgUri = s3Util.upload(file, "world");
+//        } else {
+//            worldImgUri = findRecommendedWorldImg(recommendedWorldId).getRecommendedWorldImg();
+//        }
+
+        List<Hashtag> hashtags = saveHashtagsIfNotExistsByHashtagNames(hashtagNames);
+
+        World world = World.builder()
+                .worldName(worldName)
+                .worldNotice(worldNotice)
+                .worldUserLimit(worldUserLimit)
+                .worldPassword(worldPassword)
+                .worldHostUserId(tokenUserId)
+                .worldImg(worldImgUri)
+                .worldStartDate(LocalDateTime.now())
+                .worldEndDate(LocalDateTime.now().plusMonths(1L))
+                .worldHashtags(new ArrayList<>())
+                .build();
+
+
+//        World savedWorld = worldRepository.save(world);
+
+        hashtags.stream().map(savedHashtag ->
+                        WorldHashtag.builder()
+                                .world(world)
+                                .hashtag(savedHashtag)
+                                .build())
+                .forEach(world::addHashtag);
+//
+//        worldHashtagRepository.saveAll(worldHashtagList);
+
+        todoContents.stream()
+                .map(todoContent -> Todo.builder().todoContent(todoContent).build())
+                .forEach(world::addTodo);
+
     }
 
     public List<World> getWorldsWithOrder(OrderType orderType) {
@@ -222,6 +278,26 @@ public class WorldService {
         return savedHashtags;
     }
 
+    private List<Hashtag> refactor_saveHashtagsIfNotExistsByHashtagNames(List<String> hashtagNames) {
+
+        // savedHashtags : 이미 저장되어 있는 해시태그
+        // newHashtags : 저장되어 있지 않은 새로운 해시태그
+        List<Hashtag> savedHashtags = hashtagRepository.findHashtagByNameIn(hashtagNames);
+        List<Hashtag> newHashtags = hashtagNames.stream()
+                .filter(hashtag -> savedHashtags.stream().noneMatch(h -> h.getHashtagName().equals(hashtag)))
+                .map(h -> Hashtag.builder()
+                        .hashtagName(h)
+                        .build())
+                .collect(Collectors.toList());
+
+        // 새로운 해시태그 이름이라면 모두 저장
+        List<Hashtag> savedNewhashtags = hashtagRepository.saveAll(newHashtags);
+
+        // savedHashtags에 필요한 해시태그 모두 합치기
+        savedHashtags.addAll(savedNewhashtags);
+        return savedHashtags;
+    }
+
     @Transactional
     public void updateDeletedWorldHashtags(Long userId, Long worldId, List<Long> worldhashtagIds) {
 
@@ -256,8 +332,8 @@ public class WorldService {
 
         worldRepository.findById(worldId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_NOT_FOUND));
-
-        return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
+        return worldAvatarRepository.getWorldAvatarByWorld_WorldId(worldId);
+//        return avatarRepository.getAvatarsByWorldIdWithoutBlockedUser(userId, worldId);
     }
 
     public List<RecommendedWorld> getRecommendedWorld() {

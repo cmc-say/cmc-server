@@ -2,10 +2,7 @@ package cmc.domain;
 
 import cmc.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -20,6 +17,8 @@ import javax.persistence.*;
         }
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@Setter
 @Entity
 public class WorldHashtag extends BaseEntity {
     @Id

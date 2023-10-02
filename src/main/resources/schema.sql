@@ -1,3 +1,5 @@
+SET MODE MYSQL; /* another h2 way to set mode */
+
 create table hashtag
 (
     hashtag_id   bigint auto_increment

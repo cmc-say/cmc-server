@@ -73,6 +73,36 @@ public class WorldController {
     }
 
     @Operation(
+            summary = "세계관 저장",
+            description = "세계관을 저장합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "세계관 저장 성공"),
+            @ApiResponse(responseCode = "400", description = "이미지 업로드 실패")
+    })
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/refactor")
+    public ResponseEntity<ResponseDto> refactor_saveWorld(
+            @ModelAttribute SaveWorldRequestDto req,
+            Principal principal
+    ) {
+        Long tokenUserId = Long.parseLong(principal.getName());
+
+        worldService.refactor_saveWorld(
+                tokenUserId,
+                req.getWorldImg(),
+                req.getWorldName(),
+                req.getWorldNotice(),
+                req.getWorldUserLimit(),
+                req.getWorldPassword(),
+                req.getHashtags(),
+                req.getTodos(),
+                req.getRecommendedWorldId()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto<>(ResponseCode.WORLD_SAVE_SUCCESS));
+    }
+
+    @Operation(
             summary = "세계관 전체 조회",
             description = "세계관을 전체 조회합니다." +
                     "\t\n 만료된 세계관은 조회에서 제외됩니다." +

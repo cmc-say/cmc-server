@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationFailureHandler jwtAuthenticationFailureHandler;
 
     private static final String[] GET_PERMITTED_URLS = {
+            "/actuator/**"
     };
 
     private static final String[] POST_PERMITTED_URLS = {

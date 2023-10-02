@@ -10,7 +10,9 @@ import java.util.List;
 @Getter
 @Table(name = "todo")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 @Entity
+@ToString
 public class Todo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,6 @@ public class Todo extends BaseEntity {
     @JoinColumn(name = "worldId")
     private World world;
 
-    @Setter
     @Column(length = 50)
     private String todoContent;
 

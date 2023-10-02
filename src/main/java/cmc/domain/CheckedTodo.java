@@ -1,16 +1,14 @@
 package cmc.domain;
 
 import cmc.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Table(name = "checked_todo")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 @Entity
 public class CheckedTodo extends BaseEntity {
 
@@ -23,18 +21,18 @@ public class CheckedTodo extends BaseEntity {
     private Todo todo;
 
     @ManyToOne
-    @JoinColumn(name = "worldAvatarId")
-    private WorldAvatar worldAvatar;
+    @JoinColumn(name = "avatarId")
+    private Avatar avatar;
 
     @Builder
     public CheckedTodo(
             Long checkedTodoId,
             Todo todo,
-            WorldAvatar worldAvatar) {
+            Avatar avatar) {
 
         this.checkedTodoId = checkedTodoId;
         this.todo = todo;
-        this.worldAvatar = worldAvatar;
+        this.avatar = avatar;
     }
 
 }

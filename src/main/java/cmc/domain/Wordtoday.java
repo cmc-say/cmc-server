@@ -16,17 +16,22 @@ public class Wordtoday extends BaseEntity
     private Long wordtodayId;
 
     @ManyToOne
-    @JoinColumn(name = "worldAvatarId")
-    private WorldAvatar worldAvatar;
+    @JoinColumn(name = "avatarId")
+    private Avatar avatar;
+
+    @ManyToOne
+    @JoinColumn(name = "worldId")
+    private World world;
 
     @Setter
     @Column(length = 300)
     private String wordtodayContent;
 
     @Builder
-    public Wordtoday(Long wordtodayId, WorldAvatar worldAvatar, String wordtodayContent) {
+    public Wordtoday(Long wordtodayId, World world, Avatar avatar, String wordtodayContent) {
         this.wordtodayId = wordtodayId;
-        this.worldAvatar = worldAvatar;
+        this.avatar = avatar;
+        this.world = world;
         this.wordtodayContent = wordtodayContent;
     }
 

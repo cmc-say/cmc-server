@@ -12,41 +12,34 @@ import java.util.List;
 @Getter
 @Table(name = "world")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 @Entity
 public class World extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long worldId;
 
-    @Setter
     @Column(nullable = false, length = 14)
     private String worldName;
 
-    @Setter
     @Column(nullable = false)
     private Integer worldUserLimit;
 
-    @Setter
     @Column(length = 200)
     private String worldImg;
 
-    @Setter
     @Column(nullable = false)
     private LocalDateTime worldStartDate;
 
-    @Setter
     @Column(nullable = false)
     private LocalDateTime worldEndDate;
 
-    @Setter
     @Column(length = 200)
     private String worldNotice;
 
-    @Setter
     @Column(length = 20)
     private String worldPassword;
 
-    @Setter
     private Long worldHostUserId;
 
     @OneToMany(targetEntity = WorldHashtag.class, fetch = FetchType.LAZY, mappedBy = "world", cascade = CascadeType.ALL)
@@ -68,7 +61,8 @@ public class World extends BaseEntity {
             LocalDateTime worldEndDate,
             String worldNotice,
             String worldPassword,
-            Long worldHostUserId) {
+            Long worldHostUserId,
+            List<WorldHashtag> worldHashtags) {
 
         this.worldId = worldId;
         this.worldName = worldName;
@@ -79,6 +73,7 @@ public class World extends BaseEntity {
         this.worldNotice = worldNotice;
         this.worldPassword = worldPassword;
         this.worldHostUserId = worldHostUserId;
+        this.worldHashtags = worldHashtags;
     }
 
     public World updateWorld(World world) {
@@ -93,5 +88,15 @@ public class World extends BaseEntity {
         this.setWorldHostUserId(world.getWorldHostUserId());
 
         return this;
+    }
+
+    public void addTodo(Todo todo) {
+        this.todos.add(todo);
+        todo.setWorld(this);
+    }
+
+    public void addHashtag(WorldHashtag worldHashtag) {
+        this.worldHashtags.add(worldHashtag);
+        worldHashtag.setWorld(this);
     }
 }

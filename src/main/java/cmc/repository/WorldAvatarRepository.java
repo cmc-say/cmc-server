@@ -3,6 +3,7 @@ package cmc.repository;
 import cmc.domain.User;
 import cmc.domain.WorldAvatar;
 import cmc.domain.World;
+import cmc.dto.response.AvatarsInWorldResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,8 @@ public interface WorldAvatarRepository extends JpaRepository<WorldAvatar, Long> 
             "WHERE wa.world.worldId = :worldId " +
             "AND wa.avatar.avatarId = :avatarId ")
     Optional<WorldAvatar> findByAvatarIdAndWorldId(@Param("avatarId") Long avatarId, @Param("worldId") Long worldId);
+
+    @Query(value = "SELECT wa FROM WorldAvatar wa " +
+            "where wa.world.worldId = :worldId")
+    List<AvatarsInWorldResponseDto> getWorldAvatarByWorld_WorldId(@Param("worldId") Long worldId);
 }

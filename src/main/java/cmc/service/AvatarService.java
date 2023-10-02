@@ -58,8 +58,6 @@ public class AvatarService {
         Avatar avatar = getAvatarByAvatarId(avatarId);
 
         avatar.setAvatarImg(imgUrl);
-
-        avatarRepository.save(avatar);
     }
 
     @Transactional
@@ -69,8 +67,6 @@ public class AvatarService {
 
         avatar.setAvatarName(avatarName);
         avatar.setAvatarMessage(avatarMessage);
-
-        avatarRepository.save(avatar);
     }
 
     public Avatar getAvatarByAvatarId(Long avatarId) {
@@ -86,10 +82,9 @@ public class AvatarService {
     @Transactional
     public void enterWorld(Long avatarId, Long worldId) {
 
-        // 중복된 캐릭터 세계관 참여가 존재하는지 확인
-        if(worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId).isPresent()) {
+        worldAvatarRepository.findByAvatarIdAndWorldId(avatarId, worldId).ifPresent(s -> {
             throw new BusinessException(ErrorCode.DUPLICATED_AVATAR_WORLD_ENTER);
-        }
+        });
 
         World world = getWorldById(worldId);
 
@@ -117,21 +112,19 @@ public class AvatarService {
 
         Avatar avatar = getAvatarById(avatarId);
 
-        World world = getWorldById(worldId);
-
-        WorldAvatar worldAvatar = getWorldAvatarByAvatarIdAndWorldId(avatarId, worldId);
-
         // 중복 체크 확인
-        if(checkedTodoRepository.findByTodoIdAndWorldAvatarIdToday(todo.getTodoId(), worldAvatar.getWorldAvatarId()).isPresent()) {
+        checkedTodoRepository.findByTodoIdAndAvatarIdToday(todo.getTodoId(), avatar.getAvatarId()).ifPresent(s -> {
             throw new BusinessException(ErrorCode.DUPLICATED_TODO_CHECK);
-        }
+        });
+
 
         CheckedTodo checkedTodo = CheckedTodo.builder()
                 .todo(todo)
-                .worldAvatar(worldAvatar)
+                .avatar(avatar)
                 .build();
 
-        checkedTodoRepository.save(checkedTodo);
+        avatar.getCheckedTodos().add(checkedTodo);
+        checkedTodo.setAvatar(avatar);
     }
 
     @Transactional
@@ -144,22 +137,19 @@ public class AvatarService {
 
         WorldAvatar worldAvatar = getWorldAvatarByAvatarIdAndWorldId(avatarId, worldId);
 
-        CheckedTodo checkedTodo = getCheckedTodoByTodoAndWorldAvatar(todo, worldAvatar);
+        CheckedTodo checkedTodo = getCheckedTodoByTodoAndAvatar(todo, avatar);
 
         checkedTodoRepository.delete(checkedTodo);
     }
 
     @Transactional
     public void createWordtoday(Long avatarId, Long worldId, String wordtodayContent) {
-        // 오늘 날짜의 오늘의 한마디가 이미 존재한다면 에러
-        if(wordtodayRepository.findWordtodayByAvatarIdAndWorldId(avatarId, worldId).isPresent()) {
-            throw new BusinessException(ErrorCode.WORDTODAY_DUPLICATED);
-        }
-
-        WorldAvatar worldAvatar = getWorldAvatarByAvatarIdAndWorldId(avatarId, worldId);
+        Avatar avatar = avatarRepository.findById(avatarId).orElseThrow(() -> {
+            throw new BusinessException(ErrorCode.AVATAR_NOT_FOUND);
+        });
 
         Wordtoday wordtoday = Wordtoday.builder()
-                .worldAvatar(worldAvatar)
+                .avatar(avatar)
                 .wordtodayContent(wordtodayContent)
                 .build();
 
@@ -192,8 +182,8 @@ public class AvatarService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.WORLD_AVATAR_NOT_FOUND));
     }
 
-    private CheckedTodo getCheckedTodoByTodoAndWorldAvatar(Todo todo, WorldAvatar worldAvatar) {
-        return checkedTodoRepository.findByTodoIdAndWorldAvatarIdToday(todo.getTodoId(), worldAvatar.getWorldAvatarId())
+    private CheckedTodo getCheckedTodoByTodoAndAvatar(Todo todo, Avatar avatar) {
+        return checkedTodoRepository.findByTodoIdAndAvatarIdToday(todo.getTodoId(), avatar.getAvatarId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.TODO_CHECKED_NOT_FOUND));
     }
 

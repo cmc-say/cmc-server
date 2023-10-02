@@ -25,7 +25,7 @@ public class WordtodayResponseDto {
         return new WordtodayResponseDto(
                 wordtoday.getWordtodayId(),
                 wordtoday.getWordtodayContent(),
-                wordtoday.getWorldAvatar().getAvatar().getAvatarId()
+                wordtoday.getAvatar().getAvatarId()
         );
     }
 }

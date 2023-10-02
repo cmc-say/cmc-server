@@ -1,7 +1,7 @@
 spring:
   redis:
     host: localhost
-    port: 6379
+    port: 3306
   config:
     activate:
       on-profile: dev
@@ -18,7 +18,7 @@ spring:
 #     local
     url: jdbc:mysql://localhost:3306/cmc_database
     username: root
-    password: ENC(PLZGRJ1K2iSYo3J+VAXbIdCavH38cfj0)
+    password: root123!
     properties:
       hibernate:
         show-sql: true
@@ -30,3 +30,11 @@ logging:
     org:
       hibernate:
         SQL: debug
+
+management:
+  endpoints:
+    prometheus:
+      enabled: true
+    web:
+      exposure:
+        include: health,info,beans,conditions,heapdump,threaddump,metrics,prometheus

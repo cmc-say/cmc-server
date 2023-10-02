@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.projectlombok:lombok:1.18.22'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
@@ -42,10 +43,13 @@ dependencies {
 	// jasypt
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'mysql:mysql-connector-java'
+	testImplementation 'com.h2database:h2'
 
 	// swagger
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
@@ -53,6 +57,9 @@ dependencies {
 	// fcm
 	implementation 'com.google.firebase:firebase-admin:9.1.1'
 	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+	// prometheus
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
 	// redis
 //	implementation 'org.redisson:redisson-spring-boot-starter:3.16.3'

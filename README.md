@@ -29,6 +29,9 @@
 ## 💻 System Architecture
 ![image](https://user-images.githubusercontent.com/80209277/229369168-b8329a75-7fb8-4393-883e-1b3ad7ce6aa0.png)
 ## 💯 API 명세서
-[링크](https://s0pterest.shop/swagger-ui/index.html)
+~~[링크](https://s0pterest.shop/swagger-ui/index.html)~~
+
+[현재 서버가 내려갔으므로 명세서 초안으로 대신 첨부](https://brick-venom-8c0.notion.site/Prota-API-bbd735098013416f881947b8590e835c?pvs=4)
+
 ## 💫 ERD
 ![image](https://user-images.githubusercontent.com/80209277/230480277-d09f12dd-7084-4895-b769-ff8d236a8527.png)
